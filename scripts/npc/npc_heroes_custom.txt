@@ -1,0 +1,22 @@
+// Dota Heroes File
+// NOTE: This is not for creating new heroes, this is for taking a currently existing hero as a template and overriding
+// the specified key-value combinations.  Use override_hero <hero_to_override> for this.
+"DOTAHeroes"
+{
+	"npc_dota_hero_juggernaut"
+	{
+		"override_hero"				"npc_dota_hero_juggernaut"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"juggernaut_one_ability1"
+		"Ability2"					"juggernaut_one_ability2"
+		"Ability3"					"juggernaut_one_ability2_over"
+		"Ability4"					"juggernaut_one_ability3"
+		"Ability5"					"juggernaut_one_ability3_kuangbao"
+		"Ability6"					"juggernaut_one_ability3_judu"
+		"Ability7"					"juggernaut_one_ability3_xixue"
+		"Ability8"					"juggernaut_blade_dance"
+		"Ability9"					"juggernaut_omni_slash"
+		"VisionNighttimeRange"		"1800"
+	}
+}

@@ -1,0 +1,64 @@
+// Units File
+"DOTAUnits"
+{
+	"Version"	"1"
+	
+	//马甲
+	"npc_majia"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models\development\invisiblebox.vmdl" //空模型
+		"SoundSet"					""								// 音效文件
+		"ModelScale" 				"0.9"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"	  //物理护甲
+		"MagicalResistance"			"0"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					"majia"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"0"							// 最低攻击伤害
+		"AttackDamageMax"			"0"							// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1"							// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"0"							// 侦测范围
+		"AttackRange"				"0"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"0"							// 选择圈大小
+		"HealthBarOffset"			"0"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"	// 移动类型
+		"MovementSpeed"				"0"							// 移动速度
+		"MovementTurnRate"			"3"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"100000"						// 基础生命值
+		"StatusHealthRegen"			"0"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// 白天视野
+		"VisionNighttimeRange"		"0"		// 夜晚视野
+	}
+}
