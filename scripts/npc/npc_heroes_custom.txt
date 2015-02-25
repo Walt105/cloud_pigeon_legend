@@ -15,8 +15,8 @@
 		"Ability5"					"juggernaut_one_ability3_kuangbao"
 		"Ability6"					"juggernaut_one_ability3_judu"
 		"Ability7"					"juggernaut_one_ability3_xixue"
-		"Ability8"					"juggernaut_blade_dance"
-		"Ability9"					"juggernaut_omni_slash"
+		"Ability8"					"juggernaut_one_ability4"
+		"Ability9"					"juggernaut_one_ability5"
 		"VisionNighttimeRange"		"1800"
 	}
 }

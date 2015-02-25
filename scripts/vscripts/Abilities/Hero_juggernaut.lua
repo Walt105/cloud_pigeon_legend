@@ -252,3 +252,31 @@ function OneAbility3KBModifierCount( keys )
 		caster:SetModifierStackCount(modifierName,keys.ability,i-1)
 	end
 end
+
+
+--神秘
+function OneAbility3CreateModifier( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	local i = caster:GetModifierStackCount("modifier_juggernaut_one_ability4_effect",ability)
+
+	if caster:HasModifier("modifier_juggernaut_one_ability4_effect") then
+		caster:SetModifierStackCount("modifier_juggernaut_one_ability4_effect",ability,i+1)
+	else
+		ability:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability4_effect",nil)
+	end
+end
+
+function OneAbility3DestroyModifier( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	local i = caster:GetModifierStackCount("modifier_juggernaut_one_ability4_effect",ability)
+
+	if i > 0 then
+		caster:SetModifierStackCount("modifier_juggernaut_one_ability4_effect",ability,i-1)
+	else
+		caster:RemoveModifierByName("modifier_juggernaut_one_ability4_effect")
+	end
+end

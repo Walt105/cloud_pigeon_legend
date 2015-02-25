@@ -431,6 +431,11 @@
 								"Function"		"OneAbility3KBModifierCount"
 								"AddOrLow"		"Add"
 							}
+							"FireSound"
+							{
+								"EffectName"		"Hero_Juggernaut.OmniSlash"
+								"Target"  			"CASTER"
+							}
 						}
 					}
 				}
@@ -516,6 +521,8 @@
 			"modifier_juggernaut_one_ability3_judu_effect"
 			{
 				"Duration"			"%duration"
+				"EffectName"		"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
 
 				"OnCreated"
 				{
@@ -604,6 +611,182 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"damage_out"		"5 10 15 20 25 30 35"
+			}
+		}
+	}
+
+	//技能4：神秘
+	"juggernaut_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"juggernaut_one_ability4"
+
+		"Modifiers"
+		{
+			"modifier_juggernaut_one_ability4"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion" //闪避
+				}
+
+				"Aura"          "modifier_juggernaut_one_ability4_attack"
+                "Aura_Radius"   "%radius"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+
+			"modifier_juggernaut_one_ability4_attack"
+			{
+				"IsHidden"		"1"
+
+				"OnAttackFailed"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
+						"Function"		"OneAbility3CreateModifier"
+					}
+
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_juggernaut_one_ability4_effect_duration"
+					}
+				}
+			}
+
+			"modifier_juggernaut_one_ability4_effect"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
+				}
+			}
+
+			"modifier_juggernaut_one_ability4_effect_duration"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
+						"Function"		"OneAbility3DestroyModifier"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//光环范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}
+			"02"	//闪避概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"evasion"			"100 15 20 25 30 40 50"
+			}
+			"03"	//魔抗
+			{
+				"var_type"			"FIELD_INTEGER"
+				"magical"			"3"
+			}
+			"04"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10 11 12 13 14 15 16"
+			}
+		}
+	}
+
+	"juggernaut_one_ability5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"MaxLevel"					"7"
+		"AbilityCastPoint"			"0"
+		"AbilityCooldown"			"60"
+		"AbilityManaCost"			"100 120 140 160 180 200 220"
+		"AbilityTextureName"		"juggernaut_one_ability5"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_juggernaut_one_ability5"
+				"Target"
+		        {
+		            "Types"     	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		            "Teams"     	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		            "Flags"     	"DOTA_UNIT_TARGET_FLAG_NONE"
+		            "Center"    	"CASTER"
+		            "Radius"    	"%radius"
+		        }
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Hero_TrollWarlord.BattleTrance.Cast"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_juggernaut_one_ability5"
+			{
+				"Duration"				"%duration"
+				"StatusEffectName"		"particles/status_fx/status_effect_gods_strength.vpcf"
+				"StatusEffectPriority"	"10"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_sven/sven_loadout.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"  			"TARGET"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}
+			"02"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"15"
+			}
+			"03"	//攻击速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed"		"150 200 250 300 350 400 500"
 			}
 		}
 	}
