@@ -1572,6 +1572,35 @@
         		"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
         		"Function"		"CatapultImpact"
         	}
+
+        	"AttachEffect"
+        	{
+        		"EffectName"		"particles\units\heroes\hero_jakiro\jakiro_liquid_fire_explosion.vpcf"
+        		"EffectAttachType"  "follow_origin"
+        		"Target"  			"TARGET"
+        	}
+
+        	"FireSound"
+        	{
+        		"EffectName"		"Hero_Jakiro.LiquidFire"
+        		"Target"  			"TARGET"
+        	}
+
+        	"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+				"Function"		"DamageAOE"
+				"damage_type"	"DAMAGE_TYPE_MAGICAL"
+				"damage"		"%damage"
+				"Target"
+		        {
+		            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+		            "Center"    "TARGET"
+		            "Radius"    "%damage_radius"
+		        }
+			}
         }
 
         "AbilitySpecial"
@@ -1586,6 +1615,127 @@
         		"var_type"			"FIELD_INTEGER"
         		"count"				"8"
         	}
+        	"03"	//伤害范围
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"damage_radius"		"200 210 220 230 240 250 260"
+        	}
+        	"04"	//伤害
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"damage"			"50 100 150 200 250 300 350"
+        	}
         }
+	}
+
+	//火气冲天
+	"lina_one_ability2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AOERadius"					"300"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"600"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"lina_light_strike_array"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+				"Function"		"LinaOneAbility2"
+				"Target"		"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_lina_one_ability2"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_lina_one_ability2_effect"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Center"    "TARGET"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveUnit"
+					{
+						"Target"	"TARGET"
+					}
+				}
+			}
+
+			"modifier_lina_one_ability2_effect"
+			{
+				"IsHidden"		"1"
+				"Duration"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"  			"TARGET"
+					}
+				}	
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10"
+			}
+			"02"	//伤害间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"1 1 0.9 0.9 0.8 0.8 0.7"
+			}
+			"04"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
+			}
+			"05"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"20 40 60 80 100 120 140"
+			}
+		}
 	}
 }

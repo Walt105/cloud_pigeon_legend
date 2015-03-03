@@ -40,6 +40,7 @@
 
 		"AbilityLayout"				"6"
 		"Ability1"					"lina_one_ability1"
+		"Ability2"					"lina_one_ability2"
 		"VisionNighttimeRange"		"1800"
 	}
 }
