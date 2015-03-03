@@ -1558,25 +1558,33 @@
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
 				"Function"		"LinaOneAbility1"
+				"EffectName"	"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
+				"move_speed"	"1100"
+				"radius"		"%radius"
+				"count"			"%count"
 			}
-			"TrackingProjectile"
-            {
-                "Target"			"TARGET"
-                "EffectName"        "particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
-                "Dodgeable"         "0"
-                "ProvidesVision"    "1"
-                "VisionRadius"      "300"
-                "MoveSpeed"         "1100"
-                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-            }
 		}
 
 		"OnProjectileHitUnit"
         {
         	"RunScript"
         	{
-        		"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
-        		"Function"		"LinaOneAbility1Impact"
+        		"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+        		"Function"		"CatapultImpact"
+        	}
+        }
+
+        "AbilitySpecial"
+        {
+        	"01"	//弹射范围
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"radius"			"600"
+        	}
+        	"02"	//弹射次数
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"count"				"8"
         	}
         }
 	}
