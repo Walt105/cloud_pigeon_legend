@@ -1,6 +1,6 @@
 
 --三个风暴
-function OneAbility1OnCreate( keys )
+function JuggOneAbility1OnCreate( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local caster_abs = caster:GetAbsOrigin()
@@ -12,7 +12,7 @@ function OneAbility1OnCreate( keys )
 	for i=1,num do
 		local vec = caster_abs + caster_face * keys.radius_two
 		unit[i] = CreateUnitByName("npc_majia",vec,false,nil,nil,caster:GetTeamNumber())
-		unit[i].Summoner = caster
+		unit[i].JuggOneAbility1Summoner = caster
 
 		local vec2 = RotatePosition(caster_abs,QAngle(0,(360/num)*i,0),vec)
 		unit[i]:SetAbsOrigin(vec2)
@@ -25,12 +25,12 @@ function OneAbility1OnCreate( keys )
 
 end
 
-function OneAbility1UnitDamage( keys )
+function JuggOneAbility1UnitDamage( keys )
 	local caster = keys.target
 	local targets = keys.target_entities
 
 	--获取召唤者
-	local hero = caster.Summoner or false
+	local hero = caster.JuggOneAbility1Summoner or false
 
 	if hero then
 
@@ -53,7 +53,7 @@ end
 
 
 --尾随
-function OneAbility2OnCreate( keys )
+function JuggOneAbility2OnCreate( keys )
 	local caster = keys.caster
 	local target = keys.target
 
@@ -99,7 +99,7 @@ function OneAbility2OnCreate( keys )
 		end,0)
 end
 
-function OneAbility2Over( keys )
+function JuggOneAbility2Over( keys )
 	local caster = keys.caster
 	caster.OneAbility2Dura = false
 
@@ -115,7 +115,7 @@ end
 --狂暴 1
 --剧毒 2
 --吸血 3
-function OneAbility3( keys )
+function JuggOneAbility3( keys )
 	local caster = keys.caster
 
 	local ability = {}
@@ -128,9 +128,9 @@ function OneAbility3( keys )
 			return
 		end
 	end
-
-	if caster.next_weapon == 1 then
-		caster.next_weapon = 2
+	
+	if caster.JuggOneAbility3_next_weapon == 1 then
+		caster.JuggOneAbility3_next_weapon = 2
 
 		--设置技能可见性
 		ability[1]:SetHidden(false)
@@ -142,8 +142,8 @@ function OneAbility3( keys )
 		caster:RemoveModifierByName("modifier_juggernaut_one_ability3_xixue")
 		ability[1]:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability3_kuangbao",nil)
 		
-	elseif caster.next_weapon == 2 then
-		caster.next_weapon = 3
+	elseif caster.JuggOneAbility3_next_weapon == 2 then
+		caster.JuggOneAbility3_next_weapon = 3
 
 		--设置技能可见性
 		ability[1]:SetHidden(true)
@@ -155,8 +155,8 @@ function OneAbility3( keys )
 		caster:RemoveModifierByName("modifier_juggernaut_one_ability3_xixue")
 		ability[2]:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability3_judu",nil)
 		
-	elseif caster.next_weapon == 3 then
-		caster.next_weapon = 1
+	elseif caster.JuggOneAbility3_next_weapon == 3 then
+		caster.JuggOneAbility3_next_weapon = 1
 
 		--设置技能可见性
 		ability[1]:SetHidden(true)
@@ -172,15 +172,15 @@ function OneAbility3( keys )
 end
 
 --初始化
-function OneAbility3Init( keys )
+function JuggOneAbility3Init( keys )
 	local caster = keys.caster
 
 	if caster.one_ability3_init == nil then
 		caster.one_ability3_init = true
 
 		--下一把武器
-		if caster.next_weapon == nil then
-			caster.next_weapon = 2
+		if caster.JuggOneAbility3_next_weapon == nil then
+			caster.JuggOneAbility3_next_weapon = 2
 		end
 
 		--获取技能
@@ -209,7 +209,7 @@ function OneAbility3Init( keys )
 end
 
 --用于英雄死亡后modifier消失的修复
-function OneAbility3OnCreated( keys )
+function JuggOneAbility3OnCreated( keys )
 	local caster = keys.caster
 
 	--获取技能
@@ -225,20 +225,20 @@ function OneAbility3OnCreated( keys )
 		end
 	end
 
-	if caster.next_weapon == 1 then
+	if caster.JuggOneAbility3_next_weapon == 1 then
 		ability[3]:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability3_xixue",nil)
 
-	elseif caster.next_weapon == 2 then
+	elseif caster.JuggOneAbility3_next_weapon == 2 then
 		ability[1]:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability3_kuangbao",nil)
 
-	elseif caster.next_weapon == 3 then
+	elseif caster.JuggOneAbility3_next_weapon == 3 then
 		ability[2]:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability3_judu",nil)
 
 	end
 end
 
 --显示狂暴的modifier数量
-function OneAbility3KBModifierCount( keys )
+function JuggOneAbility3KBModifierCount( keys )
 	local caster = keys.caster
 
 	local modifierName = "modifier_juggernaut_one_ability3_kuangbao"
@@ -255,7 +255,7 @@ end
 
 
 --神秘
-function OneAbility3CreateModifier( keys )
+function JuggOneAbility3CreateModifier( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 
@@ -268,7 +268,7 @@ function OneAbility3CreateModifier( keys )
 	end
 end
 
-function OneAbility3DestroyModifier( keys )
+function JuggOneAbility3DestroyModifier( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 

@@ -19,4 +19,27 @@
 		"Ability9"					"juggernaut_one_ability5"
 		"VisionNighttimeRange"		"1800"
 	}
+
+	"npc_dota_hero_luna"
+	{
+		"override_hero"				"npc_dota_hero_luna"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"luna_one_ability1"
+		"Ability2"					"luna_one_ability2"
+		"Ability3"					"luna_one_ability3"
+		"Ability4"					"luna_one_ability4"
+		"Ability5"					"luna_one_ability5"
+		"Ability6"					"luna_one_ability6"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	"npc_dota_hero_lina"
+	{
+		"override_hero"				"npc_dota_hero_lina"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"lina_one_ability1"
+		"VisionNighttimeRange"		"1800"
+	}
 }

@@ -1,4 +1,19 @@
 
+--发送消息
+function PrintMsg( str )
+	GameRules:SendCustomMessage(tostring(str),2,0)
+end
+
+--删除table中的table
+function TableRemoveTable( table_1 , table_2 )
+	for i,v in pairs(table_1) do
+		if v == table_2 then
+			table.remove(table_1,i)
+			return
+		end
+	end
+end
+
 --停止播放音效
 function StopSound( keys )
 	StopSoundEvent(keys.EffectName,keys.caster)

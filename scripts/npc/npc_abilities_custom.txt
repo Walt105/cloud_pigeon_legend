@@ -89,7 +89,7 @@
 					"RunScript"	//创建马甲
 					{
 						"ScriptFile" 		"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"			"OneAbility1OnCreate"
+						"Function"			"JuggOneAbility1OnCreate"
 						"storm_num"			"%storm_num"
 						"radius_two"		"%radius_two"
 					}
@@ -172,7 +172,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"OneAbility1UnitDamage"
+						"Function"		"JuggOneAbility1UnitDamage"
 						"damage"		"%AbilityDamage"
 						"damage_type"	"DAMAGE_TYPE_PHYSICAL"
 						"Target"
@@ -239,7 +239,7 @@
 			"RunScript"
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"OneAbility2OnCreate"
+				"Function"		"JuggOneAbility2OnCreate"
 				"duration"		"%duration"
 			}
 
@@ -276,7 +276,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"OneAbility2Over"
+						"Function"		"JuggOneAbility2Over"
 					}
 				}
 			}
@@ -317,7 +317,7 @@
 			"RunScript"
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"OneAbility2Over"
+				"Function"		"JuggOneAbility2Over"
 			}
 		}
 
@@ -349,7 +349,7 @@
 			"RunScript"
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"OneAbility3"
+				"Function"		"JuggOneAbility3"
 			}
 		}
 
@@ -376,7 +376,7 @@
 			"RunScript"
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"OneAbility3Init"
+				"Function"		"JuggOneAbility3Init"
 			}
 		}
 
@@ -392,7 +392,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"OneAbility3OnCreated"
+						"Function"		"JuggOneAbility3OnCreated"
 					}
 				}
 			}
@@ -428,7 +428,7 @@
 							"RunScript"
 							{
 								"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-								"Function"		"OneAbility3KBModifierCount"
+								"Function"		"JuggOneAbility3KBModifierCount"
 								"AddOrLow"		"Add"
 							}
 							"FireSound"
@@ -468,7 +468,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"OneAbility3KBModifierCount"
+						"Function"		"JuggOneAbility3KBModifierCount"
 						"AddOrLow"		"Low"
 					}
 				}
@@ -500,6 +500,7 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_PURE"
 
 		"MaxLevel"					"7"
 		"AbilityTextureName"		"sanbadao_judu"
@@ -520,6 +521,7 @@
 
 			"modifier_juggernaut_one_ability3_judu_effect"
 			{
+				"IsDebuff"			"1"
 				"Duration"			"%duration"
 				"EffectName"		"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
 				"EffectAttachType"	"follow_chest"
@@ -652,7 +654,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"OneAbility3CreateModifier"
+						"Function"		"JuggOneAbility3CreateModifier"
 					}
 
 					"ApplyModifier"
@@ -682,7 +684,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"OneAbility3DestroyModifier"
+						"Function"		"JuggOneAbility3DestroyModifier"
 					}
 				}
 			}
@@ -757,6 +759,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%heal_speed"
 				}
 
 				"OnCreated"
@@ -788,6 +791,793 @@
 				"var_type"			"FIELD_INTEGER"
 				"attack_speed"		"150 200 250 300 350 400 500"
 			}
+			"04"	//生命恢复速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal_speed"		"15 20 25 30 35 45 55"
+			}
 		}
+	}
+
+
+	//================================================================================================
+	//露娜 
+	//输出技能
+	//技能1：储备电能
+	"luna_one_ability1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"MaxLevel"					"7"
+		"AbilityCastPoint"			"0"
+		"AbilityCooldown"			"1 0.9 0.8 0.7 0.6 0.5 0.4"
+		"AbilityManaCost"			"3"
+		"AbilityTextureName"		"disruptor_thunder_strike"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+				"Function"		"LunaOneAbility1OnCreate"
+				"max_modifier"	"%max_modifier"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_luna_one_ability1_null"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"1"
+				}
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/heros/luna/luna_light_hand.vpcf"
+						"EffectAttachType" 	"start_at_customorigin"
+						"Target"			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_attack1"
+							"CASTER"		"attach_attack1"
+							"CASTER"		"attach_attack1"
+						}
+					}
+				}
+			}
+
+			"modifier_luna_one_ability1_effect"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"Ability.static.end"
+						"Target"  			"CASTER"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//增加的技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"10 15 20 25 30 35 40"
+			}
+			"02"	//最大叠加数量
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_modifier"		"15 16 17 18 19 20 21"
+			}
+		}
+	}
+
+	//技能2：摩擦生电
+	"luna_one_ability2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0"
+		"AbilityCooldown"			"18"
+		"AbilityManaCost"			"90"
+		"AbilityTextureName"		"storm_spirit_ball_lightning"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_luna_one_ability2"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_luna_one_ability2_1"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+				"Target"		"POINT"
+				"Function"		"LunaOneAbility2"
+				"range"			"%range"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_luna_one_ability2"
+			{
+				"IsHidden"			"1"
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED" //魔法免疫
+					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED" //攻击免疫
+					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED" //沉默
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED" //无法移动
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED" //无碰撞
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED" //无法攻击
+				}
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning_sphere.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+						}
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"Hero_StormSpirit.BallLightning.Loop"
+						"Target"  			"CASTER"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 		"scripts/vscripts/global.lua"
+						"Target"			"CASTER"
+						"Function"			"StopSound"
+						"EffectName"		"Hero_StormSpirit.BallLightning.Loop"
+					}
+				}
+			}
+			"modifier_luna_one_ability2_1"
+			{
+				"IsHidden"			"1"
+
+				"Aura"          "modifier_luna_one_ability2_effect1"
+                "Aura_Radius"   "%radius"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+
+			"modifier_luna_one_ability2_2"
+			{
+				"IsHidden"			"1"
+
+				"Aura"          "modifier_luna_one_ability2_effect2"
+                "Aura_Radius"   "%radius"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+
+
+			"modifier_luna_one_ability2_effect1"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				            "Center"    "CASTER"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+
+			"modifier_luna_one_ability2_effect2"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				            "Center"    "CASTER"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//距离
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"500"
+			}
+			"02"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"150"
+			}
+			"03"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 125 150 175 200 225 250"
+			}
+		}
+	}
+
+	//技能3：感应电流
+	"luna_one_ability3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"900"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"20"
+		"AbilityTextureName"		"wisp_tether"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"TARGET"
+				"ModifierName"		"modifier_luna_one_ability3"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_luna_one_ability3_null"
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Ability.static.loop"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_luna_one_ability3"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%duration"
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+						"Function"		"LunaOneAbility3"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_luna_one_ability3_null"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 		"scripts/vscripts/global.lua"
+						"Target"			"CASTER"
+						"Function"			"StopSound"
+						"EffectName"		"Ability.static.loop"
+					}
+				}
+			}
+
+			"modifier_luna_one_ability3_null"
+			{
+				"Duration"			"%duration"
+			}
+
+			"modifier_luna_one_ability3_effect_damage"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+					}
+
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_razor/razor_whip.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"  			"TARGET"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					}
+				}
+			}
+
+			"modifier_luna_one_ability3_effect_heal"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"Heal"
+					{
+						"Target"  		"CASTER"
+						"HealAmount"	"%heal"
+					}	
+
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_razor/razor_whip.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"  			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+						}
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"10 11 12 13 14 15 16"
+			}
+			"02"	//间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.75"
+			}
+			"03"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"10 15 20 25 30 40 50"
+			}
+			"04"	//恢复
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal"				"10 15 20 25 30 40 50"
+			}
+		}
+	}
+
+	//技能4：避雷针
+	"luna_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"300"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"10"
+		"AbilityCooldown"			"4"
+		"AbilityTextureName"		"razor_static_link_alt"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"TARGET"
+				"ModifierName"		"modifier_luna_one_ability4"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_luna_one_ability4"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%duration"
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+						"Function"		"LunaOneAbility4"
+						"chance"		"%chance"
+					}
+				}
+			}
+
+			"modifier_luna_one_ability4_damage"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Center"    "TARGET"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"20"
+			}
+			"02"	//间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"1"
+			}
+			"03"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"10"
+			}
+			"04"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"150"
+			}
+			"05"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 150 200 250 300 350 400"
+			}
+		}
+	}
+
+	//技能5：电磁感应
+	"luna_one_ability5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"		"storm_spirit_electric_vortex"
+		"MaxLevel"					"7"
+
+		"Modifiers"
+		{
+			"modifier_luna_one_ability5"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+								"Function"		"LunaOneAbility5"
+							}
+						}
+					}
+				}
+
+				"OnAbilityExecuted"
+				{
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+								"Function"		"LunaOneAbility5"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_luna_one_ability5_effect"
+			{
+				"Duration"			"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%preattack"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"03"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"30"
+			}
+			"04"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"30 32 34 36 40 45 50"
+			}
+			"01"	//攻击力
+			{
+				"var_type"			"FIELD_INTEGER"
+				"preattack"			"5 7 9 11 12 14 16"
+			}	
+			"02"	//攻击速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed"		"30 40 50 60 70 80 90"
+			}
+		}
+	}
+
+	//乌云
+	"luna_one_ability6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"150"
+		"AbilityCooldown"			"80"
+		"AbilityTextureName"		"razor_eye_of_the_storm"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_luna_one_ability6"
+			}
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+				"Function"		"LunaOneAbility6"
+				"range"			"%range"
+				"interval"		"%interval"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Razor.Storm.Cast"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_luna_one_ability6"
+			{
+				"Duration"			"%duration"
+				"EffectName"		"particles/units/heroes/hero_razor/razor_rain_storm.vpcf"
+				"EffectAttachType"	"follow_head"
+			}
+
+			"modifier_luna_one_ability6_damage"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Center"    "TARGET"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10"
+			}
+			"02"	//间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.75"
+			}
+			"03"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1000"
+			}
+			"04"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"05"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 150 200 250 300 350 400"
+			}
+		}
+	}
+
+	//================================================================================================
+	//莉娜
+	//输出技能
+	//技能1：弹跳火球
+	"lina_one_ability1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"800"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"90"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"phoenix_launch_fire_spirit"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+				"Function"		"LinaOneAbility1"
+			}
+			"TrackingProjectile"
+            {
+                "Target"			"TARGET"
+                "EffectName"        "particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
+                "Dodgeable"         "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+                "MoveSpeed"         "1100"
+                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+		}
+
+		"OnProjectileHitUnit"
+        {
+        	"RunScript"
+        	{
+        		"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+        		"Function"		"LinaOneAbility1Impact"
+        	}
+        }
 	}
 }
