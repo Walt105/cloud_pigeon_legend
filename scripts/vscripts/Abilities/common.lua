@@ -1,4 +1,7 @@
 
+-----------------------------------------------------------------------------------------------------------
+--旋转单位
+-----------------------------------------------------------------------------------------------------------
 --target绕着caster旋转
 --len:int,是距离
 --angle:int,是旋转角度
@@ -38,9 +41,12 @@ function RotateTargetToCaster( caster,targets,len,angle,interval,dura,f )
 			return interval
 		end,0)
 end
+-----------------------------------------------------------------------------------------------------------
 
 
+-----------------------------------------------------------------------------------------------------------
 --同步技能等级
+-----------------------------------------------------------------------------------------------------------
 function SyncAbilityLevel( keys )
 	local caster = keys.caster
 
@@ -75,8 +81,46 @@ function SyncAbilityLevel( keys )
 		end
 	end
 end
+-----------------------------------------------------------------------------------------------------------
 
+
+-----------------------------------------------------------------------------------------------------------
+--增加或者减少modifier的数字
+-----------------------------------------------------------------------------------------------------------
+--Add增加modifier数量
+--Low减少modifier数量
+--count是数量
+--remove的值随便填写个1，不填写就是不删除
+function AddOrLowModifierCount( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local count = tonumber(keys.count)
+	local modifierName = keys.modifierName
+
+	if caster:HasModifier(modifierName) then
+		local i = caster:GetModifierStackCount(modifierName,ability)
+		if keys.AddOrLow == "Add" then
+			caster:SetModifierStackCount(modifierName,keys.ability,i+count)
+		end
+
+		if keys.AddOrLow == "Low" then
+			if i <= count then
+				caster:SetModifierStackCount(modifierName,keys.ability,0)
+				if keys.remove then
+					caster:RemoveModifierByName(modifierName)
+				end
+			else
+				caster:SetModifierStackCount(modifierName,keys.ability,i-count)
+			end
+		end
+	end
+end
+-----------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------
 --弹射函数
+-----------------------------------------------------------------------------------------------------------
 --用于检测是否被此次弹射命中过
 function CatapultFindImpact( unit,str )
 	for i,v in pairs(unit.CatapultImpact) do
@@ -249,3 +293,4 @@ function CatapultImpact( keys )
 		end
 	end
 end
+-----------------------------------------------------------------------------------------------------------

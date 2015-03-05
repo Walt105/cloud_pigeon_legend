@@ -61,4 +61,63 @@
 		"VisionDaytimeRange"		"0"		// 白天视野
 		"VisionNighttimeRange"		"0"		// 夜晚视野
 	}
+
+	//火元素
+	"npc_lina_fire_elemental"
+	{
+		"BaseClass"					"npc_dota_warlock_golem"
+		"Model"						"models\items\invoker\forge_spirit\arsenal_magus_forged_spirit\arsenal_magus_forged_spirit.vmdl" //空模型
+		"SoundSet"					""								// 音效文件
+		"ModelScale" 				"0.4"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"10"	  //物理护甲
+		"MagicalResistance"			"10"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"1"								// 最低攻击伤害
+		"AttackDamageMax"			"2"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"35"							// 选择圈大小
+		"HealthBarOffset"			"100"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+	}
 }

@@ -1628,7 +1628,7 @@
         }
 	}
 
-	//火气冲天
+	//技能2：火气冲天
 	"lina_one_ability2"
 	{
 		"BaseClass"					"ability_datadriven"
@@ -1710,6 +1710,12 @@
 						"EffectAttachType"  "follow_origin"
 						"Target"  			"TARGET"
 					}
+
+					"FireSound"
+					{
+						"EffectName"		"Hero_OgreMagi.Fireblast.Target"
+						"Target"  			"TARGET"
+					}	
 				}	
 			}
 		}
@@ -1735,6 +1741,440 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"20 40 60 80 100 120 140"
+			}
+		}
+	}
+
+	//技能3：召唤火元素
+	"lina_one_ability3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"30"
+		"AbilityCooldown"			"5"
+		"AbilityTextureName"		"brewmaster_fire_permanent_immolation"
+
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_lina_fire_elemental"
+				"Target" 				"CASTER"
+				"Duration"				"50"
+				"UnitCount"				"1"
+				"SpawnRadius"			"200"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+						"Function"		"LinaOneAbility3Unit"
+					}
+
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_lina_one_ability3"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_lina_one_ability3"
+			{
+				"IsHidden"			"1"
+				"EffectName"		"particles/dire_fx/fire_barracks.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%preattack"
+				}
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+						"Function"		"LinaOneAbility3"
+						"heal_speed"	"%heal_speed"
+						"mana_speed"	"%mana_speed"
+						"Target"
+						{
+		                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+		                    "Center"    "TARGET"
+		                    "Radius"    "%radius"
+		                }
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"02"	//攻击力
+			{
+				"var_type"			"FIELD_INTEGER"
+				"preattack"			"20 40 60 80 100 120 140"
+			}
+			"01"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}
+			"01"	//恢复间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.4"
+			}
+			"03"	//生命恢复
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal_speed"		"1 3 5 7 10 13 20"
+			}
+			"04"	//魔法恢复
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_speed"		"1 2 3 4 7 10 15"
+			}
+		}
+	}
+
+	//技能4：热火朝天
+	"lina_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityTextureName"		"doom_bringer_doom"
+		"AbilityCastRange"			"600"
+		"MaxLevel"					"7"
+
+		"Modifiers"
+		{
+			"modifiers_lina_one_ability4"
+			{
+				"Passive"			"1"
+				"EffectName"		"particles/items2_fx/radiance.vpcf"
+				"EffectAttachType"	"follow_chest"
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Center"    "CASTER"
+				            "Radius"    "%radius"
+				        }
+					}
+
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+								"Function"		"AddOrLowModifierCount"
+								"modifierName"	"modifiers_lina_one_ability4"
+								"AddOrLow"		"Add"
+								"count"			"1"
+							}
+							"ApplyModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_lina_one_ability4_effect"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_lina_one_ability4_effect"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifiers_lina_one_ability4"
+						"AddOrLow"		"Low"
+						"count"			"1"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"600"
+			}
+			"02"	//伤害间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.85"
+			}
+			"03"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"15 20 25 30 35 40 45"
+			}
+			"04"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"15"
+			}
+			"05"	//增加的技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"2 4 6 8 10 12 14"
+			}
+			"06"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"25"
+			}
+		}
+	}
+
+	//技能5：火种
+	"lina_one_ability5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"		"ember_spirit_flame_guard"
+		"MaxLevel"					"7"
+
+		"OnUpgrade"
+		{
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_lina_one_ability5"
+			}
+
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_lina_one_ability5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_lina_one_ability5"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%preattack"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"			"%heal"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//附加攻击力
+			{
+				"var_type"			"FIELD_INTEGER"
+				"preattack"			"20 30 40 50 70 90 110"
+			}
+			"02"	//生命值加成
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal"				"200 300 400 550 650 750 900"
+			}
+			"03"	//提高技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"30 40 50 60 70 80 90"
+			}
+		}
+	}
+
+	//技能6：轰轰烈烈
+	"lina_one_ability6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"800"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"150"
+		"AbilityCooldown"			"60"
+		"AbilityTextureName"		"sniper_shrapnel_muh_keen_gun"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_lina_one_ability6"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_lina_one_ability6"
+			{
+				"Duration"			"%duration"
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+						"Function"		"LinaOneAbility6"
+						"radius"		"%damage_radius"
+						"Target"
+		                {
+		                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+		                    "Center"    "CASTER"
+		                    "Radius"    "%radius"
+		                }
+					}
+				}
+			}
+
+			"modifier_lina_one_ability6_damage"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Center"    "TARGET"
+				            "Radius"    "%damage_radius"
+				        }
+					}
+					"FireSound"
+					{
+						"EffectName"		"Hero_Invoker.ChaosMeteor.Impact"
+						"Target" 			"TARGET"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveUnit"
+					{
+						"Target"		"TARGET"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10"
+			}
+			"02"	//间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"1"
+			}
+			"03"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}
+			"04"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_radius"		"400"
+			}
+			"05"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 200 300 400 500 600 700"
 			}
 		}
 	}

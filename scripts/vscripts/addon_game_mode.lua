@@ -18,7 +18,9 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_razor.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context )
 
 	--载入特效
 	PrecacheResource( "particle", "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf", context )
@@ -29,7 +31,23 @@ function Precache( context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_razor", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_zuus", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_jakiro", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_invoker", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_phoenix", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_stormspirit", context )
+
+	--载入模型
+	local unit_kv = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+    if unit_kv then
+        for unit_name,keys in pairs(unit_kv) do
+            print("precacheing resource for unit"..unit_name)
+            if type(keys) == "table" then
+                if keys.Model then
+                    print("precacheing model"..keys.Model)
+                    PrecacheModel(keys.Model, context )
+                end
+            end
+        end
+    end
 
 end
 
