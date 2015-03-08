@@ -122,3 +122,32 @@ function SkeletonkingOneAbility5( keys )
 
 	end
 end
+
+
+--巨石之魂
+function SkeletonkingOneAbility6( keys )
+	local caster = keys.caster
+	local target = keys.target
+
+	if caster.SkeletonkingOneAbility6 ~= nil then
+		if IsValidEntity(caster.SkeletonkingOneAbility6) then
+			caster.SkeletonkingOneAbility6:RemoveSelf()
+		end
+	end
+		
+	caster.SkeletonkingOneAbility6 = target
+	target:SetAbsOrigin(caster:GetAbsOrigin() + 200 * caster:GetForwardVector())
+	target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
+	target:SetMaxHealth(caster:GetMaxHealth() * 4)
+	target:SetHealth(target:GetMaxHealth())
+	target:SetBaseDamageMax(caster:GetBaseDamageMax() * 2)
+	target:SetBaseDamageMin(caster:GetBaseDamageMin() * 2)
+end
+
+function SkeletonkingOneAbility6Remove( keys )
+	local target = keys.target
+
+	if IsValidEntity(target) then
+		target:RemoveSelf()
+	end
+end

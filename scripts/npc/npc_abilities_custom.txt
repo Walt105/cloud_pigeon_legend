@@ -2593,7 +2593,7 @@
 		}
 	}
 
-	//技能4：稳固
+	//技能5：稳固
 	"skeletonking_one_ability5"
 	{
 		"BaseClass"					"ability_datadriven"
@@ -2641,6 +2641,7 @@
 		}
 	}
 
+	//技能6：巨石之魂
 	"skeletonking_one_ability6"
 	{
 		"BaseClass"					"ability_datadriven"
@@ -2651,15 +2652,31 @@
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"60"
-		"AbilityTextureName"		"earth_spirit_petrify"
+		"AbilityCooldown"			"75"
+		"AbilityTextureName"		"skeletonking_one_ability6"
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
+			"SpawnUnit"
 			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_skeletonking_one_ability6"
+				"UnitName"				"npc_skeletonking_huge_stone"
+				"Target" 				"CASTER"
+				"Duration"				"%duration"
+				"UnitCount"				"1"
+				"SpawnRadius"			"200"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_skeletonking_one_ability6"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+						"Function"		"SkeletonkingOneAbility6"
+					}
+				}
 			}
 		}
 
@@ -2667,9 +2684,70 @@
 		{
 			"modifier_skeletonking_one_ability6"
 			{
-				"Duration"			"10"
+				"IsHidden"				"1"
+				"Duration"				"%duration"
 				"StatusEffectName"		"particles/custom/heros/skeletonking/skeletonking_one_ability6.vpcf"
 				"StatusEffectPriority"	"100"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+						"Function"		"SkeletonkingOneAbility6Remove"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"20"
+			}
+		}
+	}
+	//巨石之人:重击
+	"skeletonking_one_ability6_huge_stone"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"	"earth_spirit_rolling_boulder"
+
+		"Modifiers"
+		{
+			"modifier_skeletonking_one_ability6_huge_stone"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnAttackLanded"
+				{
+					"Damage"
+					{
+						"Target"
+						{
+							"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+							"Center"	"CASTER"
+							"Radius"	"%radius"
+						}
+						"Type"			 "DAMAGE_TYPE_PURE"
+						"Damage"		 "%attack_damage"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"400"
 			}
 		}
 	}
