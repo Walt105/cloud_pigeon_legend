@@ -58,6 +58,7 @@
 		"Ability3"					"skeletonking_one_ability3"
 		"Ability4"					"skeletonking_one_ability4"
 		"Ability5"					"skeletonking_one_ability5"
+		"Ability6"					"skeletonking_one_ability6"
 		"VisionNighttimeRange"		"1800"
 	}
 }

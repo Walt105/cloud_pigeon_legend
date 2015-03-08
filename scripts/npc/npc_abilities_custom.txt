@@ -756,7 +756,7 @@
 			"modifier_juggernaut_one_ability5"
 			{
 				"Duration"				"%duration"
-				"StatusEffectName"		"particles/status_fx/status_effect_gods_strength.vpcf"
+				"StatusEffectName"		"particles/custom/heros/juggernaut/juggernaut_one_ability5.vpcf"
 				"StatusEffectPriority"	"10"
 
 				"Properties"
@@ -2268,9 +2268,6 @@
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
 
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"2000"
@@ -2640,6 +2637,39 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"armor"				"10 15 20 25 30 35 40"
+			}
+		}
+	}
+
+	"skeletonking_one_ability6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"60"
+		"AbilityTextureName"		"earth_spirit_petrify"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_skeletonking_one_ability6"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_skeletonking_one_ability6"
+			{
+				"Duration"			"10"
+				"StatusEffectName"		"particles/custom/heros/skeletonking/skeletonking_one_ability6.vpcf"
+				"StatusEffectPriority"	"100"
 			}
 		}
 	}
