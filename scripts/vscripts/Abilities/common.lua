@@ -1,4 +1,8 @@
 
+--[[
+这里主要编写技能相关的函数
+]]
+
 -----------------------------------------------------------------------------------------------------------
 --旋转单位
 -----------------------------------------------------------------------------------------------------------
@@ -294,3 +298,71 @@ function CatapultImpact( keys )
 	end
 end
 -----------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------
+--恢复生命值
+-----------------------------------------------------------------------------------------------------------
+function CDOTA_BaseNPC:CustomHeal( heal )
+	self:SetHealth(self:GetHealth() + heal)
+	local heal_num = #tostring(math.floor(heal))
+    local particle = ParticleManager:CreateParticle("particles/msg_fx/msg_heal.vpcf",PATTACH_ABSORIGIN_FOLLOW,self)
+    ParticleManager:SetParticleControl(particle,0,self:GetOrigin())
+    ParticleManager:SetParticleControl(particle,1,Vector(10,heal,0))
+    ParticleManager:SetParticleControl(particle,2,Vector(1,heal_num + 1,0))
+    ParticleManager:SetParticleControl(particle,3,Vector(0,255,0))
+    ParticleManager:ReleaseParticleIndex(particle)
+end
+-----------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------
+--计时器
+-----------------------------------------------------------------------------------------------------------
+function CustomTimer( timerName,fun,delay )
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString(timerName),fun,delay)
+end
+-----------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------
+--净化
+-----------------------------------------------------------------------------------------------------------
+GameRules.CustomPurgeTable = {}
+function CustomPurgeInit( )
+	local kv = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
+	if kv then
+		--此for获取技能
+        for name,keys in pairs(kv) do
+            if type(keys) == "table" then
+                
+                --此for获取Modifiers
+                for modifiers,mKeys in pairs(keys) do
+                	if modifiers == "Modifiers" then
+
+	                	--此for获取Modifiers里面的modifier
+	                	for modifierName,modifierKeys in pairs(mKeys) do
+	                		GameRules.CustomPurgeTable[modifierName]=modifierKeys
+	                	end
+                	end
+                end
+            end
+        end
+    end
+end
+
+function CDOTA_BaseNPC:CustomPurge( RemoveBuff,RemoveDebuff )
+	for i,v in pairs(GameRules.CustomPurgeTable) do
+		if self:HasModifier(i) then
+			if v.IsDebuff then
+				if v.IsDebuff == 1 and RemoveDebuff then
+					self:RemoveModifierByName(i)
+				end
+			else
+				if RemoveBuff then
+					self:RemoveModifierByName(i)
+				end
+			end
+		end
+	end
+end

@@ -64,7 +64,38 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	--隐藏dota2的一些UI
 	HideGameHud()
 	
+	--设置游戏准备时间
+	GameRules:SetPreGameTime( 10.0)
+
+	-- 设定选择英雄时间
+	GameRules:SetHeroSelectionTime(15)
+
+	-- 设定是否可以选择相同英雄
+	GameRules:SetSameHeroSelectionEnabled( false )
+
+	-- 是否使用自定义的英雄经验
+  	GameRules:SetUseCustomHeroXPValues ( true )
+  	
+  	-- 设定每秒工资数
+  	GameRules:SetGoldPerTick(0)
+
+  	-- 允许自定义英雄等级
+  	GameRules:GetGameModeEntity():SetUseCustomHeroLevels(true)
+
+  	--不允许复活
+  	GameRules:SetHeroRespawnEnabled(false)
+
+  	--最大等级
+  	MaxLevel = 1
+
+  	--升级所需经验
+	XpTable = {1}
+	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(MaxLevel)
+	GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XpTable)
 	
+	--初始化
+	CEvents:Init()
+	CustomPurgeInit()
 end
 
 function HideGameHud( )

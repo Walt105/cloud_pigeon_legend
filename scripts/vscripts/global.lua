@@ -1,4 +1,9 @@
 
+--[[
+这里主要编写通用的函数
+]]
+
+
 --发送消息
 function PrintMsg( str )
 	GameRules:SendCustomMessage(tostring(str),2,0)

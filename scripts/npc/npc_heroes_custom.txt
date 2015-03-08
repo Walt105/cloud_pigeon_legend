@@ -47,4 +47,17 @@
 		"Ability6"					"lina_one_ability6"
 		"VisionNighttimeRange"		"1800"
 	}
+
+	"npc_dota_hero_skeleton_king"
+	{
+		"override_hero"				"npc_dota_hero_skeleton_king"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"skeletonking_one_ability1"
+		"Ability2"					"skeletonking_one_ability2"
+		"Ability3"					"skeletonking_one_ability3"
+		"Ability4"					"skeletonking_one_ability4"
+		"Ability5"					"skeletonking_one_ability5"
+		"VisionNighttimeRange"		"1800"
+	}
 }

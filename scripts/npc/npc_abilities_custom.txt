@@ -528,22 +528,24 @@
 
 				"OnCreated"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"		 "TARGET"
-						"Type"			 "DAMAGE_TYPE_PURE"
-						"Damage"		 "%damage_init"
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_PURE"
+						"damage"		"%damage_init"
 					}
 				}
 
 				"ThinkInterval"		"%interval"
 				"OnIntervalThink"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"		 "TARGET"
-						"Type"			 "DAMAGE_TYPE_PURE"
-						"Damage"		 "%damage_think"
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_PURE"
+						"damage"		"%damage_think"
 					}
 				}
 			}
@@ -700,7 +702,7 @@
 			"02"	//闪避概率
 			{
 				"var_type"			"FIELD_INTEGER"
-				"evasion"			"100 15 20 25 30 40 50"
+				"evasion"			"10 15 20 25 30 40 50"
 			}
 			"03"	//魔抗
 			{
@@ -715,6 +717,7 @@
 		}
 	}
 
+	//技能5：嗜血之神
 	"juggernaut_one_ability5"
 	{
 		"BaseClass"					"ability_datadriven"
@@ -2175,6 +2178,468 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"100 200 300 400 500 600 700"
+			}
+		}
+	}
+
+	//================================================================================================
+	//冥魂 
+	//技能1：灵魂之球
+	"skeletonking_one_ability1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"700"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"80"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"skeleton_king_hellfire_blast"
+
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+            {
+                "Target"            "TARGET"
+                "EffectName"        "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+                "Dodgeable"         "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+                "MoveSpeed"         "1100"
+                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+            "FireSound"
+            {
+            	"EffectName"		"Hero_SkeletonKing.Hellfire_Blast"
+            	"Target"  			"CASTER"
+            }
+		}
+
+		"OnProjectileHitUnit"
+        {
+            "RunScript"
+            {
+            	"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+            	"Function"		"SkeletonkingOneAbility1"
+            	"damage_max"	"%damage_max"
+            	"damage_min"	"%damage_min"
+            	"damage_type"	"DAMAGE_TYPE_MAGICAL"
+            	"radius"		"%radius"
+            	"num"			"%num"
+            }
+            "FireSound"
+            {
+            	"EffectName"		"Hero_SkeletonKing.Hellfire_BlastImpact"
+            	"Target"  			"TARGET"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+        	"01"	//影响范围
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"radius"			"1000"
+        	}
+        	"02"	//最小伤害
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"damage_min"		"50 100 150 200 250 300 350"
+        	}
+        	"03"	//最大伤害
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"damage_max"		"150 250 350 450 550 650 750"
+        	}
+        	"04"	//倍数
+        	{
+        		"var_type"			"FIELD_FLOAT"
+        		"num"				"1.5 1.6 1.7 1.8 1.9 2.0 2.1"
+        	}
+        }
+	}
+
+	"skeletonking_one_ability1_majia"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+
+		"MaxLevel"					"1"
+		"AbilityCastRange"			"2000"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"skeleton_king_hellfire_blast"
+
+		"OnSpellStart"
+		{
+			"ActOnTargets"
+			{
+				"Target"
+				{
+                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                    "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+                    "Center"    "CASTER"
+                    "Radius"    "1000"
+                }
+                "Action"
+                {
+                	"TrackingProjectile"
+		            {
+		                "Target"			"TARGET"
+		                "EffectName"        "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+		                "Dodgeable"         "0"
+		                "ProvidesVision"    "1"
+		                "VisionRadius"      "300"
+		                "MoveSpeed"         "1100"
+		                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		            }
+                }
+			}
+			"FireSound"
+            {
+            	"EffectName"		"Hero_SkeletonKing.Hellfire_Blast"
+            	"Target"  			"CASTER"
+            }
+		}
+
+		"OnProjectileHitUnit"
+        {
+            "RunScript"
+            {
+            	"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+            	"Function"		"SkeletonkingOneAbility1Heal"
+            }
+            "FireSound"
+            {
+            	"EffectName"		"Hero_SkeletonKing.Hellfire_BlastImpact"
+            	"Target"  			"TARGET"
+            }
+        }
+
+        "Modifiers"
+        {
+        	"modifier_skeletonking_one_ability1_remove"
+        	{
+        		"Duration"		"2"
+        		"Passive"		"1"
+        		"IsHidden"		"1"
+
+        		"OnDestroy"
+        		{
+        			"RemoveUnit"
+        			{
+        				"Target"	"CASTER"
+        			}
+        		}	
+        	}
+        }
+	}
+
+	//技能2：灵魂禁锢
+	"skeletonking_one_ability2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AOERadius"					"300"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"600"
+		"AbilityCastPoint"			"0.5"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"15"
+		"AbilityTextureName"		"oracle_fortunes_end"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+                    "Center"    "POINT"
+                    "Radius"    "%radius"
+				}
+				"ModifierName"		"modifier_skeletonking_one_ability2"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_skeletonking_one_ability2"
+			{
+				"IsDebuff"			"1"
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"EffectName"		"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mag"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%incoming_damage"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//作用范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"02"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"5"
+			}
+			"03"	//魔抗
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mag"				"-10 -12 -14 -16 -18 -20 -25"
+			}
+			"04"	//移动速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"move_speed"		"-60"
+			}
+			"05"	//加深受到的伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"incoming_damage"	"5 10 15 20 25 30 35"
+			}
+		}
+	}
+
+	//技能3：灵魂净化
+	"skeletonking_one_ability3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"800"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"17 16 15 14 13 12 11"
+		"AbilityTextureName"		"elder_titan_echo_stomp_spirit"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+				"Function"		"SkeletonkingOneAbility3"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_skeletonking_one_ability3"
+			{
+				"Duration"			"%duration"
+				"EffectName"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%add_damage"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"5"
+			}
+			"02"	//提高技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"100 150 200 250 300 350 400"
+			}
+		}
+	}
+
+	//技能4：饥渴难耐
+	"skeletonking_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"700"
+		"AbilityTextureName"		"skeleton_king_mortal_strike"
+
+		"Modifiers"
+		{
+			"modifier_skeletonking_one_ability4"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 		"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+								"Function"			"SkeletonkingOneAbility4IsCriticalStrike"
+								"IsCriticalStrike"	"true"
+							}
+							"ApplyModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_skeletonking_one_ability4_effect"
+							}
+						}
+						"OnFailure"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 		"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+								"Function"			"SkeletonkingOneAbility4IsCriticalStrike"
+								"IsCriticalStrike"	"false"
+							}
+							"RemoveModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_skeletonking_one_ability4_effect"
+							}
+						}
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+						"Function"		"SkeletonkingOneAbility4"
+						"AttackDamage"	"%attack_damage"
+						"radius"		"%radius"
+					}
+				}
+			}
+
+			"modifier_skeletonking_one_ability4_effect"
+			{
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%critical_strike"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"50"
+			}
+			"02"	//影响范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"700"
+			}
+			"03"	//致命一击
+			{
+				"var_type"			"FIELD_INTEGER"
+				"critical_strike"	"110 120 130 150 170 190 220"
+			}
+		}
+	}
+
+	//技能4：稳固
+	"skeletonking_one_ability5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"skeleton_king_vampiric_aura"
+
+		"Modifiers"
+		{
+			"modifier_skeletonking_one_ability5"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mag"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+						"Function"		"SkeletonkingOneAbility5"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//魔抗
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mag"				"5 7 9 11 14 17 20"
+			}
+			"02"	//护甲
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor"				"10 15 20 25 30 35 40"
 			}
 		}
 	}
