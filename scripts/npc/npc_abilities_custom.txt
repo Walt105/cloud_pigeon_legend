@@ -3345,13 +3345,790 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 
 		"MaxLevel"					"7"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"50"
-		"AbilityCooldown"			"10"
-		"AbilityTextureName"		"slark_shadow_dance"
+		"AbilityCooldown"			"5"
+		"AbilityTextureName"		"antimage_mana_void"
+
+		"OnUpgrade"		//同步技能等级
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+				"Function"		"SyncAbilityLevel"
+				"abilityName"	"antimage_one_ability1_fake"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+				"Function"		"AntimageOneAbility4Cast"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability2"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability3"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability3_effect"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability1"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoid"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_antimage_one_ability1"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+						"Function"		"AntimageOneAbilityColor"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability1_color"
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability1_color"
+			{
+				"IsHidden"					"1"
+				"StatusEffectName"			"particles/custom/heros/antimage/antimage_one_ability1.vpcf"
+				"StatusEffectPriority"		"100"
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//魔抗
+			{
+				"var_type"			"FIELD_INTEGER"
+				"magical"			"15 19 23 27 31 35 39"
+			}
+			"02"	//额外伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"150 190 230 270 310 350 390"
+			}
+		}
+	}
+
+	"antimage_one_ability1_fake"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"antimage_mana_void"
+	}
+
+	//技能2：黄金
+	"antimage_one_ability2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"50"
+		"AbilityCooldown"			"5"
+		"AbilityTextureName"		"keeper_of_the_light_spirit_form_illuminate"
+
+		"OnUpgrade"		//同步技能等级
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+				"Function"		"SyncAbilityLevel"
+				"abilityName"	"antimage_one_ability2_fake"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+				"Function"		"AntimageOneAbility4Cast"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability1"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability3"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability3_effect"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability2"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoid"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_antimage_one_ability2"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_out"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_antimage_one_ability2_effect"
+							}
+						}
+						"OnFailure"
+						{
+							"RemoveModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_antimage_one_ability2_effect"
+							}
+						}
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+						"Function"		"AntimageOneAbilityColor"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability2_effect"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability2_color"
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability2_effect"
+			{
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%critical_strike"
+				}
+			}
+
+			"modifier_antimage_one_ability2_color"
+			{
+				"IsHidden"					"1"
+				"StatusEffectName"			"particles/custom/heros/antimage/antimage_one_ability2.vpcf"
+				"StatusEffectPriority"		"100"
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//护甲
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor"				"10 20 30 40 50 60 70"
+			}
+			"02"	//攻击力
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_out"		"50 60 75 85 100 110 150"
+			}
+			"03"	//攻击速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed"		"20 40 60 80 100 120 140"
+			}
+			"04"	//暴击概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"75"
+			}
+			"05"	//暴击倍数
+			{
+				"var_type"			"FIELD_INTEGER"
+				"critical_strike"	"160"
+			}
+		}
+	}
+
+	"antimage_one_ability2_fake"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"keeper_of_the_light_spirit_form_illuminate"
+	}
+
+	//技能3：透明
+	"antimage_one_ability3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"50"
+		"AbilityCooldown"			"5"
+		"AbilityTextureName"		"puck_illusory_orb"
+
+		"OnUpgrade"		//同步技能等级
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+				"Function"		"SyncAbilityLevel"
+				"abilityName"	"antimage_one_ability3_fake"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+				"Function"		"AntimageOneAbility4Cast"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability2"
+			}
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability1"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability3"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoid"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_antimage_one_ability3"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_invisible"
+					}
+				}
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_invisible"
+					}
+				}
+
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability3_effect"
+					}
+				}
+
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability3_effect"
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability3_effect"
+			{
+				"Duration"			"3"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+						"Function"		"AntimageOneAbility3"
+					}
+				}
+			}
+		}
+	}
+
+	"antimage_one_ability3_fake"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"puck_illusory_orb"
+	}
+
+	//技能4：突变
+	"antimage_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"antimage_spell_shield"
+
+		"precache" //缓存
+        {
+            "particle"              "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+            "particle"              "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+        }
+
+		"Modifiers"
+		{
+			"modifier_antimage_one_ability4"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"OnAbilityExecuted"
+				{
+					"DelayedAction"
+					{
+						"Delay"		"0.01"
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+								"Function"		"AntimageOneAbility4"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability4_damage"
+			{
+				"Duration"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Center"    "CASTER"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability4_1"
+			{
+				"Duration"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target" 			"CASTER"
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability4_2"
+			{
+				"Duration"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target" 			"CASTER"
+						"ControlPoints"
+						{
+							"00"			"00 00 05"
+							"01"			"%radius %radius %radius"
+							"02"			"00 00 05"
+						}
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability4_3"
+			{
+				"Duration"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target" 			"CASTER"
+						"ControlPoints"
+						{
+							"00"			"00 00 05"
+							"01"			"%radius %radius %radius"
+						}
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//作用范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"350"
+			}
+			"02"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"50 75 100 125 150 175 200"
+			}
+		}
+	}
+
+	//技能5：幻象
+	"antimage_one_ability5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"modifier_illusion"
+
+		"Modifiers"
+		{
+			"modifier_antimage_one_ability5"
+			{
+				"Passive"			"1"
+
+				"OnAttack"
+				{
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+								"Function"		"AntimageOneAbility5"
+								"duration"		"%duration"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_antimage_one_ability5_remove"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability5_effect"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+						"Function"		"AntimageOneAbility5Remove"
+					}
+				}	
+			}
+
+			"modifier_antimage_one_ability5_effect"
+			{
+				"IsHidden"				"1"
+				"Duration"				"%duration"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_antimage_one_ability5"
+						"AddOrLow"		"Add"
+						"count"			"1"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_antimage_one_ability5"
+						"AddOrLow"		"Low"
+						"count"			"1"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"15 18 21 24 27 30 35"
+			}
+			"02"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10 12 14 16 18 20 22"
+			}
+			"03"	//提高技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"15 30 45 60 75 90 110"
+			}
+		}
+	}
+
+	//技能6：统一
+	"antimage_one_ability6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"150"
+		"AbilityCooldown"			"60"
+		"AbilityTextureName"		"invoker_invoke"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_antimage_one_ability6"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoidCast"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_antimage_one_ability6"
+			{
+				"Duration"			"%duration"
+				"StatusEffectName"	"particles/custom/heros/antimage/antimage_one_ability6.vpcf"
+				"StatusEffectPriority"	"100"
+
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability1"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability2"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability3"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability3_effect"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+						"Function"		"AntimageOneAbility6"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_antimage.lua"
+						"Function"		"AntimageOneAbility6Destroy"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability1"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability2"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability3"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_antimage_one_ability3_effect"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"30"
+			}
+		}
 	}
 }

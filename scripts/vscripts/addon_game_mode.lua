@@ -25,10 +25,11 @@ function Precache( context )
 
 	--载入特效
 	PrecacheResource( "particle", "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf", context )
-	PrecacheResource( "particle", "particles/units/heroes/hero_sven/sven_loadout.vpcf", context )
-	PrecacheResource( "particle", "particles/status_fx/status_effect_gods_strength.vpcf", context )
+	
 	PrecacheResource( "particle", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf", context )
 	PrecacheResource( "particle_folder", "particles/custom", context )
+	PrecacheResource( "particle_folder", "particles/status_fx", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_sven", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_razor", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_zuus", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_jakiro", context )

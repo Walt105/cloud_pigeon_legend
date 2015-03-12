@@ -62,7 +62,7 @@ function JuggOneAbility2OnCreate( keys )
 		keys.ability:EndCooldown()
 		return
 	else
-		keys.ability:ApplyDataDrivenModifier(caster,target,"modifier_juggernaut_one_ability2",nil)
+		keys.ability:ApplyDataDrivenModifier(caster,caster,"modifier_juggernaut_one_ability2",nil)
 	end
 
 	--OneAbility2Dura 用于判断是否在持续时间内

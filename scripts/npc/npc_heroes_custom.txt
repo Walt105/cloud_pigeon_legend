@@ -82,6 +82,14 @@
 
 		"AbilityLayout"				"6"
 		"Ability1"					"antimage_one_ability1"
+		"Ability2"					"antimage_one_ability2"
+		"Ability3"					"antimage_one_ability3"
+		"Ability4"					"antimage_one_ability4"
+		"Ability5"					"antimage_one_ability5"
+		"Ability6"					"antimage_one_ability6"
+		"Ability7"					"antimage_one_ability1_fake"
+		"Ability8"					"antimage_one_ability2_fake"
+		"Ability9"					"antimage_one_ability3_fake"
 		"VisionNighttimeRange"		"1800"
 	}
 }
