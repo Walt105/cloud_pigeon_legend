@@ -28,6 +28,27 @@
 		}
 	}
 
+	//通用技能
+	"common_ability"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"Modifiers"
+		{
+			"modifier_add_attack_speed_percent"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
+				}
+			}
+		}
+	}
+
 	//================================================================================================
 	//主宰 
 	//输出技能
@@ -241,12 +262,6 @@
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
 				"Function"		"JuggOneAbility2OnCreate"
 				"duration"		"%duration"
-			}
-
-			"ApplyModifier"
-			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_juggernaut_one_ability2"
 			}
 		}
 
@@ -2649,10 +2664,10 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 
 		"MaxLevel"					"7"
-		"AbilityCastRange"			"1000"
+		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"75"
+		"AbilityCooldown"			"150"
 		"AbilityTextureName"		"skeletonking_one_ability6"
 
 		"OnSpellStart"
@@ -2750,5 +2765,593 @@
 				"radius"			"400"
 			}
 		}
+	}
+
+
+	//================================================================================================
+	//风行 
+	//输出技能
+	//技能1：聚力
+	"windrunner_one_ability1"
+	{
+		"BaseClass"                 "ability_datadriven"
+	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_ALL"
+	    "AbilityCastAnimation"		"ACT_DOTA_IDLE"
+
+	    "AbilityCastPoint"          "0.0"
+	    "AbilityCooldown"           "0"
+	    "AbilityManaCost"           "3"
+	    "AbilityTextureName"		"skywrath_mage_arcane_bolt"
+
+	    "precache" //缓存
+        {
+            "particle_folder"       "particles/units/heroes/hero_skywrath_mage"
+        }
+
+        "OnSpellStart"
+        {
+        	"RunScript"
+        	{
+        		"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+        		"Function"		"WindrunnerOneAbility1"
+        	}
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "RunScript"
+            {
+            	"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+            	"Function"		"WindrunnerOneAbility1Heal"
+            }
+        }
+
+	    "Modifiers"
+	    {
+	    	"modifier_windrunner_one_ability1"
+	    	{
+	    		"Passive"			"1"
+	    		"IsHidden"			"1"
+	    		"Orb"	
+	            {
+	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+	                "ProjectileName"    "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+	                "CastAttack"        "1"
+	            }
+	            "OnOrbFire"
+	            {
+	                "SpendMana"
+	                {
+	                    "Mana"    "%AbilityManaCost"
+	                }
+	                "FireSound"
+	                {
+	                	"EffectName"		"Hero_SkywrathMage.ArcaneBolt.Impact"
+	                	"Target" 			"CASTER"
+	                }
+	            }
+	            "OnOrbImpact"
+	            {
+	            	"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+					}
+	            	"RunScript"
+		        	{
+		        		"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+		        		"Function"		"WindrunnerOneAbility1Unit"
+		        		"DamageTaken"	"%attack_damage"
+		        	}
+	            }						
+	    	}
+	    }
+
+	    "AbilitySpecial"
+	    {
+	    	"01"	//额外伤害
+	    	{
+	    		"var_type"			"FIELD_INTEGER"
+	    		"damage"			"25 35 45 55 65 75 85"
+	    	}
+	    }
+	}
+
+	//技能2：旋风
+	"windrunner_one_ability2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"80"
+		"AbilityCooldown"			"20"
+		"AbilityTextureName"		"windrunner_windrun"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_windrunner_one_ability2"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_windrunner_one_ability2_null"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Ability.Windrunner"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_windrunner_one_ability2"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+						"Function"		"WindrunnerOneAbility2"
+						"attack_speed"	"%attack_speed"
+						"duration"		"%duration"
+					}
+				}
+
+				"OnUnitMoved"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_windrunner_one_ability2_add_damage"
+					}
+				}
+			}
+
+			"modifier_windrunner_one_ability2_null"
+			{
+				"Duration"			"%duration"
+				"EffectName"		"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+						"Function"		"WindrunnerOneAbility2Null"
+					}
+				}
+			}
+
+			"modifier_windrunner_one_ability2_add_damage"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_windrunner_one_ability2_null"
+						"AddOrLow"		"Add"
+						"count"			"1"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_windrunner_one_ability2_null"
+						"AddOrLow"		"Low"
+						"Remove"		"1"
+						"count"			"1"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"04"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"15"
+			}
+			"01"	//移动速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"move_speed"		"10 15 20 25 30 35 40"
+			}
+			"02"	//移动速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed"		"15 20 25 30 40 50 60"
+			}
+			"03"	//提高技能伤害
+			{
+				"var_type"			"FIELD_FLOAT"
+				"add_damage"		"0.1 0.2 0.3 0.4 0.5 0.6 0.7"
+			}
+		}
+	}
+
+	//技能3：蓄力
+	"windrunner_one_ability3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"60"
+		"AbilityCooldown"			"10 9 8 7 6 5 4"
+		"AbilityTextureName"		"windrunner_powershot"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_windrunner_one_ability3"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Ability.PowershotPull"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_windrunner_one_ability3"
+			{
+				"Duration"			"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_out"
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%critical_strike"
+				}
+
+				"OnAttack"
+				{
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_windrunner_one_ability3"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"10"
+			}
+			"02"	//攻击力加成
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_out"		"150 175 200 225 250 275 300"
+			}
+			"03"	//致命一击
+			{
+				"var_type"			"FIELD_INTEGER"
+				"critical_strike"	"225"
+			}
+		}
+	}
+
+	//技能4：轻盈
+	"windrunner_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityTextureName"		"enchantress_natures_attendants"
+
+		"Modifiers"
+		{
+			"modifier_windrunner_one_ability4"
+			{
+				"Passive"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%move_speed"
+				}
+
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+						"Function"		"WindrunnerOneAbility4"
+						"move_speed_max"	"%move_speed_max"
+					}
+				}
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_bloodseeker_thirst_speed"
+					}
+				}
+			}
+
+			"modifier_windrunner_one_ability4_evasion"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion"
+				}
+			}
+
+			"modifier_windrunner_one_ability4_effect"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_windrunner_one_ability4"
+						"AddOrLow"		"Add"
+						"count"			"1"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_windrunner_one_ability4"
+						"AddOrLow"		"Low"
+						"Remove"		"1"
+						"count"			"1"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"15"
+			}
+			"02"	//移动速度
+			{
+				"var_type"			"FIELD_INTEGER"
+				"move_speed"		"1 2 3 4 5 6 7"
+			}
+			"03"	//极限
+			{
+				"var_type"			"FIELD_INTEGER"
+				"move_speed_max"	"200"
+			}
+			"04"	//闪避
+			{
+				"var_type"			"FIELD_INTEGER"
+				"evasion"			"15 17 19 21 23 25 27"
+			}
+		}
+	}
+
+	//技能5：疾影
+	"windrunner_one_ability5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"AbilityCooldown"			"13 12 11 10 9 8 7"
+		"AbilityTextureName"		"windrunner_windrun_sylvan"
+
+		"Modifiers"
+		{
+			"modifier_windrunner_one_ability5"
+			{
+				"Passive"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+						"Function"		"WindrunnerOneAbility5Created"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-100"
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+						"Function"		"WindrunnerOneAbility5Remove"
+					}
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_windrunner_one_ability5_effect"
+					}
+					"RemoveModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_windrunner_one_ability5"
+					}
+				}
+			}
+
+			"modifier_windrunner_one_ability5_effect"
+			{
+				"Duration"				"%duration"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"5"
+			}
+			"02"	//提高技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"200"
+			}
+		}
+	}
+
+	//技能6：神箭
+	"windrunner_one_ability6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"700"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"150"
+		"AbilityCooldown"			"60"
+		"AbilityTextureName"		"enchantress_impetus"
+
+		"precache" //缓存
+        {
+            "particle"       	"particles/units/heroes/hero_enchantress/enchantress_impetus.vpcf"
+        }
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+				"Function"		"WindrunnerOneAbility6"
+				"count"			"%count"
+			}
+		}
+
+		"OnProjectileHitUnit"
+        {
+            "RunScript"
+            {
+            	"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+            	"Function"		"WindrunnerOneAbility6Impact"
+            	"damage"		"%damage"
+            	"damage_type"	"DAMAGE_TYPE_MAGICAL"
+            }
+        }
+
+		"AbilitySpecial"
+		{
+			"01"	//弹射次数
+			{
+				"var_type"			"FIELD_INTEGER"
+				"count"				"20 22 24 26 28 30 32"
+			}
+			"02"	//伤害或者恢复生命值
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200 250 300 350 400 450 500"
+			}
+		}
+	}
+
+
+	//================================================================================================
+	//敌法 
+	//输出技能
+	//技能1：黑暗
+	"antimage_one_ability1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"MaxLevel"					"7"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"50"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"slark_shadow_dance"
 	}
 }

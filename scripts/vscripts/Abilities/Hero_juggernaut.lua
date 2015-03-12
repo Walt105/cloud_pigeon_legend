@@ -57,6 +57,14 @@ function JuggOneAbility2OnCreate( keys )
 	local caster = keys.caster
 	local target = keys.target
 
+	if caster == target then
+		caster:SetMana(caster:GetMana() + keys.ability:GetManaCost(keys.ability:GetLevel() - 1))
+		keys.ability:EndCooldown()
+		return
+	else
+		keys.ability:ApplyDataDrivenModifier(caster,target,"modifier_juggernaut_one_ability2",nil)
+	end
+
 	--OneAbility2Dura 用于判断是否在持续时间内
 	caster.OneAbility2Dura = true
 	caster:AddNewModifier(nil,nil,"modifier_phased",{duration = keys.duration})

@@ -366,3 +366,20 @@ function CDOTA_BaseNPC:CustomPurge( RemoveBuff,RemoveDebuff )
 		end
 	end
 end
+
+
+-----------------------------------------------------------------------------------------------------------
+--增加攻击速度
+-----------------------------------------------------------------------------------------------------------
+function CDOTA_BaseNPC:AddAttackSpeed( attack_speed,dura )
+
+	local ability = self:FindAbilityByName("common_ability")
+
+	if ability then
+		ability:ApplyDataDrivenModifier(self,self,"modifier_add_attack_speed_percent",{duration=tonumber(dura)})
+		local speed = (self:GetAttackSpeed()*100 + 13) * attack_speed
+		local num = self:GetModifierStackCount("modifier_add_attack_speed_percent",ability)
+		self:SetModifierStackCount("modifier_add_attack_speed_percent",ability,num + tonumber(speed))
+	end
+
+end

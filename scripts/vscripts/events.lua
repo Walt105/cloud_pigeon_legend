@@ -36,12 +36,47 @@ end
 function CEvents:OnNPCSpawned( keys )
 	local unit = EntIndexToHScript(keys.entindex)
 
+	--如果是英雄添加通用技能
+	if unit:IsHero() then
+		unit:AddAbility("common_ability")
+	end
 
 	--判断玩家英雄是否是第一次创建，如果是则设置全部技能等级为1
 	if unit.OnFirstSpawned == nil and unit:IsHero() and unit:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 		unit.OnFirstSpawned = true
 		unit:SetAbilityPoints(0)
 
+		--针对主宰的技能进行从新排列
+		if unit:GetUnitName() == "npc_dota_hero_juggernaut" then
+			local abilityName = {
+				"juggernaut_one_ability1",
+				"juggernaut_one_ability2",
+				"juggernaut_one_ability2_over",
+				"juggernaut_one_ability3",
+				"juggernaut_one_ability3_kuangbao",
+				"juggernaut_one_ability3_judu",
+				"juggernaut_one_ability3_xixue",
+				"juggernaut_one_ability4",
+				"juggernaut_one_ability5",
+			}
+
+			for i,v in ipairs(abilityName) do
+				unit:RemoveAbility(v)
+			end
+
+			for i,v in ipairs(abilityName) do
+				unit:AddAbility(v)
+			end
+
+			for i,v in ipairs(abilityName) do
+				local ability = unit:FindAbilityByName(v)
+				ability:SetLevel(1)
+			end
+
+			return
+		end
+
+		--设置技能等级为1
 		local num = unit:GetAbilityCount() - 1
 		for i=0,num do
 			local ability = unit:GetAbilityByIndex(i)
@@ -49,6 +84,7 @@ function CEvents:OnNPCSpawned( keys )
 				ability:SetLevel(1)
 			end
 		end
+
 	end
 end
 ----------------------------------------------------------------------------------------------------------

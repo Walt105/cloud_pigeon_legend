@@ -21,6 +21,7 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts", context )
 
 	--载入特效
 	PrecacheResource( "particle", "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf", context )
@@ -83,7 +84,7 @@ function CCloudPigeonLegendGameMode:InitGameMode()
   	GameRules:GetGameModeEntity():SetUseCustomHeroLevels(true)
 
   	--不允许复活
-  	GameRules:SetHeroRespawnEnabled(false)
+  	GameRules:SetHeroRespawnEnabled(true)
 
   	--最大等级
   	MaxLevel = 1
@@ -102,6 +103,7 @@ function HideGameHud( )
 	local mode = GameRules:GetGameModeEntity()
 	mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_HEROES, false)
 	mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_SHOP, false)
+	mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_TIMEOFDAY, false)
 
 	Convars:SetInt("dota_render_crop_height", 0)
 	Convars:SetInt("dota_render_y_inset", 0)

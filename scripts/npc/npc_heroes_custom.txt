@@ -10,13 +10,13 @@
 		"AbilityLayout"				"6"
 		"Ability1"					"juggernaut_one_ability1"
 		"Ability2"					"juggernaut_one_ability2"
-		"Ability3"					"juggernaut_one_ability2_over"
-		"Ability4"					"juggernaut_one_ability3"
-		"Ability5"					"juggernaut_one_ability3_kuangbao"
-		"Ability6"					"juggernaut_one_ability3_judu"
-		"Ability7"					"juggernaut_one_ability3_xixue"
-		"Ability8"					"juggernaut_one_ability4"
-		"Ability9"					"juggernaut_one_ability5"
+		"Ability3"					"juggernaut_one_ability3"
+		"Ability4"					"juggernaut_one_ability4"
+		"Ability5"					"juggernaut_one_ability5"
+		"Ability6"					"juggernaut_one_ability2_over"
+		"Ability7"					"juggernaut_one_ability3_kuangbao"
+		"Ability8"					"juggernaut_one_ability3_judu"
+		"Ability9"					"juggernaut_one_ability3_xixue"
 		"VisionNighttimeRange"		"1800"
 	}
 
@@ -59,6 +59,29 @@
 		"Ability4"					"skeletonking_one_ability4"
 		"Ability5"					"skeletonking_one_ability5"
 		"Ability6"					"skeletonking_one_ability6"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	"npc_dota_hero_windrunner"
+	{
+		"override_hero"				"npc_dota_hero_windrunner"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"windrunner_one_ability1"
+		"Ability2"					"windrunner_one_ability2"
+		"Ability3"					"windrunner_one_ability3"
+		"Ability4"					"windrunner_one_ability4"
+		"Ability5"					"windrunner_one_ability5"
+		"Ability6"					"windrunner_one_ability6"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	"npc_dota_hero_antimage"
+	{
+		"override_hero"				"npc_dota_hero_antimage"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"antimage_one_ability1"
 		"VisionNighttimeRange"		"1800"
 	}
 }
