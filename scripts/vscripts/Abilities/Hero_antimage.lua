@@ -119,19 +119,13 @@ function AntimageOneAbility6( keys )
 	}
 
 	for k,v in pairs(name_1) do
-		local ability = caster:FindAbilityByName(v)
-		if ability then
-			ability:SetHidden(true)
+		local ability_1 = caster:FindAbilityByName(v)
+		local ability_2 = caster:FindAbilityByName(name_2[k])
+		if ability_1 ~= nil and ability_2 ~= nil then
+			caster:SwapAbilities(v,name_2[k],false,true)
 
 			local modifierName = string.format("modifier_antimage_one_ability%d",k)
-			ability:ApplyDataDrivenModifier(caster,caster,modifierName,nil)
-		end
-	end
-
-	for k,v in pairs(name_2) do
-		local ability = caster:FindAbilityByName(v)
-		if ability then
-			ability:SetHidden(false)
+			ability_1:ApplyDataDrivenModifier(caster,caster,modifierName,nil)
 		end
 	end
 end
@@ -152,16 +146,10 @@ function AntimageOneAbility6Destroy( keys )
 	}
 
 	for k,v in pairs(name_1) do
-		local ability = caster:FindAbilityByName(v)
-		if ability then
-			ability:SetHidden(false)
-		end
-	end
-
-	for k,v in pairs(name_2) do
-		local ability = caster:FindAbilityByName(v)
-		if ability then
-			ability:SetHidden(true)
+		local ability_1 = caster:FindAbilityByName(v)
+		local ability_2 = caster:FindAbilityByName(name_2[k])
+		if ability_1 ~= nil and ability_2 ~= nil then
+			caster:SwapAbilities(v,name_2[k],true,false)
 		end
 	end
 end

@@ -13,6 +13,14 @@ function Precache( context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
 
+	--载入模型
+	PrecacheResource( "model", "models/heroes/antimage/antimage_arms.vmdl", context )
+	PrecacheResource( "model", "models/heroes/antimage/antimage_belt.vmdl", context )
+	PrecacheResource( "model", "models/heroes/antimage/antimage_chest.vmdl", context )
+	PrecacheResource( "model", "models/heroes/antimage/antimage_head.vmdl", context )
+	PrecacheResource( "model", "models/heroes/antimage/antimage_offhand_weapon.vmdl", context )
+	PrecacheResource( "model", "models/heroes/antimage/antimage_weapon.vmdl", context )
+
 	--载入音效
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts", context )
