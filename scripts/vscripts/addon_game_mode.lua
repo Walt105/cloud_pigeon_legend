@@ -69,6 +69,7 @@ end
 
 function CCloudPigeonLegendGameMode:InitGameMode()
 	print( "CloudPigeonLegend addon is loaded." )
+	print( "Load map is "..GetMapName()..".vmap" )
 	require("require_everything")
 
 	--隐藏dota2的一些UI
@@ -106,6 +107,9 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	--初始化
 	CEvents:Init()
 	CustomPurgeInit()
+	GameRules.PlayerNum = 1
+	GameRules.PlayerMaxNum = 6
+	GameRules.PlayerPercent = 0
 end
 
 function HideGameHud( )

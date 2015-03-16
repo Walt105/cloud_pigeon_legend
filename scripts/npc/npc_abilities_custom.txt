@@ -36,6 +36,7 @@
 
 		"Modifiers"
 		{
+			//按百分比增加攻击速度
 			"modifier_add_attack_speed_percent"
 			{
 				"IsHidden"		"1"
@@ -44,6 +45,70 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
+				}
+			}
+
+			//根据玩家人数调整难度
+			"modifier_player_difficulty"
+			{
+				"IsHidden"		"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"500"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"25"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"2"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"3"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"5"
+				}
+			}
+
+			//仇恨系统
+			"modifier_hate_system"
+			{
+				"IsHidden"		"1"
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/hate_system.lua"
+						"Function"		"HateSystemOnTaken"
+						"take_damage"	"%attack_damage"
+					}
+				}
+			}
+
+			//发现周围的单位
+			"modifier_boss_find_unit"
+			{
+				"IsHidden"		"1"
+
+				"Aura"          "modifier_boss_find_unit_create"
+                "Aura_Radius"   "800"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+			}
+			"modifier_boss_find_unit_create"
+			{
+				"IsHidden"		"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"BossFindUnitCreate"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"BossFindUnitDestroy"
+					}
 				}
 			}
 		}

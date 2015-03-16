@@ -19,6 +19,16 @@ function TableRemoveTable( table_1 , table_2 )
 	end
 end
 
+--寻找table
+function FindTableToTable( table_1 , table_2 )
+	for k,v in pairs(table_1) do
+		if v == table_2 then
+			return true
+		end
+	end
+	return false
+end
+
 --停止播放音效
 function StopSound( keys )
 	StopSoundEvent(keys.EffectName,keys.caster)
@@ -38,4 +48,35 @@ function CriticalStrikeMsg( npc, num, color )
 	ParticleManager:SetParticleControl(p,1,Vector(10,num,4))
 	ParticleManager:SetParticleControl(p,2,Vector(1,(#tostring(num))+1,0))
 	ParticleManager:SetParticleControl(p,3,Vector(color[1],color[2],color[3]))
+end
+
+
+--创建单位
+function CustomCreateUnit( unitName,vec,angle,teamNumer )
+	local unit = CreateUnitByName(tostring(unitName),vec,false,nil,nil,teamNumer)
+	unit:SetAngles(0,angle,0)
+	unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
+
+	--如果是DOTA_TEAM_BADGUYS单位根据玩家人数设置基础难度
+	if teamNumer == DOTA_TEAM_BADGUYS and unitName ~= "npc_majia" then
+
+		local ability_player_difficulty = GameRules.Majia:FindAbilityByName("common_ability")
+		if ability_player_difficulty then
+			local modifierName = "modifier_player_difficulty"
+			ability_player_difficulty:ApplyDataDrivenModifier(unit,unit,modifierName,nil)
+			unit:SetModifierStackCount(modifierName,ability_player_difficulty,GameRules.PlayerNum)
+		end
+	end
+
+	return unit
+end
+
+--判断实体有效
+function IsValidAndAlive( unit )
+	if IsValidEntity(unit) then
+		if unit:IsAlive() then
+			return true
+		end
+	end
+	return false
 end

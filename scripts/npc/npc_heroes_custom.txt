@@ -17,6 +17,23 @@
 		"Ability7"					"juggernaut_one_ability3_kuangbao"
 		"Ability8"					"juggernaut_one_ability3_judu"
 		"Ability9"					"juggernaut_one_ability3_xixue"
+
+		// Attributes
+		//----------------------------------------------------------------------------------------------
+		"AttributeBaseStrength"		"25"										
+		"AttributeStrengthGain"		"3"										
+		"AttributeBaseIntelligence"	"25"										
+		"AttributeIntelligenceGain"	"3"										
+		"AttributeBaseAgility"		"25"										
+		"AttributeAgilityGain"		"3"										
+
+		// Status
+		//----------------------------------------------------------------------------------------------
+		"StatusHealth"				"600"									
+		"StatusHealthRegen"			"1.0"									
+		"StatusMana"				"500"										
+		"StatusManaRegen"			"0.5"									
+
 		"VisionNighttimeRange"		"1800"
 	}
 
@@ -31,6 +48,23 @@
 		"Ability4"					"luna_one_ability4"
 		"Ability5"					"luna_one_ability5"
 		"Ability6"					"luna_one_ability6"
+
+		// Attributes
+		//----------------------------------------------------------------------------------------------
+		"AttributeBaseStrength"		"25"										
+		"AttributeStrengthGain"		"3"										
+		"AttributeBaseIntelligence"	"25"										
+		"AttributeIntelligenceGain"	"3"										
+		"AttributeBaseAgility"		"25"										
+		"AttributeAgilityGain"		"3"	
+
+		// Status
+		//----------------------------------------------------------------------------------------------
+		"StatusHealth"				"600"									
+		"StatusHealthRegen"			"1.0"									
+		"StatusMana"				"500"										
+		"StatusManaRegen"			"0.5"
+
 		"VisionNighttimeRange"		"1800"
 	}
 
@@ -45,6 +79,23 @@
 		"Ability4"					"lina_one_ability4"
 		"Ability5"					"lina_one_ability5"
 		"Ability6"					"lina_one_ability6"
+
+		// Attributes
+		//----------------------------------------------------------------------------------------------
+		"AttributeBaseStrength"		"25"										
+		"AttributeStrengthGain"		"3"										
+		"AttributeBaseIntelligence"	"25"										
+		"AttributeIntelligenceGain"	"3"										
+		"AttributeBaseAgility"		"25"										
+		"AttributeAgilityGain"		"3"	
+
+		// Status
+		//----------------------------------------------------------------------------------------------
+		"StatusHealth"				"600"									
+		"StatusHealthRegen"			"1.0"									
+		"StatusMana"				"500"										
+		"StatusManaRegen"			"0.5"
+		
 		"VisionNighttimeRange"		"1800"
 	}
 
@@ -59,6 +110,23 @@
 		"Ability4"					"skeletonking_one_ability4"
 		"Ability5"					"skeletonking_one_ability5"
 		"Ability6"					"skeletonking_one_ability6"
+
+		// Attributes
+		//----------------------------------------------------------------------------------------------
+		"AttributeBaseStrength"		"25"										
+		"AttributeStrengthGain"		"3"										
+		"AttributeBaseIntelligence"	"25"										
+		"AttributeIntelligenceGain"	"3"										
+		"AttributeBaseAgility"		"25"										
+		"AttributeAgilityGain"		"3"	
+
+		// Status
+		//----------------------------------------------------------------------------------------------
+		"StatusHealth"				"600"									
+		"StatusHealthRegen"			"1.0"									
+		"StatusMana"				"500"										
+		"StatusManaRegen"			"0.5"
+		
 		"VisionNighttimeRange"		"1800"
 	}
 
@@ -73,6 +141,23 @@
 		"Ability4"					"windrunner_one_ability4"
 		"Ability5"					"windrunner_one_ability5"
 		"Ability6"					"windrunner_one_ability6"
+
+		// Attributes
+		//----------------------------------------------------------------------------------------------
+		"AttributeBaseStrength"		"25"										
+		"AttributeStrengthGain"		"3"										
+		"AttributeBaseIntelligence"	"25"										
+		"AttributeIntelligenceGain"	"3"										
+		"AttributeBaseAgility"		"25"										
+		"AttributeAgilityGain"		"3"	
+
+		// Status
+		//----------------------------------------------------------------------------------------------
+		"StatusHealth"				"600"									
+		"StatusHealthRegen"			"1.0"									
+		"StatusMana"				"500"										
+		"StatusManaRegen"			"0.5"
+		
 		"VisionNighttimeRange"		"1800"
 	}
 
@@ -90,6 +175,23 @@
 		"Ability7"					"antimage_one_ability1_fake"
 		"Ability8"					"antimage_one_ability2_fake"
 		"Ability9"					"antimage_one_ability3_fake"
+
+		// Attributes
+		//----------------------------------------------------------------------------------------------
+		"AttributeBaseStrength"		"25"										
+		"AttributeStrengthGain"		"3"										
+		"AttributeBaseIntelligence"	"25"										
+		"AttributeIntelligenceGain"	"3"										
+		"AttributeBaseAgility"		"25"										
+		"AttributeAgilityGain"		"3"	
+
+		// Status
+		//----------------------------------------------------------------------------------------------
+		"StatusHealth"				"600"									
+		"StatusHealthRegen"			"1.0"									
+		"StatusMana"				"500"										
+		"StatusManaRegen"			"0.5"
+		
 		"VisionNighttimeRange"		"1800"
 	}
 }

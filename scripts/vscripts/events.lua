@@ -29,20 +29,35 @@ function CEvents:OnGameRulesStateChange( keys )
 		for i=0,DOTA_MAX_PLAYER_TEAMS - 1 do
 			local player = PlayerResource:GetPlayer(i)
 			if player then
+				GameRules.PlayerNum = GameRules.PlayerNum + 1
 				if PlayerResource:GetTeam(i) ~= DOTA_TEAM_GOODGUYS then
 					player:SetTeam(DOTA_TEAM_GOODGUYS)
 				end
 			end
 		end
+
+		--设置玩家系数
+		GameRules.PlayerPercent = GameRules.PlayerNum / GameRules.PlayerMaxNum
 	end
 
 	if new == DOTA_GAMERULES_STATE_PRE_GAME then
 
-		CustomTimer("OnGameRulesStateChange",function( )
-			local unit = CreateUnitByName("npc_dota_creep_badguys_melee",Vector(0,0,0),false,nil,nil,DOTA_TEAM_BADGUYS)
-			unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
-			return 5
-		end,5)
+		--创建马甲，此马甲用于存放技能
+		local ent = Entities:FindByName(nil,"hidden_point")
+		GameRules.Majia = CustomCreateUnit("npc_majia",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
+		if GameRules.Majia then
+			GameRules.Majia:AddAbility("common_ability")
+		end
+
+		if GetMapName() == "template_map" then
+
+			CTemplateMap:CreateUnit()
+
+		elseif GetMapName() == "cloud_pigeon_legend" then
+
+			CCloudPigeonLegend:Start( )
+
+		end
 	end
 	
 end
@@ -61,7 +76,6 @@ function HeroAbilityRearrange( unitName )
 	--需要重新排列的英雄
 	local heroName = {
 		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_antimage",
 	}
 	for k,v in pairs(heroName) do
 		if v == unitName then
@@ -100,20 +114,6 @@ function CEvents:OnNPCSpawned( keys )
 					"juggernaut_one_ability3_xixue",
 					"juggernaut_one_ability4",
 					"juggernaut_one_ability5",
-				}
-			end
-
-			if unit:GetUnitName() == "npc_dota_hero_antimage" then
-				abilityName = {
-					"antimage_one_ability1",
-					"antimage_one_ability1_fake",
-					"antimage_one_ability2",
-					"antimage_one_ability2_fake",
-					"antimage_one_ability3",
-					"antimage_one_ability3_fake",
-					"antimage_one_ability4",
-					"antimage_one_ability5",
-					"antimage_one_ability6",
 				}
 			end
 

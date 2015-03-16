@@ -383,3 +383,28 @@ function CDOTA_BaseNPC:AddAttackSpeed( attack_speed,dura )
 	end
 
 end
+
+
+-----------------------------------------------------------------------------------------------------------
+--记录BOSS附近的单位
+-----------------------------------------------------------------------------------------------------------
+function BossFindUnitCreate( keys )
+	local caster = keys.caster
+	local target = keys.target
+
+	if caster.BossFindUnitNum == nil then
+		caster.BossFindUnitNum = 0
+	end
+	caster.BossFindUnitNum = caster.BossFindUnitNum + 1
+end
+
+function BossFindUnitDestroy( keys )
+	local caster = keys.caster
+	local target = keys.target
+
+	caster.BossFindUnitNum = caster.BossFindUnitNum - 1
+
+	if caster.BossFindUnitNum < 0 then
+		caster.BossFindUnitNum = 0
+	end
+end

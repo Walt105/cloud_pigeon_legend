@@ -179,4 +179,188 @@
 		"VisionDaytimeRange"		"1000"		// 白天视野
 		"VisionNighttimeRange"		"1000"		// 夜晚视野
 	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//以下是刷怪
+	//-------------------------------------------------------------------------------------------------------
+	//小树精
+	"npc_first_boss_small_treant"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/furion/treant.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"0.7"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"	 	 //物理护甲
+		"MagicalResistance"			"10"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"20"								// 最低攻击伤害
+		"AttackDamageMax"			"30"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.2"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"45"							// 选择圈大小
+		"HealthBarOffset"			"110"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
+	}
+
+	//大树精
+	"npc_first_boss_big_treant"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant_stump.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"0.8"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"	 	 //物理护甲
+		"MagicalResistance"			"10"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"30"								// 最低攻击伤害
+		"AttackDamageMax"			"40"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.1"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"90"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"110"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"1500"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+	}
+
+	//超级树精
+	"npc_first_boss_super_treant"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant/father_treant/father_treant.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"1.7"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"	 	 //物理护甲
+		"MagicalResistance"			"20"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"90"								// 最低攻击伤害
+		"AttackDamageMax"			"110"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.0"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"100"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"105"							// 选择圈大小
+		"HealthBarOffset"			"270"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"10000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_super_treant.lua"
+	}
 }
