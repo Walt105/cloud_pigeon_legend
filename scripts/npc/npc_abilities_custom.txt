@@ -135,6 +135,22 @@
 					}
 				}
 			}
+
+			//第一个BOSS的AI
+			"modifier_first_boss_ai"
+			{
+				"IsHidden"				"1"
+
+				"ThinkInterval"			"0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/AI/first_boss/ai_boss_millenary_treant.lua"
+						"Function"		"ModifierFirstBossAi"
+					}
+				}
+			}
 		}
 	}
 
@@ -4227,7 +4243,7 @@
 	"boss_millenary_treant_a1"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET  | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
@@ -4236,15 +4252,10 @@
 
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"1000"
-		"AbilityCastPoint"			"0.5"
+		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"10"
+		"AbilityCooldown"			"3"
 		"AbilityTextureName"		"ability_1"
-
-		"precache" //缓存
-        {
-            "particle_folder"       "particles/units/heroes/hero_treant"
-        }
 
 		"OnSpellStart"
 		{
@@ -4365,7 +4376,7 @@
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"10"
+		"AbilityCooldown"			"3"
 		"AbilityTextureName"		"ability_2"
 
 		"OnSpellStart"
@@ -4433,7 +4444,7 @@
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"15"
+		"AbilityCooldown"			"3"
 		"AbilityTextureName"		"ability_3"
 
 		"OnSpellStart"
@@ -4541,7 +4552,7 @@
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"10"
+		"AbilityCooldown"			"3"
 		"AbilityTextureName"		"ability_4"
 
 		"OnSpellStart"
@@ -4635,7 +4646,7 @@
 			"01"	//持续时间
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"15"
+				"duration"			"0"
 			}
 			"02"	//提高技能伤害
 			{
@@ -4657,7 +4668,7 @@
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"10"
+		"AbilityCooldown"			"3"
 		"AbilityTextureName"		"ability_5"
 
 		"OnSpellStart"

@@ -3,6 +3,111 @@ if CHateSystem == nil then
 	CHateSystem = class({})
 end
 
+--根据队列返回一个近战英雄，为0则为随机
+function CDOTA_BaseNPC:GetHateSystemMeleeHero( queue )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		if queue == 0 then
+			return self._HateSystemMeleeHero[RandomInt(1,#self._HateSystemMeleeHero)]
+		end
+		return self._HateSystemMeleeHero[queue]
+	end
+end
+
+--根据队列返回一个远程英雄，为0则为随机
+function CDOTA_BaseNPC:GetHateSystemRangedHero( queue )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		if queue == 0 then
+			return self._HateSystemRangedHero[RandomInt(1,#self._HateSystemRangedHero)]
+		end
+		return self._HateSystemRangedHero[queue]
+	end
+end
+
+--打印
+function CHateSystem:HateSystemMeleeAndRangedShow( boss )
+	local melee_num = #boss._HateSystemMeleeHero
+	local range_num = #boss._HateSystemRangedHero
+
+	print("-------------HateSystemMelee-------------")
+	for i=1,melee_num do
+		local unit = boss._HateSystemMeleeHero[i]
+		if IsValidAndAlive(unit) == true then
+			print(unit:GetUnitName(),"hate is",boss.HateSystemHateNum[i])
+		end
+	end
+	print("-----------------------------------------")
+
+	print("-------------HateSystemRanged-------------")
+	for i=1,range_num do
+		local unit = boss._HateSystemRangedHero[i]
+		if IsValidAndAlive(unit) == true then
+			print(unit:GetUnitName(),"hate is",boss.HateSystemHateNum[i])
+		end
+	end
+	print("-----------------------------------------")
+
+end
+
+--排列
+function CHateSystem:HateSystemMeleeAndRangedQueue( boss )
+	local melee_num = #boss._HateSystemMeleeHero
+	local range_num = #boss._HateSystemRangedHero
+
+	for i=1,melee_num do
+		local temp = nil
+		local unit = boss._HateSystemMeleeHero[i]
+		for j=i,melee_num do
+			local new = boss._HateSystemMeleeHero[j]
+			if boss:GetHateSystemHeroNum( unit ) < boss:GetHateSystemHeroNum( new ) then
+				temp = boss._HateSystemMeleeHero[i]
+				boss._HateSystemMeleeHero[i] = boss._HateSystemMeleeHero[j]
+				boss._HateSystemMeleeHero[j] = temp
+			end
+		end
+	end
+
+	for i=1,range_num do
+		local temp = nil
+		local unit = boss._HateSystemRangedHero[i]
+		for j=i,range_num do
+			local new = boss._HateSystemRangedHero[j]
+			if boss:GetHateSystemHeroNum( unit ) < boss:GetHateSystemHeroNum( new ) then
+				temp = boss._HateSystemRangedHero[i]
+				boss._HateSystemRangedHero[i] = boss._HateSystemRangedHero[j]
+				boss._HateSystemRangedHero[j] = temp
+			end
+		end
+	end	
+
+	--CHateSystem:HateSystemMeleeAndRangedShow( boss )
+end
+
+--对远程英雄和近战英雄进行分类
+function CHateSystem:HateSystemMeleeAndRangedCreated( boss )
+
+	if boss._HateSystemMeleeHero == nil then
+		boss._HateSystemMeleeHero  = {}
+		boss._HateSystemRangedHero = {}
+	end
+
+	for k,v in pairs(boss.HateSystemUnit) do
+		repeat
+			if FindTableToTable( boss._HateSystemRangedHero,v ) then break end
+			if FindTableToTable( boss._HateSystemMeleeHero ,v ) then break end
+			if IsValidAndAlive(v) == true then
+				if v:IsHero() then
+					if v:IsRangedAttacker() then
+						table.insert( boss._HateSystemRangedHero,v )
+					else
+						table.insert( boss._HateSystemMeleeHero ,v )
+					end
+				end
+			end
+		until true
+	end
+	CHateSystem:HateSystemMeleeAndRangedQueue( boss )
+end
+
 --打印仇恨系统消息
 function CHateSystem:HateSystemShow( boss )
 	if boss.HateSystemUnit ~= nil and boss.HateSystemHateNum ~= nil then
@@ -17,8 +122,6 @@ function CHateSystem:HateSystemShow( boss )
 					if unit:IsAlive() then
 						print(unit:GetUnitName(),"hate is",boss.HateSystemHateNum[i])
 					end
-				else
-					TableRemoveTable(boss.HateSystemUnit,unit)
 				end
 			end
 			print("------------------------------------")
@@ -46,6 +149,7 @@ function CHateSystem:HateSystemQueue( boss )
 				end
 			end
 			CHateSystem:HateSystemShow(boss)
+			CHateSystem:HateSystemMeleeAndRangedCreated( boss )
 		end
 	end
 end
@@ -102,6 +206,23 @@ function CDOTA_BaseNPC:GetHateSystemHero( queue )
 	end
 end
 
+--获取某单位的仇恨值
+function CDOTA_BaseNPC:GetHateSystemHeroNum( unit )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		local unit_num = #self.HateSystemUnit
+		local hate_num = #self.HateSystemHateNum
+		if unit_num == hate_num then
+			for k,v in pairs(self.HateSystemUnit) do
+				if v == unit then
+					return self.HateSystemHateNum[k]
+				end
+			end
+		end
+	end
+	return 0
+end
+
 --返回当前存活着的仇恨值最大的一个单位
 function CDOTA_BaseNPC:GetHateSystemMaxHero( )
 	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
@@ -119,6 +240,29 @@ function CDOTA_BaseNPC:GetHateSystemMaxHero( )
 				end
 			end
 			return unit
+		end
+	end
+end
+
+--清空仇恨系统
+function CDOTA_BaseNPC:GetHateSystemClear( )
+	self.HateSystemUnit = nil
+	self.HateSystemHateNum = nil
+end
+
+--仇恨置零
+function CDOTA_BaseNPC:GetHateSystemZero( unit )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		local unit_num = #self.HateSystemUnit
+		local hate_num = #self.HateSystemHateNum
+		if unit_num == hate_num then
+			local unit = nil
+			for k,v in pairs(self.HateSystemUnit) do
+				if v == unit then
+					self.HateSystemHateNum[k] = 0
+				end
+			end
 		end
 	end
 end

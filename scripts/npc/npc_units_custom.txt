@@ -556,7 +556,7 @@
 		"VisionDaytimeRange"		"1800"		// 白天视野
 		"VisionNighttimeRange"		"1800"		// 夜晚视野
 
-		//"vscripts"					"AI/first_boss/ai_super_treant.lua"
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
 	}
 
 	"boss_millenary_treant_A5_unit"

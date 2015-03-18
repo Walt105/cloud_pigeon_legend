@@ -46,6 +46,7 @@ function Precache( context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_invoker", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_phoenix", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_stormspirit", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_treant", context )
 
 	--载入模型
 	local unit_kv = LoadKeyValues("scripts/npc/npc_units_custom.txt")

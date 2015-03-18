@@ -96,6 +96,18 @@ function BossMillenaryTreantA4( keys )
 	end
 	if ent then
 		target:SetAbsOrigin(ent:GetAbsOrigin())
+		CustomTimer("BossMillenaryTreantA4",function( )
+			if IsValidAndAlive(target) == "Not Valid" then return nil end
+
+			local newOrder = {
+		        UnitIndex = target:entindex(), 
+		        OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+		        Position = caster:GetOrigin(), 
+		        Queue = 0
+			}
+		    ExecuteOrderFromTable(newOrder)
+		    return nil
+		end,1.5)
 	end
 
 	caster.BossMillenaryTreantA4Num = caster.BossMillenaryTreantA4Num + 1
@@ -134,6 +146,8 @@ function BossMillenaryTreantA5( keys )
 	if ent then
 		target:SetAbsOrigin(ent:GetAbsOrigin())
 		CustomTimer("BossMillenaryTreantA5",function( )
+			if IsValidAndAlive(target) == "Not Valid" then return nil end
+			
 			local newOrder = {
 		        UnitIndex = target:entindex(), 
 		        OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,
@@ -150,8 +164,10 @@ function BossMillenaryTreantA5( keys )
 end
 
 function BossMillenaryTreantA5Kill( keys )
-	keys.target:Kill(keys.ability,keys.caster)
-	keys.caster:CustomHeal(keys.heal)
+	if keys.target:GetUnitName() == "boss_millenary_treant_A5_unit" then
+		keys.target:Kill(keys.ability,keys.caster)
+		keys.caster:CustomHeal(keys.heal)
+	end
 end
 
 --在不同的生命值阶段播放不同的音效

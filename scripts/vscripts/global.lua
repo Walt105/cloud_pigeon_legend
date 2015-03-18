@@ -14,9 +14,10 @@ function TableRemoveTable( table_1 , table_2 )
 	for i,v in pairs(table_1) do
 		if v == table_2 then
 			table.remove(table_1,i)
-			return
+			return i
 		end
 	end
+	return false
 end
 
 --寻找table
@@ -91,7 +92,7 @@ function CustomRespawnHero( )
 		CustomTimer("CustomRespawnHero",function( )
 			for k,v in pairs(GameRules._PlayerHeroes) do
 				if IsValidAndAlive(v) == false then
-					v:RespawnUnit()
+					v:RespawnHero(true,true,true)
 					v:SetAbsOrigin(GameRules._HeroRespawn:GetOrigin())
 					FindClearSpaceForUnit(v,v:GetOrigin(),true)
 				end
