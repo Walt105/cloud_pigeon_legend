@@ -42,6 +42,7 @@ function AntimageOneAbility4( keys )
 			"antimage_one_ability3",
 		}
 
+		--通过CD和技能名来判断当前使用哪个技能，并添加相应的modifier
 		for i,v in pairs(name) do
 			local ability = caster:FindAbilityByName(v)
 
@@ -91,7 +92,7 @@ function AntimageOneAbility5( keys )
 	end
 
 end
-
+--删除幻象
 function AntimageOneAbility5Remove( keys )
 	local target = keys.target
 
@@ -118,6 +119,7 @@ function AntimageOneAbility6( keys )
 		"antimage_one_ability3_fake",
 	}
 
+	--实现调换技能，并且添加相应的modifier
 	for k,v in pairs(name_1) do
 		local ability_1 = caster:FindAbilityByName(v)
 		local ability_2 = caster:FindAbilityByName(name_2[k])
@@ -145,6 +147,7 @@ function AntimageOneAbility6Destroy( keys )
 		"antimage_one_ability3_fake",
 	}
 
+	--实现调换技能
 	for k,v in pairs(name_1) do
 		local ability_1 = caster:FindAbilityByName(v)
 		local ability_2 = caster:FindAbilityByName(name_2[k])

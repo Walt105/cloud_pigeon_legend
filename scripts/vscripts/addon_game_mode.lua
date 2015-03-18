@@ -30,6 +30,8 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/custom/Boss_millenary_treant/Boss_millenary_treant_A4.vsndevts", context )
 
 	--载入特效
 	PrecacheResource( "particle", "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf", context )
@@ -93,8 +95,11 @@ function CCloudPigeonLegendGameMode:InitGameMode()
   	-- 允许自定义英雄等级
   	GameRules:GetGameModeEntity():SetUseCustomHeroLevels(true)
 
+  	--设置树木重生时间
+  	GameRules:SetTreeRegrowTime( 3600.0 )
+
   	--不允许复活
-  	GameRules:SetHeroRespawnEnabled(true)
+  	GameRules:SetHeroRespawnEnabled(false)
 
   	--最大等级
   	MaxLevel = 1
@@ -107,9 +112,13 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	--初始化
 	CEvents:Init()
 	CustomPurgeInit()
-	GameRules.PlayerNum = 1
+	GameRules.PlayerNum = 0
 	GameRules.PlayerMaxNum = 6
 	GameRules.PlayerPercent = 0
+	GameRules.ThisBoss = nil
+	GameRules._HeroRespawn = nil
+	GameRules._IsRespawn = true
+	GameRules._PlayerHeroes = {}
 end
 
 function HideGameHud( )

@@ -85,7 +85,7 @@
 				"IsHidden"		"1"
 
 				"Aura"          "modifier_boss_find_unit_create"
-                "Aura_Radius"   "800"
+                "Aura_Radius"   "1000"
                 "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
                 "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
                 "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
@@ -108,6 +108,30 @@
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
 						"Function"		"BossFindUnitDestroy"
+					}
+				}
+			}
+
+			//第一次个boss摧毁树木
+			"modifier_first_boss_tree"
+			{
+				"IsHidden"				"1"
+
+				"ThinkInterval"			"0.1"
+				"OnIntervalThink"
+				{
+					"DestroyTrees"
+					{
+						"Radius"			"250"
+						"Target"			"CASTER"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveUnit"
+					{
+						"Target"			"CASTER"
 					}
 				}
 			}
@@ -377,7 +401,7 @@
 			"02"	//持续时间
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"5 6 7 8 10 12 14"
+				"duration"			"30"
 			}
 		}
 	}
@@ -2045,7 +2069,7 @@
 			"03"	//伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"15 20 25 30 35 40 45"
+				"damage"			"10 15 20 25 30 35 40"
 			}
 			"04"	//触发概率
 			{
@@ -3221,7 +3245,6 @@
 						"Function"		"AddOrLowModifierCount"
 						"modifierName"	"modifier_windrunner_one_ability4"
 						"AddOrLow"		"Low"
-						"Remove"		"1"
 						"count"			"1"
 					}
 				}
@@ -4193,6 +4216,641 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"duration"			"30"
+			}
+		}
+	}
+
+	//================================================================================================
+	//BOSS:千年树精
+	//================================================================================================
+	//A1
+	"boss_millenary_treant_a1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityCastAnimation"		"ACT_DOTA_IDLE_RARE"
+
+		"MaxLevel"					"1"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0.5"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"ability_1"
+
+		"precache" //缓存
+        {
+            "particle_folder"       "particles/units/heroes/hero_treant"
+        }
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"TARGET"
+				"ModifierName"		"modifier_boss_millenary_treant_a1"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Treant.LivingArmor.Cast"
+				"Target" 			"TARGET"
+			}
+		}
+
+		"OnProjectileHitUnit"
+        {
+        	"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+				"Function"		"DamageTarget"
+				"damage_type"	"DAMAGE_TYPE_MAGICAL"
+				"damage"		"%damage"
+			}
+        }
+
+		"Modifiers"
+		{
+			"modifier_boss_millenary_treant_a1"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				"Duration"			"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
+				}
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA1"
+						"Target"
+						{
+							"Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		                    "Center"    "TARGET"
+		                    "Radius"    "%radius"
+						}
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA1OnCreated"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA1OnDestroy"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"04"	//降低魔抗
+			{
+				"var_type"			"FIELD_INTEGER"
+				"magical"			"-25"
+			}
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10"
+			}
+			"02"	//伤害间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.75"
+			}
+			"03"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"350"
+			}
+			"05"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100"
+			}
+		}
+	}
+
+	//A2
+	"boss_millenary_treant_a2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+
+		"MaxLevel"					"1"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"ability_2"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"TARGET"
+				"ModifierName"		"modifier_boss_millenary_treant_a2"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_millenary_treant_a2"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				"Duration"			"%duration"
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA2"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"04"	//降低魔抗
+			{
+				"var_type"			"FIELD_INTEGER"
+				"magical"			"-25"
+			}
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10"
+			}
+		}
+	}
+
+	//A3
+	"boss_millenary_treant_a3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"MaxLevel"					"1"
+		"AbilityCastRange"			"600"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"15"
+		"AbilityTextureName"		"ability_3"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			
+				{
+                    "Types"     	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                    "Teams"     	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Flags"     	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+                    "Center"    	"CASTER"
+                    "Radius"    	"%radius"
+                }
+				"ModifierName"		"modifier_boss_millenary_treant_a3"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Treant.LeechSeed.Target"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_millenary_treant_a3"
+			{
+				"Duration"			"%duration"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_treant/treant_leech_seed.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"  			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage_init"
+					}
+				}
+
+				"ThinkInterval"		"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_PURE"
+						"damage"		"%damage_think"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"05"	//作用范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"700"
+			}
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10"
+			}
+			"02"	//初始伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_init"		"80"
+			}
+			"03"	//持续伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_think"		"15"
+			}
+			"04"	//伤害间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.85"
+			}
+		}
+	}
+
+	//A4
+	"boss_millenary_treant_a4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"MaxLevel"					"1"
+		"AbilityCastRange"			"200"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"ability_4"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_boss_millenary_treant_a4"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"				"boss_millenary_treant_A4_unit"
+				"Target" 				"CASTER"
+				"Duration"				"%duration"
+				"UnitCount"				"2"
+				"SpawnRadius"			"200"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA4"
+					}
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_boss_millenary_treant_a4_effect"
+					}
+				}
+			}
+			"FireSound"
+			{
+				"EffectName"		"BossMillenaryTreant.A3"
+				"Target" 			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_millenary_treant_a4"
+			{
+
+			}
+
+			"modifier_boss_millenary_treant_a4_effect"
+			{
+				"IsHidden"				"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_boss_millenary_treant_a4"
+						"AddOrLow"		"Add"
+						"count"			"1"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_boss_millenary_treant_a4"
+						"AddOrLow"		"Low"
+						"Remove"		"1"
+						"count"			"1"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"15"
+			}
+			"02"	//提高技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"25"
+			}
+		}
+	}
+
+	//A5
+	"boss_millenary_treant_a5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"MaxLevel"					"1"
+		"AbilityCastRange"			"200"
+		"AbilityCastPoint"			"0"
+		"AbilityManaCost"			"100"
+		"AbilityCooldown"			"10"
+		"AbilityTextureName"		"ability_5"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_boss_millenary_treant_a5"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"				"boss_millenary_treant_A5_unit"
+				"Target" 				"CASTER"
+				"Duration"				"0"
+				"UnitCount"				"4"
+				"SpawnRadius"			"200"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA5"
+					}
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"ModifierName"		"modifier_boss_millenary_treant_a5_unit"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_millenary_treant_a5"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED" //禁止移动
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED" //无法攻击
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED" //眩晕
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED" //魔法免疫
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED" //攻击免疫
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED" //不可选择
+				}
+
+				"Aura"          "modifier_boss_millenary_treant_a5_effect"
+                "Aura_Radius"   "150"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+
+			"modifier_boss_millenary_treant_a5_effect"
+			{
+				"Duration"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA5Kill"
+						"heal"			"%heal"
+					}
+				}
+			}
+
+			"modifier_boss_millenary_treant_a5_unit"
+			{
+				"IsHidden"				"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/heros/boss_millenary_treant/boss_millenary_treant_tether.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_boss_millenary_treant_a5"
+						"AddOrLow"		"Add"
+						"count"			"1"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_boss_millenary_treant_a5"
+						"AddOrLow"		"Low"
+						"Remove"		"1"
+						"count"			"1"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal"				"1000"
+			}
+		}
+	}
+
+	//A6
+	"boss_millenary_treant_a6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"MaxLevel"					"1"
+		"AbilityTextureName"		"ability_6"
+
+		"Modifiers"
+		{
+			"modifier_boss_millenary_treant_a6"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"ThinkInterval"		"2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA6"
+						"heal_percent"	"%heal_percent"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH"	"100"
+				}
+			}
+
+			"modifier_boss_millenary_treant_a6_Heal"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"ThinkInterval"		"1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA6Heal"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+						"Function"		"BossMillenaryTreantA6HealDestroy"
+					}
+				}	
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//恢复生命值
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal_percent"		"20"
 			}
 		}
 	}

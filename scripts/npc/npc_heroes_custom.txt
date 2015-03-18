@@ -193,5 +193,6 @@
 		"StatusManaRegen"			"0.5"
 		
 		"VisionNighttimeRange"		"1800"
-	}
+	}	
+
 }

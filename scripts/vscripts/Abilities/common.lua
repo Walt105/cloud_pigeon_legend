@@ -110,7 +110,7 @@ function AddOrLowModifierCount( keys )
 		if keys.AddOrLow == "Low" then
 			if i <= count then
 				caster:SetModifierStackCount(modifierName,keys.ability,0)
-				if keys.remove then
+				if keys.Remove then
 					caster:RemoveModifierByName(modifierName)
 				end
 			else
@@ -339,7 +339,6 @@ function CustomPurgeInit( )
                 --此for获取Modifiers
                 for modifiers,mKeys in pairs(keys) do
                 	if modifiers == "Modifiers" then
-
 	                	--此for获取Modifiers里面的modifier
 	                	for modifierName,modifierKeys in pairs(mKeys) do
 	                		GameRules.CustomPurgeTable[modifierName]=modifierKeys
@@ -352,15 +351,14 @@ function CustomPurgeInit( )
 end
 
 function CDOTA_BaseNPC:CustomPurge( RemoveBuff,RemoveDebuff )
+	print("----Run CustomPurge----")
 	for i,v in pairs(GameRules.CustomPurgeTable) do
 		if self:HasModifier(i) then
 			if v.IsDebuff then
-				if v.IsDebuff == 1 and RemoveDebuff then
+				print(v.IsDebuff,v.IsPurgable)
+				if v.IsDebuff == 1 and v.IsPurgable == 1 and RemoveDebuff then
 					self:RemoveModifierByName(i)
-				end
-			else
-				if RemoveBuff then
-					self:RemoveModifierByName(i)
+					print("Purge:"..i)
 				end
 			end
 		end
@@ -407,4 +405,34 @@ function BossFindUnitDestroy( keys )
 	if caster.BossFindUnitNum < 0 then
 		caster.BossFindUnitNum = 0
 	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--Target不断向Caster靠近
+-----------------------------------------------------------------------------------------------------------
+function TargetMoveToCaster( Caster,Target,speed )
+	print("Run TargetMoveToCaster")
+	CustomTimer("TargetMoveToCaster",function( )
+
+				if IsValidAndAlive(Caster) == false and IsValidAndAlive(Target) == false then
+					return nil
+				end
+
+				--获取位置
+				local Target_abs = Target:GetAbsOrigin()
+				local Caster_abs = Caster:GetAbsOrigin()
+
+				if (Caster_abs - Target_abs):Length()<=50 then
+					print("TargetMoveToCaster over")
+					return nil
+				end
+
+				--设置位置
+				local face = (Caster_abs - Target_abs):Normalized()
+				local vec = Target_abs + face * speed
+
+				Target:SetAbsOrigin(vec)
+
+				return 0.02
+			end,0.0)
 end

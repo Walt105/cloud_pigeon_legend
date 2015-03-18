@@ -76,7 +76,27 @@ function IsValidAndAlive( unit )
 	if IsValidEntity(unit) then
 		if unit:IsAlive() then
 			return true
+		else
+			return false
 		end
+	else
+		return "Not Valid"
 	end
-	return false
+	
+end
+
+--复活英雄
+function CustomRespawnHero( )
+	if GameRules._IsRespawn then
+		CustomTimer("CustomRespawnHero",function( )
+			for k,v in pairs(GameRules._PlayerHeroes) do
+				if IsValidAndAlive(v) == false then
+					v:RespawnUnit()
+					v:SetAbsOrigin(GameRules._HeroRespawn:GetOrigin())
+					FindClearSpaceForUnit(v,v:GetOrigin(),true)
+				end
+			end
+			return nil
+		end,3)
+	end
 end

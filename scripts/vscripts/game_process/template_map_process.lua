@@ -8,9 +8,9 @@ if CTemplateMap == nil then
 end
 
 function CTemplateMap:CreateUnit( )
-	CustomTimer("OnGameRulesStateChange",function( )
-		local unit = CreateUnitByName("npc_dota_creep_badguys_melee",Vector(0,0,0),false,nil,nil,DOTA_TEAM_BADGUYS)
-		unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
-		return 4
-	end,4)
+	-- CustomTimer("OnGameRulesStateChange",function( )
+	-- 	local unit = CreateUnitByName("npc_dota_creep_badguys_melee",Vector(0,0,0),false,nil,nil,DOTA_TEAM_BADGUYS)
+	-- 	unit:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
+	-- 	return 4
+	-- end,4)
 end

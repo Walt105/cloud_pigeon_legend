@@ -36,6 +36,10 @@ function CEvents:OnGameRulesStateChange( keys )
 			end
 		end
 
+		if GameRules.PlayerNum == 0 then
+			GameRules.PlayerNum = 1
+		end
+
 		--设置玩家系数
 		GameRules.PlayerPercent = GameRules.PlayerNum / GameRules.PlayerMaxNum
 	end
@@ -44,10 +48,16 @@ function CEvents:OnGameRulesStateChange( keys )
 
 		--创建马甲，此马甲用于存放技能
 		local ent = Entities:FindByName(nil,"hidden_point")
-		GameRules.Majia = CustomCreateUnit("npc_majia",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
-		if GameRules.Majia then
-			GameRules.Majia:AddAbility("common_ability")
+		if ent then
+			GameRules.Majia = CustomCreateUnit("npc_majia",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
+			if GameRules.Majia then
+				GameRules.Majia:AddAbility("common_ability")
+				GameRules.MajiaCommonAbility = GameRules.Majia:FindAbilityByName("common_ability")
+			end
 		end
+
+		--设置英雄重生地点
+		GameRules._HeroRespawn = Entities:FindByName(nil,"hero_respawn")
 
 		if GetMapName() == "template_map" then
 
@@ -98,6 +108,9 @@ function CEvents:OnNPCSpawned( keys )
 	if unit.OnFirstSpawned == nil and unit:IsHero() and unit:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 		unit.OnFirstSpawned = true
 		unit:SetAbilityPoints(0)
+
+		--记录玩家的英雄
+		table.insert( GameRules._PlayerHeroes,unit )
 
 		--针对某些英雄的技能进行重新排列
 		if HeroAbilityRearrange(unit:GetUnitName()) then

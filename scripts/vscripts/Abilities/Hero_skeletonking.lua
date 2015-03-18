@@ -113,6 +113,7 @@ function SkeletonkingOneAbility5( keys )
 
 		--没有英雄死亡
 		local hero = unit[1]
+		if hero == nil then return end
 		for i=1,#unit do
 			if hero:GetHealth() > unit[i]:GetHealth() then
 				hero = unit[i]
