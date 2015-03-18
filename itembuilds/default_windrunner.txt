@@ -1,0 +1,32 @@
+"itembuilds"
+{
+	"author"		"Valve"
+	"hero"			"npc_dota_hero_windrunner"
+	"Title"			"Recommended items for windrunner"
+	
+	"Items"
+	{		
+		"#DOTA_Item_Build_Starting_Items"
+		{
+			"item"		"item_custom_small_heal_bottle"
+			"item"		"item_custom_big_heal_bottle"
+			"item"		"item_custom_small_mana_bottle"
+			"item"		"item_custom_big_mana_bottle"
+		}
+		
+		"#DOTA_Item_Build_Early_Game"
+		{	
+
+		}
+		
+		"#DOTA_Item_Build_Core_Items"
+		{
+
+		}
+		
+		"#DOTA_Item_Build_Luxury"
+		{
+
+		}
+	}
+}

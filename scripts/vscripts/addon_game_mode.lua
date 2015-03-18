@@ -92,6 +92,10 @@ function CCloudPigeonLegendGameMode:InitGameMode()
   	
   	-- 设定每秒工资数
   	GameRules:SetGoldPerTick(0)
+  	GameRules:SetGoldTickTime(3600)
+
+  	-- 隐藏击杀信息
+  	GameRules:SetHideKillMessageHeaders(true)
 
   	-- 允许自定义英雄等级
   	GameRules:GetGameModeEntity():SetUseCustomHeroLevels(true)
@@ -99,8 +103,8 @@ function CCloudPigeonLegendGameMode:InitGameMode()
   	--设置树木重生时间
   	GameRules:SetTreeRegrowTime( 3600.0 )
 
-  	--不允许复活
-  	GameRules:SetHeroRespawnEnabled(false)
+  	--不允许买活
+  	GameRules:GetGameModeEntity():SetBuybackEnabled(false)
 
   	--最大等级
   	MaxLevel = 1
@@ -120,12 +124,13 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	GameRules._HeroRespawn = nil
 	GameRules._IsRespawn = true
 	GameRules._PlayerHeroes = {}
+	GameRules._Players = {}
 end
 
 function HideGameHud( )
 	local mode = GameRules:GetGameModeEntity()
 	mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_HEROES, false)
-	mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_SHOP, false)
+	--mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_SHOP, false)
 	mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_TIMEOFDAY, false)
 
 	Convars:SetInt("dota_render_crop_height", 0)

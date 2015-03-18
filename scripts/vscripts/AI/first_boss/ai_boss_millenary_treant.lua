@@ -57,6 +57,9 @@ function Spawn( val )
 					thisEntity:SetAbsOrigin(ent_unit:GetAbsOrigin())
 					thisEntity:SetHealth(thisEntity:GetMaxHealth())
 					thisEntity:GetHateSystemClear()
+					thisEntity._FirstBossHealA1=nil
+					thisEntity._FirstBossHealA4=nil
+					thisEntity._FirstBossHealA5=nil
 					thisEntity:Stop()
 
 					local teams = DOTA_UNIT_TARGET_TEAM_FRIENDLY
@@ -80,19 +83,19 @@ end
 function ModifierFirstBossAi( keys )
 	local caster = keys.caster
 
-	if caster._FirstBossHealA6 == nil then
+	if caster._FirstBossHealA5 == nil then
 		caster._FirstBossHealA1={}
 		caster._FirstBossHealA4={}
-		caster._FirstBossHealA6={}
+		caster._FirstBossHealA5={}
 
-		for i=5,100,5 do
+		for i=5,95,5 do
 			caster._FirstBossHealA1[i] = true
 		end
-		for i=4,100,4 do
+		for i=6,90,6 do
 			caster._FirstBossHealA4[i] = true
 		end
 		for i=20,80,20 do
-			caster._FirstBossHealA6[i] = true
+			caster._FirstBossHealA5[i] = true
 		end
 		caster.spell = 0
 
@@ -110,7 +113,7 @@ function ModifierFirstBossAi( keys )
 		local spell = false
 		
 		--施放A1
-		for i=5,100,5 do
+		for i=5,95,5 do
 			if heal_percent <= i then
 				if caster._FirstBossHealA1[i] then
 					caster._FirstBossHealA1[i] = false
@@ -137,7 +140,7 @@ function ModifierFirstBossAi( keys )
 
 		--施放A3
 		spell = false
-		for i=4,100,4 do
+		for i=6,90,6 do
 			if heal_percent <= i then
 				if caster._FirstBossHealA4[i] then
 					caster._FirstBossHealA4[i] = false
@@ -147,13 +150,13 @@ function ModifierFirstBossAi( keys )
 			end
 		end
 		if spell then
-			local ability = caster:FindAbilityByName("boss_millenary_treant_a3")
+			local ability = caster:FindAbilityByName("boss_millenary_treant_a4")
 			ability:CastAbility()
 		end
 			
 		--施放A4
 		if RollPercentage(2) then
-			local ability = caster:FindAbilityByName("boss_millenary_treant_a4")
+			local ability = caster:FindAbilityByName("boss_millenary_treant_a3")
 			ability:CastAbility()
 		end
 
@@ -161,8 +164,8 @@ function ModifierFirstBossAi( keys )
 		spell = false
 		for i=20,80,20 do
 			if heal_percent <= i then
-				if caster._FirstBossHealA6[i] then
-					caster._FirstBossHealA6[i] = false
+				if caster._FirstBossHealA5[i] then
+					caster._FirstBossHealA5[i] = false
 					spell = true
 					break
 				end

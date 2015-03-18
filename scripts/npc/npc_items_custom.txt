@@ -1,80 +1,257 @@
 "DOTAAbilities"
 {
-	//=================================================================================================================
-	// Recipe: Arcane Boots
-	//=================================================================================================================
-	"item_recipe_arcane_boots2"
-	{
-		"ID"							"1005"
+	//=================================
+	//消耗型物品, ID 范围 1001-1050
+	//=================================
+	//小血瓶
+	"item_custom_small_heal_bottle"
+	{	
+	    "ID"						"1001"
+	    "BaseClass"					"item_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"			"3"
+	    "AbilitySharedCooldown"		"consumables_heal"
+	    "AbilityManaCost"			"0"
+	    "AbilityTextureName"		"item_custom_small_heal_bottle"
 
-		"BaseClass"						"item_recipe_arcane_boots"
+	    "ItemCost"					"10"
+	    "ItemDroppable"				"1"
+	    "ItemSellable"				"1"
+	    "ItemPurchasable"			"1"
+	    "ItemKillable"				"1"
+	    "ItemDisassembleRule"		"0"
+	    "ItemPermanent"				"0"
+	    "ItemInitialCharges"		"1"
+	    "ItemRequiresCharges"		"1"
+	    "ItemStackable"				"1"
+	    "ItemStockTime"				"0"
+	    "ItemShareability"			"1"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_arcane_boots2"
-		"ItemRequirements"
-		{
-			"01"						"item_energy_booster;item_arcane_boots"
-		}
+	    "OnSpellStart"
+	    {
+	    	"ApplyModifier"
+	    	{
+	    		"Target" 			"CASTER"
+	    		"ModifierName"		"modifier_item_custom_small_heal_bottle"
+	    	}
+	    	"SpendCharge"{}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_item_custom_small_heal_bottle"
+	    	{
+	    		"Duration"			"%duration"
+	    		"TextureName"		"item_custom_small_heal_bottle"
+
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%heal_regen"
+	    		}
+	    	}
+	    }
+
+	    "AbilitySpecial"
+	    {
+	    	"01"	//持续时间
+	    	{
+	    		"var_type"			"FIELD_FLOAT"
+	    		"duration"			"5"
+	    	}
+	    	"01"	//生命恢复速度
+	    	{
+	    		"var_type"			"FIELD_INTEGER"
+	    		"heal_regen"		"32"
+	    	}
+	    }
 	}
-	
-	//=================================================================================================================
-	// Arcane Boots II
-	//=================================================================================================================
-	"item_arcane_boots2"
-	{
-		"ID"							"1006"
 
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"BaseClass"						"item_arcane_boots"
+	//大血瓶
+	"item_custom_big_heal_bottle"
+	{	
+	    "ID"						"1002"
+	    "BaseClass"					"item_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"			"3"
+	    "AbilitySharedCooldown"		"consumables_heal"
+	    "AbilityManaCost"			"0"
+	    "AbilityTextureName"		"item_custom_big_heal_bottle"
 
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"55.0"
+	    "ItemCost"					"20"
+	    "ItemDroppable"				"1"
+	    "ItemSellable"				"1"
+	    "ItemPurchasable"			"1"
+	    "ItemKillable"				"1"
+	    "ItemDisassembleRule"		"0"
+	    "ItemPermanent"				"0"
+	    "ItemInitialCharges"		"1"
+	    "ItemRequiresCharges"		"1"
+	    "ItemStackable"				"1"
+	    "ItemStockTime"				"0"
+	    "ItemShareability"			"1"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
-		"ItemCost"						"2450"
-		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
-		"ItemQuality"					"rare"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemDisassembleRule"			"0"
-		"ItemAlertable"					"1"
-		"ItemAliases"					"mana;mb"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"75"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"600"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_amount"		"250"
-			}
-		}
+	    "OnSpellStart"
+	    {
+	    	"ApplyModifier"
+	    	{
+	    		"Target" 			"CASTER"
+	    		"ModifierName"		"modifier_item_custom_big_heal_bottle"
+	    	}
+	    	"SpendCharge"{}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_item_custom_big_heal_bottle"
+	    	{
+	    		"Duration"			"%duration"
+	    		"TextureName"		"item_custom_big_heal_bottle"
+
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%heal_regen"
+	    		}
+	    	}
+	    }
+
+	    "AbilitySpecial"
+	    {
+	    	"01"	//持续时间
+	    	{
+	    		"var_type"			"FIELD_FLOAT"
+	    		"duration"			"5"
+	    	}
+	    	"01"	//生命恢复速度
+	    	{
+	    		"var_type"			"FIELD_INTEGER"
+	    		"heal_regen"		"80"
+	    	}
+	    }
+	}
+
+	//小魔瓶
+	"item_custom_small_mana_bottle"
+	{	
+	    "ID"						"1003"
+	    "BaseClass"					"item_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"			"3"
+	    "AbilitySharedCooldown"		"consumables_mana"
+	    "AbilityManaCost"			"0"
+	    "AbilityTextureName"		"item_custom_small_mana_bottle"
+
+	    "ItemCost"					"15"
+	    "ItemDroppable"				"1"
+	    "ItemSellable"				"1"
+	    "ItemPurchasable"			"1"
+	    "ItemKillable"				"1"
+	    "ItemDisassembleRule"		"0"
+	    "ItemPermanent"				"0"
+	    "ItemInitialCharges"		"1"
+	    "ItemRequiresCharges"		"1"
+	    "ItemStackable"				"1"
+	    "ItemStockTime"				"0"
+	    "ItemShareability"			"1"
+
+	    "OnSpellStart"
+	    {
+	    	"ApplyModifier"
+	    	{
+	    		"Target" 			"CASTER"
+	    		"ModifierName"		"modifier_item_custom_small_mana_bottle"
+	    	}
+	    	"SpendCharge"{}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_item_custom_small_mana_bottle"
+	    	{
+	    		"Duration"			"%duration"
+	    		"TextureName"		"item_custom_small_mana_bottle"
+
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%mana_regen"
+	    		}
+	    	}
+	    }
+
+	    "AbilitySpecial"
+	    {
+	    	"01"	//持续时间
+	    	{
+	    		"var_type"			"FIELD_FLOAT"
+	    		"duration"			"5"
+	    	}
+	    	"01"	//生命恢复速度
+	    	{
+	    		"var_type"			"FIELD_INTEGER"
+	    		"mana_regen"		"28"
+	    	}
+	    }
+	}
+
+	//大魔瓶
+	"item_custom_big_mana_bottle"
+	{	
+	    "ID"						"1004"
+	    "BaseClass"					"item_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"			"3"
+	    "AbilitySharedCooldown"		"consumables_mana"
+	    "AbilityManaCost"			"0"
+	    "AbilityTextureName"		"item_custom_big_mana_bottle"
+
+	    "ItemCost"					"25"
+	    "ItemDroppable"				"1"
+	    "ItemSellable"				"1"
+	    "ItemPurchasable"			"1"
+	    "ItemKillable"				"1"
+	    "ItemDisassembleRule"		"0"
+	    "ItemPermanent"				"0"
+	    "ItemInitialCharges"		"1"
+	    "ItemRequiresCharges"		"1"
+	    "ItemStackable"				"1"
+	    "ItemStockTime"				"0"
+	    "ItemShareability"			"1"
+
+	    "OnSpellStart"
+	    {
+	    	"ApplyModifier"
+	    	{
+	    		"Target" 			"CASTER"
+	    		"ModifierName"		"modifier_item_custom_big_mana_bottle"
+	    	}
+	    	"SpendCharge"{}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_item_custom_big_mana_bottle"
+	    	{
+	    		"Duration"			"%duration"
+	    		"TextureName"		"item_custom_big_mana_bottle"
+
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%mana_regen"
+	    		}
+	    	}
+	    }
+
+	    "AbilitySpecial"
+	    {
+	    	"01"	//持续时间
+	    	{
+	    		"var_type"			"FIELD_FLOAT"
+	    		"duration"			"5"
+	    	}
+	    	"01"	//生命恢复速度
+	    	{
+	    		"var_type"			"FIELD_INTEGER"
+	    		"mana_regen"		"64"
+	    	}
+	    }
 	}
 }

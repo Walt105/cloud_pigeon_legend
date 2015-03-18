@@ -11,7 +11,7 @@ function CEvents:Init( )
 	--监听游戏进度
 	ListenToGameEvent("game_rules_state_change", Dynamic_Wrap(CEvents,"OnGameRulesStateChange"), self)
 
-	--监听单位被击杀的事件,用于刷怪
+	--监听单位被击杀的事件
 	ListenToGameEvent("entity_killed", Dynamic_Wrap(CEvents, "OnEntityKilled"), self)
 
 	--监听单位重生或者出生
@@ -29,6 +29,10 @@ function CEvents:OnGameRulesStateChange( keys )
 		for i=0,DOTA_MAX_PLAYER_TEAMS - 1 do
 			local player = PlayerResource:GetPlayer(i)
 			if player then
+				table.insert( GameRules._Players,player )
+				PlayerResource:SetGold(player:GetPlayerID(),300,true)
+				PlayerResource:SetGold(player:GetPlayerID(),0,false)
+
 				GameRules.PlayerNum = GameRules.PlayerNum + 1
 				if PlayerResource:GetTeam(i) ~= DOTA_TEAM_GOODGUYS then
 					player:SetTeam(DOTA_TEAM_GOODGUYS)
@@ -76,7 +80,18 @@ end
 
 ----------------------------------------------------------------------------------------------------------
 function CEvents:OnEntityKilled( keys )
-	
+	local unit = EntIndexToHScript(keys.entindex_killed)
+
+	if unit:IsHero() and unit:GetTeamNumber() == DOTA_TEAM_GOODGUYS and GameRules._IsRespawn then
+		CustomTimer("OnEntityKilled",function( )
+			if IsValidAndAlive(unit) == false then
+				unit:RespawnHero(true,true,true)
+				unit:SetAbsOrigin(GameRules._HeroRespawn:GetOrigin())
+				FindClearSpaceForUnit(unit,unit:GetOrigin(),true)
+			end
+			return nil
+		end,3)
+	end
 end
 ----------------------------------------------------------------------------------------------------------
 
@@ -102,6 +117,7 @@ function CEvents:OnNPCSpawned( keys )
 	--如果是英雄添加通用技能
 	if unit:IsHero() then
 		unit:AddAbility("common_ability")
+		unit:SetTimeUntilRespawn(99999)
 	end
 
 	--判断玩家英雄是否是第一次创建，如果是则设置全部技能等级为1

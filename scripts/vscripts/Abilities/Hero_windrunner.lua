@@ -40,7 +40,7 @@ function WindrunnerOneAbility1Unit( keys )
 	--筛选目标
 	local teams = DOTA_UNIT_TARGET_TEAM_FRIENDLY
     local types = DOTA_UNIT_TARGET_HERO
-    local flags = DOTA_UNIT_TARGET_FLAG_NONE
+    local flags = DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS
     local group = FindUnitsInRadius(caster:GetTeamNumber(),caster:GetOrigin(),nil,2000,teams,types,flags,FIND_CLOSEST,true)
     local hero  = group[RandomInt(1,#group)]
 	local unit = {}
@@ -206,7 +206,7 @@ function WindrunnerOneAbility6( keys )
 
 				local teams = DOTA_UNIT_TARGET_TEAM_BOTH
 			    local types = DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_HERO
-			    local flags = DOTA_UNIT_TARGET_FLAG_NONE
+			    local flags = DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES
 
 			    local group = FindUnitsInRadius(caster:GetTeamNumber(),target:GetOrigin(),nil,1000,teams,types,flags,FIND_UNITS_EVERYWHERE,true)
 

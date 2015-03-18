@@ -2404,7 +2404,7 @@
 				{
                     "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
                     "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
                     "Center"    "CASTER"
                     "Radius"    "1000"
                 }
@@ -3389,7 +3389,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 
 		"MaxLevel"					"7"
 		"AbilityCastRange"			"700"

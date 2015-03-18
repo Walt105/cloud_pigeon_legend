@@ -18,6 +18,10 @@
 		"Ability8"					"juggernaut_one_ability3_judu"
 		"Ability9"					"juggernaut_one_ability3_xixue"
 
+		"AttackDamageMin"			"55"
+		"AttackDamageMax"			"65"
+		"AttackRate"				"1.2"
+
 		// Attributes
 		//----------------------------------------------------------------------------------------------
 		"AttributeBaseStrength"		"25"										
@@ -48,6 +52,10 @@
 		"Ability4"					"luna_one_ability4"
 		"Ability5"					"luna_one_ability5"
 		"Ability6"					"luna_one_ability6"
+
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"60"
+		"AttackRate"				"1.2"
 
 		// Attributes
 		//----------------------------------------------------------------------------------------------
@@ -80,6 +88,10 @@
 		"Ability5"					"lina_one_ability5"
 		"Ability6"					"lina_one_ability6"
 
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"60"
+		"AttackRate"				"1.2"
+
 		// Attributes
 		//----------------------------------------------------------------------------------------------
 		"AttributeBaseStrength"		"25"										
@@ -111,6 +123,10 @@
 		"Ability5"					"skeletonking_one_ability5"
 		"Ability6"					"skeletonking_one_ability6"
 
+		"AttackDamageMin"			"70"
+		"AttackDamageMax"			"80"
+		"AttackRate"				"1.2"
+
 		// Attributes
 		//----------------------------------------------------------------------------------------------
 		"AttributeBaseStrength"		"25"										
@@ -141,6 +157,10 @@
 		"Ability4"					"windrunner_one_ability4"
 		"Ability5"					"windrunner_one_ability5"
 		"Ability6"					"windrunner_one_ability6"
+
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"60"
+		"AttackRate"				"1.2"
 
 		// Attributes
 		//----------------------------------------------------------------------------------------------
@@ -175,6 +195,10 @@
 		"Ability7"					"antimage_one_ability1_fake"
 		"Ability8"					"antimage_one_ability2_fake"
 		"Ability9"					"antimage_one_ability3_fake"
+
+		"AttackDamageMin"			"65"
+		"AttackDamageMax"			"70"
+		"AttackRate"				"1.2"
 
 		// Attributes
 		//----------------------------------------------------------------------------------------------
