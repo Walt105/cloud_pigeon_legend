@@ -2,8 +2,10 @@
 
 function Spawn( val )
 
-	local IsFirstSpawn = true
 	local start = false
+
+	thisEntity:AddHateSystem()
+	thisEntity._BossIsWar = false
 	GameRules:GetGameModeEntity():SetContextThink("ai_super_treant",function( )
 		
 		if IsValidAndAlive(thisEntity) == "Not Valid" then
@@ -38,34 +40,34 @@ function Spawn( val )
 			return nil
 		end
 
-		--是否第一次创建
-		if IsFirstSpawn then
-			IsFirstSpawn = false
-			thisEntity:AddHateSystem()
-		end
-
-		if thisEntity.BossFindUnitNum then
+		if GameRules._touch2TriggerNum then
 			local ent_1 = Entities:FindByName(nil,"touch_1")
 			local ent_2 = Entities:FindByName(nil,"touch_2")
-			if thisEntity.BossFindUnitNum > 0 then
+			if GameRules._touch2TriggerNum > 0 and thisEntity._BossIsWar then
 				if start == false then start = true end
 
-				ent_2:Enable()
+				local ent_3 = Entities:FindByName(nil,"touch_22")
+				ent_3:Enable()
+				ent_1:Disable()
+				--不允许复活
 				GameRules._IsRespawn =false
 				
 				local target = thisEntity:GetHateSystemMaxHero()
 				if target ~= nil then
-					local newOrder = {
-				        UnitIndex = thisEntity:entindex(), 
-				        TargetIndex = target:entindex(),
-				        OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-				        Queue = 0
-				    }
-				    ExecuteOrderFromTable(newOrder)
+					if IsValidAndAlive(target) == true then
+						local newOrder = {
+					        UnitIndex = thisEntity:entindex(), 
+					        TargetIndex = target:entindex(),
+					        OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+					        Queue = 0
+					    }
+					    ExecuteOrderFromTable(newOrder)
+					end
 				end
 			else
 				ent_1:Enable()
-				ent_1:Trigger()
+
+				--允许复活
 				GameRules._IsRespawn = true
 				CustomRespawnHero()
 
@@ -74,6 +76,8 @@ function Spawn( val )
 					local ent_unit = Entities:FindByName(nil,"first_boss_super_treant")
 					thisEntity:SetAbsOrigin(ent_unit:GetAbsOrigin())
 					thisEntity:GetHateSystemClear()
+					thisEntity:Stop()
+					thisEntity:Hold()
 				end
 			end
 		end

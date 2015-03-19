@@ -20,19 +20,23 @@ function Spawn( val )
 
 		if IsValidAndAlive(thisEntity) == true then
 			if thisEntity:HasModifier("modifier_boss_millenary_treant_a5") then
+				GameRules.MajiaCommonAbility:ApplyDataDrivenModifier(thisEntity,thisEntity,"modifier_boss_is_war_effect",{duration = 3})
 				return 1
 			end
 		end
 
-		if thisEntity.BossFindUnitNum then
+		if GameRules._touch3TriggerNum then
 			local ent_1 = Entities:FindByName(nil,"touch_1")
 			local ent_2 = Entities:FindByName(nil,"touch_3")
-			if thisEntity.BossFindUnitNum > 0 then
+			if GameRules._touch3TriggerNum > 0 and thisEntity._BossIsWar then
 				if start == false then start = true end
 
-				ent_2:Enable()
+				--不允许复活
 				GameRules._IsRespawn =false
-				
+				local ent_3 = Entities:FindByName(nil,"touch_33")
+				ent_3:Enable()
+				ent_1:Disable()
+
 				local target = thisEntity:GetHateSystemMaxHero()
 				if target ~= nil then
 					if IsValidAndAlive(target) == true then
@@ -47,7 +51,6 @@ function Spawn( val )
 				end
 			else
 				ent_1:Enable()
-				ent_1:Trigger()
 				GameRules._IsRespawn = true
 				CustomRespawnHero()
 
@@ -61,6 +64,7 @@ function Spawn( val )
 					thisEntity._FirstBossHealA4=nil
 					thisEntity._FirstBossHealA5=nil
 					thisEntity:Stop()
+					thisEntity:Hold()
 
 					local teams = DOTA_UNIT_TARGET_TEAM_FRIENDLY
 				    local types = DOTA_UNIT_TARGET_BASIC

@@ -386,25 +386,17 @@ end
 -----------------------------------------------------------------------------------------------------------
 --记录BOSS附近的单位
 -----------------------------------------------------------------------------------------------------------
-function BossFindUnitCreate( keys )
-	local caster = keys.caster
+function BossIsWarCreated( keys )
 	local target = keys.target
-
-	if caster.BossFindUnitNum == nil then
-		caster.BossFindUnitNum = 0
-	end
-	caster.BossFindUnitNum = caster.BossFindUnitNum + 1
+	target._BossIsWar = true
+	local str = target:GetUnitName()
+	PrintMsg("#BossIsWarCreated")
 end
 
-function BossFindUnitDestroy( keys )
-	local caster = keys.caster
+function BossIsWarDestroy( keys )
 	local target = keys.target
-
-	caster.BossFindUnitNum = caster.BossFindUnitNum - 1
-
-	if caster.BossFindUnitNum < 0 then
-		caster.BossFindUnitNum = 0
-	end
+	target._BossIsWar = false
+	PrintMsg("#BossIsWarDestroy")
 end
 
 -----------------------------------------------------------------------------------------------------------

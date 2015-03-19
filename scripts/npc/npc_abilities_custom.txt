@@ -79,27 +79,62 @@
 				}
 			}
 
-			//发现周围的单位
-			"modifier_boss_find_unit"
+			//boss是否进入战斗状态
+			"modifier_boss_is_war"
 			{
-				"IsHidden"		"1"
+				"IsHidden"				"1"
 
-				"Aura"          "modifier_boss_find_unit_create"
-                "Aura_Radius"   "1000"
-                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_boss_is_war_effect"
+					}
+				}	
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_boss_is_war_effect"
+					}
+				}
+				"OnTakeDamage"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_boss_is_war_effect"
+					}
+				}
+				"OnDealDamage"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_boss_is_war_effect"
+					}
+				}
+				"OnUnitMoved"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_boss_is_war_effect"
+					}
+				}
 			}
-			"modifier_boss_find_unit_create"
+			"modifier_boss_is_war_effect"
 			{
-				"IsHidden"		"1"
-
+				"Duration"					"3"
+				"IsHidden"					"1"
 				"OnCreated"
 				{
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-						"Function"		"BossFindUnitCreate"
+						"Function"		"BossIsWarCreated"
 					}
 				}
 				"OnDestroy"
@@ -107,7 +142,7 @@
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-						"Function"		"BossFindUnitDestroy"
+						"Function"		"BossIsWarDestroy"
 					}
 				}
 			}
@@ -4713,7 +4748,6 @@
 					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED" //禁止移动
 					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED" //无法攻击
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED" //眩晕
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED" //魔法免疫
 					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED" //攻击免疫
 					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED" //不可选择
 				}

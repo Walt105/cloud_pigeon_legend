@@ -190,7 +190,7 @@ function CDOTA_BaseNPC:AddHateSystem( )
 	local ability = GameRules.Majia:FindAbilityByName("common_ability")
 	if ability then
 		ability:ApplyDataDrivenModifier(self,self,"modifier_hate_system",nil)
-		ability:ApplyDataDrivenModifier(self,self,"modifier_boss_find_unit",nil)
+		ability:ApplyDataDrivenModifier(self,self,"modifier_boss_is_war",nil)
 	end
 end
 

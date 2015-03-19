@@ -125,6 +125,10 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	GameRules._IsRespawn = true
 	GameRules._PlayerHeroes = {}
 	GameRules._Players = {}
+	GameRules._touch2TriggerNum = 0
+	GameRules._touch2TriggerUnit = {}
+	GameRules._touch3TriggerNum = 0
+	GameRules._touch3TriggerUnit = {}
 end
 
 function HideGameHud( )

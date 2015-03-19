@@ -30,13 +30,18 @@ function CEvents:OnGameRulesStateChange( keys )
 			local player = PlayerResource:GetPlayer(i)
 			if player then
 				table.insert( GameRules._Players,player )
-				PlayerResource:SetGold(player:GetPlayerID(),300,true)
-				PlayerResource:SetGold(player:GetPlayerID(),0,false)
 
 				GameRules.PlayerNum = GameRules.PlayerNum + 1
 				if PlayerResource:GetTeam(i) ~= DOTA_TEAM_GOODGUYS then
 					player:SetTeam(DOTA_TEAM_GOODGUYS)
 				end
+			end
+		end
+
+		for k,player in pairs(GameRules._Players) do
+			if player then
+				PlayerResource:SetGold(player:GetPlayerID(),300,true)
+				PlayerResource:SetGold(player:GetPlayerID(),0,false)
 			end
 		end
 
