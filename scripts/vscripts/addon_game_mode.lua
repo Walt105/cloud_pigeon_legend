@@ -52,10 +52,10 @@ function Precache( context )
 	local unit_kv = LoadKeyValues("scripts/npc/npc_units_custom.txt")
     if unit_kv then
         for unit_name,keys in pairs(unit_kv) do
-            print("precacheing resource for unit"..unit_name)
+            --print("precacheing resource for unit"..unit_name)
             if type(keys) == "table" then
                 if keys.Model then
-                    print("precacheing model"..keys.Model)
+                    --print("precacheing model"..keys.Model)
                     PrecacheModel(keys.Model, context )
                 end
             end

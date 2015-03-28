@@ -10,6 +10,7 @@
 		"Model"						"models\development\invisiblebox.vmdl" //空模型
 		"SoundSet"					""								// 音效文件
 		"ModelScale" 				"0.9"							// 模型大小
+		"IsAncient"					"1"
 
 		// 护甲
 		//----------------------------------------------------------------

@@ -3,6 +3,21 @@
 {
 	"Version"		"1"
 
+	// "Boss"						"1"				//标记为1则会在AI中使用
+	// "BossCastPercentMin"			"25"			//施放该技能的最小概率
+	// "BossCastPercentMax"			"50"			//施放该技能的最大概率
+	// "BossHealPercent"			"100"			//施放该技能的生命值百分比要求
+	// "BossNextAbilityDelay"		"1"									//施放下个技能延迟
+	// "BossNextAbility"			"boss_millenary_treant_a2"			//当施放完该技能之后紧接着施放的技能
+	// "BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_HATESYSTEM_MAX"	//施放技能的目标筛选
+	// BOSSCASTABILITYSELECT_MAX_HEAL = 1 						--选取生命值最大的
+	// BOSSCASTABILITYSELECT_MIN_HEAL = 2 						--选取生命值最小的
+	// BOSSCASTABILITYSELECT_HATESYSTEM_MAX = 3				--选取仇恨最高的
+	// BOSSCASTABILITYSELECT_HATESYSTEM_MIN = 4				--选取仇恨最低的
+	// BOSSCASTABILITYSELECT_Random   = 5						--随机选取
+	// BOSSCASTABILITYSELECT_EXTRA_MELEE = 100					--选取近战
+	// BOSSCASTABILITYSELECT_EXTRA_RANGE = 200					--选取远程
+
 	"majia"  //马甲的基本技能
 	{
 		"BaseClass"				"ability_datadriven"
@@ -4285,6 +4300,15 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityCastAnimation"		"ACT_DOTA_IDLE_RARE"
 
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"25"
+		"BossCastPercentMax"		"50"
+		"BossHealPercent"			"100"
+		"BossNextAbilityDelay"		"0.1"
+		"BossNextAbility"			"boss_millenary_treant_a2"
+		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MAX_HEAL | BOSSCASTABILITYSELECT_EXTRA_MELEE"
+
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0.0"
@@ -4407,6 +4431,15 @@
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 
+		"Boss"						"1"
+		"BossAutoCast"				"0"
+		"BossCastPercentMin"		"25"
+		"BossCastPercentMax"		"50"
+		"BossHealPercent"			"100"
+		"BossNextAbilityDelay"		"0.1"
+		"BossNextAbility"			"boss_millenary_treant_a1"
+		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MIN_HEAL | BOSSCASTABILITYSELECT_EXTRA_RANGE"
+
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0"
@@ -4471,9 +4504,15 @@
 	"boss_millenary_treant_a3"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"50"
+		"BossCastPercentMax"		"75"
+		"BossHealPercent"			"100"
 
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"600"
@@ -4507,6 +4546,7 @@
 		{
 			"modifier_boss_millenary_treant_a3"
 			{
+				"IsDebuff"			"1"
 				"Duration"			"%duration"
 
 				"OnCreated"

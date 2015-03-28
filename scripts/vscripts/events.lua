@@ -168,13 +168,7 @@ function CEvents:OnNPCSpawned( keys )
 		end
 
 		--设置技能等级为1
-		local num = unit:GetAbilityCount() - 1
-		for i=0,num do
-			local ability = unit:GetAbilityByIndex(i)
-			if ability then
-				ability:SetLevel(1)
-			end
-		end
+		SetAbilitiesLevelToOne(unit)
 
 	end
 end

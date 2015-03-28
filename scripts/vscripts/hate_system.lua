@@ -3,6 +3,64 @@ if CHateSystem == nil then
 	CHateSystem = class({})
 end
 
+--返回当前存活着的仇恨值最大的一个近战单位
+function CDOTA_BaseNPC:GetHateSystemMaxMeleeHero( )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		for k,v in pairs(self._HateSystemMeleeHero) do
+			if IsValidAndAlive(v) == true then
+				return v
+			end
+		end
+
+	end
+	return nil
+end
+
+--返回当前存活着的仇恨值最大的一个远程单位
+function CDOTA_BaseNPC:GetHateSystemMaxRangedHero( )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		for k,v in pairs(self._HateSystemRangedHero) do
+			if IsValidAndAlive(v) == true then
+				return v
+			end
+		end
+		
+	end
+	return nil
+end
+
+--返回当前存活着的仇恨值最小的一个近战单位
+function CDOTA_BaseNPC:GetHateSystemMinMeleeHero( )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		local num = #self._HateSystemMeleeHero
+		for i=num,1,-1 do
+			if IsValidAndAlive(self._HateSystemMeleeHero[i]) == true then
+				return self._HateSystemMeleeHero[i]
+			end
+		end
+
+	end
+	return nil
+end
+
+--返回当前存活着的仇恨值最小的一个远程单位
+function CDOTA_BaseNPC:GetHateSystemMinRangedHero( )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		local num = #self._HateSystemRangedHero
+		for i=num,1,-1 do
+			if IsValidAndAlive(self._HateSystemRangedHero[i]) == true then
+				return self._HateSystemRangedHero[i]
+			end
+		end
+
+	end
+	return nil
+end
+
 --根据队列返回一个近战英雄，为0则为随机
 function CDOTA_BaseNPC:GetHateSystemMeleeHero( queue )
 	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
@@ -238,6 +296,29 @@ function CDOTA_BaseNPC:GetHateSystemMaxHero( )
 						break
 					end
 				end
+			end
+			return unit
+		end
+	end
+end
+
+--返回当前存活着的仇恨值最小的一个单位
+function CDOTA_BaseNPC:GetHateSystemMinHero( )
+	if self.HateSystemUnit ~= nil and self.HateSystemHateNum ~= nil then
+		
+		local unit_num = #self.HateSystemUnit
+		local hate_num = #self.HateSystemHateNum
+		if unit_num == hate_num then
+			local num = unit_num
+			local unit = nil
+			for i=1,unit_num do
+				unit = self:GetHateSystemHero(num)
+				if IsValidEntity(unit) then
+					if unit:IsAlive() then
+						break
+					end
+				end
+				num = num - 1
 			end
 			return unit
 		end

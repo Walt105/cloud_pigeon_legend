@@ -329,12 +329,18 @@ end
 --净化
 -----------------------------------------------------------------------------------------------------------
 GameRules.CustomPurgeTable = {}
+GameRules.BossAbility = {}
 function CustomPurgeInit( )
 	local kv = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
 	if kv then
 		--此for获取技能
         for name,keys in pairs(kv) do
             if type(keys) == "table" then
+
+            	--记录Boss技能
+            	if keys.Boss == 1 then
+            		GameRules.BossAbility[name] = keys
+            	end
                 
                 --此for获取Modifiers
                 for modifiers,mKeys in pairs(keys) do
@@ -428,3 +434,98 @@ function TargetMoveToCaster( Caster,Target,speed )
 				return 0.02
 			end,0.0)
 end
+
+-----------------------------------------------------------------------------------------------------------
+--判断技能的行为
+-----------------------------------------------------------------------------------------------------------
+GameRules.AbilityBehavior = {             
+    DOTA_ABILITY_BEHAVIOR_ATTACK,            
+    DOTA_ABILITY_BEHAVIOR_AURA,     
+    DOTA_ABILITY_BEHAVIOR_AUTOCAST,    
+    DOTA_ABILITY_BEHAVIOR_CHANNELLED,   
+    DOTA_ABILITY_BEHAVIOR_DIRECTIONAL,    
+    DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET,    
+    DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT, 
+    DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK,   
+    DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT,             
+    DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING,    
+    DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL,      
+    DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE,   
+    DOTA_ABILITY_BEHAVIOR_IGNORE_TURN ,        
+    DOTA_ABILITY_BEHAVIOR_IMMEDIATE,         
+    DOTA_ABILITY_BEHAVIOR_ITEM,              
+    DOTA_ABILITY_BEHAVIOR_NOASSIST,            
+    DOTA_ABILITY_BEHAVIOR_NONE,             
+    DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN, 
+    DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE,       
+    DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES,      
+    DOTA_ABILITY_BEHAVIOR_RUNE_TARGET,         
+    DOTA_ABILITY_BEHAVIOR_UNRESTRICTED ,  
+}
+
+--判断单体技能
+function CDOTABaseAbility:IsUnitTarget( )
+	local b = self:GetBehavior()
+
+	if self:IsHidden() then b = b - 1 end
+	for k,v in pairs(GameRules.AbilityBehavior) do
+		repeat
+			if v == 0 then break end
+			b = b % v
+		until true
+	end
+
+	if (b - DOTA_ABILITY_BEHAVIOR_AOE) == DOTA_ABILITY_BEHAVIOR_UNIT_TARGET then
+		b = b - DOTA_ABILITY_BEHAVIOR_AOE
+	end
+
+	if b == DOTA_ABILITY_BEHAVIOR_UNIT_TARGET then
+		return true
+	end
+	return false
+end
+
+--判断点目标技能
+function CDOTABaseAbility:IsPoint( )
+	local b = self:GetBehavior()
+
+	if self:IsHidden() then b = b - 1 end
+	for k,v in pairs(GameRules.AbilityBehavior) do
+		repeat
+			if v == 0 then break end
+			b = b % v
+		until true
+	end
+
+	if (b - DOTA_ABILITY_BEHAVIOR_AOE) == DOTA_ABILITY_BEHAVIOR_POINT then
+		b = b - DOTA_ABILITY_BEHAVIOR_AOE
+	end
+
+	if b == DOTA_ABILITY_BEHAVIOR_POINT then
+		return true
+	end
+	return false
+end
+
+--判断无目标技能
+function CDOTABaseAbility:IsNoTarget( )
+	local b = self:GetBehavior()
+
+	if self:IsHidden() then b = b - 1 end
+	for k,v in pairs(GameRules.AbilityBehavior) do
+		repeat
+			if v == 0 then break end
+			b = b % v
+		until true
+	end
+
+	if (b - DOTA_ABILITY_BEHAVIOR_AOE) == DOTA_ABILITY_BEHAVIOR_NO_TARGET then
+		b = b % DOTA_ABILITY_BEHAVIOR_AOE
+	end
+
+	if b == DOTA_ABILITY_BEHAVIOR_NO_TARGET then
+		return true
+	end
+	return false
+end
+
