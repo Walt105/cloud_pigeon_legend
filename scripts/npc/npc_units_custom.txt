@@ -378,7 +378,7 @@
 
 		//技能
 		//----------------------------------------------------------------
-		"Ability1"					""
+		"Ability1"					"super_treant_ability1"
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""

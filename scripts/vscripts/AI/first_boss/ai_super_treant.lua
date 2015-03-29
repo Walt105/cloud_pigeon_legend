@@ -7,6 +7,7 @@ function Spawn( val )
 
 	thisEntity:AddHateSystem()
 	thisEntity._BossIsWar = false
+	CAI:AutoAttack( thisEntity )
 	GameRules:GetGameModeEntity():SetContextThink("ai_super_treant",function( )
 		
 		if IsValidAndAlive(thisEntity) == "Not Valid" then

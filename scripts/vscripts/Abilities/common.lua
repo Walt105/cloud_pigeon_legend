@@ -304,6 +304,7 @@ end
 --恢复生命值
 -----------------------------------------------------------------------------------------------------------
 function CDOTA_BaseNPC:CustomHeal( heal )
+	if IsValidAndAlive(self) == true then else return end
 	self:SetHealth(self:GetHealth() + heal)
 	local heal_num = #tostring(math.floor(heal))
     local particle = ParticleManager:CreateParticle("particles/msg_fx/msg_heal.vpcf",PATTACH_ABSORIGIN_FOLLOW,self)
@@ -328,8 +329,6 @@ end
 -----------------------------------------------------------------------------------------------------------
 --净化
 -----------------------------------------------------------------------------------------------------------
-GameRules.CustomPurgeTable = {}
-GameRules.BossAbility = {}
 function CustomPurgeInit( )
 	local kv = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
 	if kv then

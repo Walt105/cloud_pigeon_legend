@@ -73,6 +73,9 @@ end
 function CCloudPigeonLegendGameMode:InitGameMode()
 	print( "CloudPigeonLegend addon is loaded." )
 	print( "Load map is "..GetMapName()..".vmap" )
+
+	GameRules.CustomPurgeTable = {}
+	GameRules.BossAbility = {}
 	require("require_everything")
 
 	--隐藏dota2的一些UI

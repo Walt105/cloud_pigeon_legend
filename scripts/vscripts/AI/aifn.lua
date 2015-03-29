@@ -4,6 +4,34 @@ if CAI == nil then
 	CAI = class({})
 end
 
+--有有一些modifier不作为
+CAI.NotWorkModifiers = {
+	"modifier_boss_millenary_treant_a5",
+}
+
+function CAI:NotWork( unit )
+	for k,v in pairs(CAI.NotWorkModifiers) do
+		if IsValidAndAlive(unit) then
+			if unit:HasModifier(v) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function CAI:NotWorkChanneling( unit )
+	for i=0,unit:GetAbilityCount()-1 do
+		local ability = unit:GetAbilityByIndex(i)
+		if ability then
+			if ability:IsChanneling() then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 --匹配boss技能
 function CAI:FindBossAbility( unit,name )
 	--GameRules.BossAbility在Abilities/common.lua中的净化进行了记录
@@ -182,7 +210,7 @@ function CAI:FindRadiusOneUnit( boss,radius,teams,types,flags,at )
 	return unit
 end
 
---AI入口
+--AI-自动施放技能入口
 function CAI:AutoCastAbility( unit )
 
 	local ability = {}
@@ -202,7 +230,7 @@ function CAI:AutoCastAbility( unit )
 		end
 	end
 	
-	CustomTimer("CAI",function( )
+	CustomTimer("CAI_AutoCastAbility",function( )
 		
 		if IsValidAndAlive(unit) ~= true then
 			return nil
@@ -210,6 +238,10 @@ function CAI:AutoCastAbility( unit )
 
 		if unit._BossIsWar == true then else
 			return RandomFloat(1,10)
+		end
+
+		if CAI:NotWork(unit) or CAI:NotWorkChanneling( unit ) then
+			return RandomFloat(1,5)
 		end
 
 		local group = FindUnitsInRadius(unit:GetTeamNumber(),unit:GetOrigin(),nil,1000,DOTA_UNIT_TARGET_TEAM_ENEMY,DOTA_UNIT_TARGET_ALL,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_UNITS_EVERYWHERE,true)
@@ -224,16 +256,20 @@ function CAI:AutoCastAbility( unit )
 
 		if RollPercentage(random) then
 			for k,v in pairs(ability) do
+				print("random3",random)
 				local hp = v.BossHealPercent
 				if hp then
 					if heal_percent <= hp then
+						print("random4",random)
 						local min = v.BossCastPercentMin
 						local max = v.BossCastPercentMax
 						if min ~= nil and max ~= nil then
 							if RollPercentage(RandomFloat(min,max)) then
+								print("random5",random)
 								local a = unit:FindAbilityByName(k)
 								if a then
 									if a:IsCooldownReady() then
+										print("Cast "..k)
 										CAI:CastAbility( unit,a,v )
 
 										if v.BossNextAbility ~= nil and v.BossNextAbilityDelay ~= nil then
@@ -258,4 +294,41 @@ function CAI:AutoCastAbility( unit )
 		return RandomFloat(0.5,time)
 	end,0)
 
+end
+
+
+--AI-自动攻击入口
+function CAI:AutoAttack( unit )
+	CustomTimer("CAI_AutoAttack",function( )
+		
+		if IsValidAndAlive(unit) ~= true then
+			return nil
+		end
+
+		if unit._BossIsWar == true then else
+			return RandomFloat(1,10)
+		end
+
+		if CAI:NotWork(unit) or CAI:NotWorkChanneling( unit ) then
+			return RandomFloat(1,5)
+		end
+
+		local group = FindUnitsInRadius(unit:GetTeamNumber(),unit:GetOrigin(),nil,600,DOTA_UNIT_TARGET_TEAM_ENEMY,DOTA_UNIT_TARGET_ALL,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
+		if #group > 0 then 
+			local a = nil
+			_,a = FindUnitMaxHeal( group )
+			local newOrder = {
+		        UnitIndex       = unit:entindex(), 
+		        TargetIndex     = a:entindex(),
+		        OrderType       = DOTA_UNIT_ORDER_ATTACK_TARGET,
+		        Queue           = 0
+		    }
+		    ExecuteOrderFromTable(newOrder)
+		    return RandomFloat(1,3)
+		else
+			return RandomFloat(1,10)
+		end
+
+		return RandomFloat(1,3)
+	end,0)
 end

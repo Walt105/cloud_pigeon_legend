@@ -206,7 +206,7 @@ function CHateSystem:HateSystemQueue( boss )
 					end
 				end
 			end
-			CHateSystem:HateSystemShow(boss)
+			--CHateSystem:HateSystemShow(boss)
 			CHateSystem:HateSystemMeleeAndRangedCreated( boss )
 		end
 	end

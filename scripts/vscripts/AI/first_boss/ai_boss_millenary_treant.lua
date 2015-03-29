@@ -2,7 +2,7 @@
 function Spawn( val )
 	print(thisEntity)
 	SetAbilitiesLevelToOne(thisEntity)
-	
-	CAI:AutoCastAbility( thisEntity )
 	thisEntity:AddHateSystem()
+	CAI:AutoCastAbility( thisEntity )
+	CAI:AutoAttack( thisEntity )
 end

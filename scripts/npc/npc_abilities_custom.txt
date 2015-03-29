@@ -4287,6 +4287,75 @@
 	}
 
 	//================================================================================================
+	//小BOSS:超级树精
+	//================================================================================================
+	//穿刺
+	"super_treant_ability1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"		"lion_impale"
+
+		"Modifiers"
+		{
+			"modifier_super_treant_ability1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_super_treant_ability1_effect"
+							}
+						}
+						"OnFailure"
+						{
+							"RemoveModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_super_treant_ability1_effect"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_super_treant_ability1_effect"
+			{
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%critical_strike"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"20"
+			}
+			"02"	//致命一击
+			{
+				"var_type"			"FIELD_INTEGER"
+				"critical_strike"	"150"
+			}
+		}
+	}
+
+	//================================================================================================
 	//BOSS:千年树精
 	//================================================================================================
 	//A1
@@ -4312,8 +4381,8 @@
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0.0"
-		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"3"
+		"AbilityManaCost"			"30"
+		"AbilityCooldown"			"11"
 		"AbilityTextureName"		"ability_1"
 
 		"OnSpellStart"
@@ -4443,8 +4512,8 @@
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0"
-		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"3"
+		"AbilityManaCost"			"30"
+		"AbilityCooldown"			"10"
 		"AbilityTextureName"		"ability_2"
 
 		"OnSpellStart"
@@ -4517,8 +4586,8 @@
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
-		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"3"
+		"AbilityManaCost"			"20"
+		"AbilityCooldown"			"7"
 		"AbilityTextureName"		"ability_3"
 
 		"OnSpellStart"
@@ -4623,10 +4692,16 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"50"
+		"BossCastPercentMax"		"75"
+		"BossHealPercent"			"90"
+
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0"
-		"AbilityManaCost"			"100"
+		"AbilityManaCost"			"35"
 		"AbilityCooldown"			"3"
 		"AbilityTextureName"		"ability_4"
 
@@ -4738,6 +4813,12 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"5"
+		"BossCastPercentMax"		"10"
+		"BossHealPercent"			"30"
 
 		"MaxLevel"					"1"
 		"AbilityCastRange"			"200"
