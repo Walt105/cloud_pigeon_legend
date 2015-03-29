@@ -192,7 +192,7 @@ function WindrunnerOneAbility6( keys )
     --弹射最大次数
     local count_num = 0
     
-	GameRules:GetGameModeEntity():SetContextThink(str,
+	CustomTimer(str,
 		function( )
 
 			--满足达到最大弹射次数删除计时器

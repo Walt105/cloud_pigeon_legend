@@ -23,7 +23,7 @@ function RotateTargetToCaster( caster,targets,len,angle,interval,dura,f )
 	local angle_add = angle
 	angle = 0
 	local caster_face = caster:GetForwardVector()
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("TargetRotateCaster"),
+	CustomTimer("TargetRotateCaster",
 		function( )
 			time = time + interval
 			if time>dura then
@@ -184,7 +184,7 @@ function Catapult( caster,target,ability,effectName,move_speed,radius,count,team
     --弹射最大次数
     local count_num = 0
     
-	GameRules:GetGameModeEntity():SetContextThink(str,
+	CustomTimer(str,
 		function( )
 
 			--满足达到最大弹射次数删除计时器
@@ -321,7 +321,10 @@ end
 --计时器
 -----------------------------------------------------------------------------------------------------------
 function CustomTimer( timerName,fun,delay )
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString(timerName),fun,delay)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString(timerName),function( )
+		if GameRules._IsGamePaused then return 0.1 end
+		return fun()
+	end,delay)
 end
 -----------------------------------------------------------------------------------------------------------
 

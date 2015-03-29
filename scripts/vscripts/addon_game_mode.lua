@@ -126,12 +126,14 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	GameRules.ThisBoss = nil
 	GameRules._HeroRespawn = nil
 	GameRules._IsRespawn = true
+	GameRules._IsGamePaused = false
 	GameRules._PlayerHeroes = {}
 	GameRules._Players = {}
 	GameRules._touch2TriggerNum = 0
 	GameRules._touch2TriggerUnit = {}
 	GameRules._touch3TriggerNum = 0
 	GameRules._touch3TriggerUnit = {}
+	GamePaused()
 end
 
 function HideGameHud( )

@@ -77,7 +77,7 @@ function LunaOneAbility2( keys )
 	local r = 0
 	local speed = 50
 	local back = true
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("LunaOneAbility2"),
+	CustomTimer("LunaOneAbility2",
 		function( )
 
 			--判断是否返回
@@ -208,7 +208,7 @@ function LunaOneAbility6( keys )
 	--设置避雷针触发概率为100
 	caster.LunaOneAbility4AddChance = 100
 
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("LunaOneAbility6"),
+	CustomTimer("LunaOneAbility6",
 		function( )
 			
 			if caster:HasModifier("modifier_luna_one_ability6")==false then

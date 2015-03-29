@@ -9,6 +9,23 @@ function PrintMsg( str )
 	GameRules:SendCustomMessage(tostring(str),2,0)
 end
 
+--判断游戏是否暂停
+function GamePaused()
+	old = GameRules:GetGameTime()
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("GamePaused"),function( )
+		local new = GameRules:GetGameTime()
+
+		if new == old then
+			GameRules._IsGamePaused = true
+		else
+			GameRules._IsGamePaused = false
+		end
+		old = new
+
+		return 0.1
+	end,0)
+end
+
 --删除table中的table
 function TableRemoveTable( table_1 , table_2 )
 	for i,v in pairs(table_1) do

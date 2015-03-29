@@ -97,7 +97,7 @@ function LinaOneAbility6( keys )
 
 	EmitSoundOn("Hero_Invoker.ChaosMeteor.Loop",unit)
 
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("string_1"),
+	CustomTimer("LinaOneAbility6",
 		function( )
 			StopSoundEvent("Hero_Invoker.ChaosMeteor.Loop",unit)
 

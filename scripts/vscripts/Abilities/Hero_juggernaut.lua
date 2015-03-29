@@ -76,7 +76,7 @@ function JuggOneAbility2OnCreate( keys )
 	ability2:SetHidden(false)
 
 	local interval = 0.02
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("OneAbility2OnCreate"),
+	CustomTimer("OneAbility2OnCreate",
 		function( )
 			if IsValidEntity(target)==false or caster.OneAbility2Dura == false then
 
