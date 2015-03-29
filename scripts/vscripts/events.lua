@@ -17,6 +17,12 @@ function CEvents:Init( )
 	--监听单位重生或者出生
 	ListenToGameEvent("npc_spawned", Dynamic_Wrap(CEvents, "OnNPCSpawned"), self)
 
+	--玩家购买物品
+	ListenToGameEvent("dota_item_purchased",Dynamic_Wrap(CEvents, "OnItemPurchased"),self)
+
+	--单位捡起物品
+	ListenToGameEvent("dota_item_picked_up",Dynamic_Wrap(CEvents, "OnItemPickedUp"),self)
+
 end
 
 ----------------------------------------------------------------------------------------------------------
@@ -173,3 +179,48 @@ function CEvents:OnNPCSpawned( keys )
 	end
 end
 ----------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------
+function CDOTA_BaseNPC:FindItem( itemname )
+	if IsValidAndAlive(self) then
+		for i=0,12 do
+			local item = self:GetItemInSlot(i)
+			if item then
+				if item:GetAbilityName() == itemname then
+					return item
+				end
+			end
+		end
+	end
+	return nil
+end
+
+function CEvents:OnItemPurchased( keys )
+	local player = PlayerResource:GetPlayer(keys.PlayerID)
+
+	if player then
+		local hero = player:GetAssignedHero()
+		if keys.itemname == "item_pay_ability_point" then
+			local item = hero:FindItem(keys.itemname)
+			if item then
+				hero:RemoveItem(item)
+			end
+		end
+	end
+		
+end
+----------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------
+function CEvents:OnItemPickedUp( keys )
+	local playerid = keys.PlayerID 
+	local itemname = keys.itemname 
+	local item = EntIndexToHScript(keys.ItemEntityIndex)
+	local hero = EntIndexToHScript(keys.HeroEntityIndex)
+
+	if itemname == "item_pay_ability_point" then
+		item:RemoveSelf()
+	end
+end

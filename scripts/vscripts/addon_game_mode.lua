@@ -113,7 +113,7 @@ function CCloudPigeonLegendGameMode:InitGameMode()
   	MaxLevel = 1
 
   	--升级所需经验
-	XpTable = {1}
+	XpTable = {10}
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(MaxLevel)
 	GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XpTable)
 	

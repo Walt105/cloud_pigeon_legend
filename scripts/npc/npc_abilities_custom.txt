@@ -162,7 +162,7 @@
 				}
 			}
 
-			//第一次个boss摧毁树木
+			//第一个boss摧毁树木
 			"modifier_first_boss_tree"
 			{
 				"IsHidden"				"1"
@@ -185,22 +185,6 @@
 					}
 				}
 			}
-
-			//第一个BOSS的AI
-			"modifier_first_boss_ai"
-			{
-				"IsHidden"				"1"
-
-				"ThinkInterval"			"0.1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/AI/first_boss/ai_boss_millenary_treant.lua"
-						"Function"		"ModifierFirstBossAi"
-					}
-				}
-			}
 		}
 	}
 
@@ -216,6 +200,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0"
 		"AbilityDuration"			"5"
@@ -404,6 +389,7 @@
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"200 225 250 275 300 325 350"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"30"
@@ -478,6 +464,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
 		"AbilityTextureName"		"stop"
@@ -509,6 +496,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1"
 		"AbilityManaCost"			"3"
@@ -576,6 +564,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"sanbadao_kuangbao"
 
 		"Modifiers"
@@ -673,6 +662,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PURE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"sanbadao_judu"
 
 		"Modifiers"
@@ -753,6 +743,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"sanbadao_xixue"
 
 		"Modifiers"
@@ -796,6 +787,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"juggernaut_one_ability4"
 
 		"Modifiers"
@@ -894,6 +886,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"60"
 		"AbilityManaCost"			"100 120 140 160 180 200 220"
@@ -983,6 +976,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"1 0.9 0.8 0.7 0.6 0.5 0.4"
 		"AbilityManaCost"			"3"
@@ -1080,6 +1074,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"18"
@@ -1258,6 +1253,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
@@ -1426,6 +1422,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"300"
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"10"
@@ -1524,6 +1521,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"		"storm_spirit_electric_vortex"
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 
 		"Modifiers"
 		{
@@ -1612,6 +1610,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"150"
@@ -1719,6 +1718,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"800"
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"90"
@@ -1811,6 +1811,7 @@
 		"AOERadius"					"300"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"100"
@@ -1926,6 +1927,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"30"
@@ -2032,6 +2034,7 @@
 		"AbilityTextureName"		"doom_bringer_doom"
 		"AbilityCastRange"			"600"
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 
 		"Modifiers"
 		{
@@ -2162,6 +2165,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"		"ember_spirit_flame_guard"
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 
 		"OnUpgrade"
 		{
@@ -2242,6 +2246,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"800"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"150"
@@ -2365,6 +2370,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"700"
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"80"
@@ -2440,6 +2446,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"2000"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"0"
@@ -2521,6 +2528,7 @@
 		"AOERadius"					"300"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0.5"
 		"AbilityManaCost"			"100"
@@ -2602,6 +2610,7 @@
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"800"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"100"
@@ -2674,6 +2683,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"700"
 		"AbilityTextureName"		"skeleton_king_mortal_strike"
 
@@ -2770,6 +2780,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"skeleton_king_vampiric_aura"
 
 		"Modifiers"
@@ -2811,42 +2822,40 @@
 		}
 	}
 
-	//技能6：巨石之魂
+	//技能6：
 	"skeletonking_one_ability6"
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"150"
+		"AbilityCooldown"			"60"
 		"AbilityTextureName"		"skeletonking_one_ability6"
+
+		"precache" //缓存
+        {
+            "particle_folder"       "particles/units/heroes/hero_abaddon"
+        }
 
 		"OnSpellStart"
 		{
-			"SpawnUnit"
+			"RunScript"
 			{
-				"UnitName"				"npc_skeletonking_huge_stone"
-				"Target" 				"CASTER"
-				"Duration"				"%duration"
-				"UnitCount"				"1"
-				"SpawnRadius"			"200"
-				"OnSpawn"
+				"ScriptFile" 		"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+				"Function"			"SkeletonkingOneAbility6"
+				"Target"
 				{
-					"ApplyModifier"
-					{
-						"Target" 			"TARGET"
-						"ModifierName"		"modifier_skeletonking_one_ability6"
-					}
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
-						"Function"		"SkeletonkingOneAbility6"
-					}
-				}
+                    "Types"     	"DOTA_UNIT_TARGET_HERO"
+                    "Teams"     	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                    "Flags"     	"DOTA_UNIT_TARGET_FLAG_NONE"
+                    "Center"    	"CASTER"
+                    "Radius"    	"%radius"
+                }
 			}
 		}
 
@@ -2854,19 +2863,66 @@
 		{
 			"modifier_skeletonking_one_ability6"
 			{
-				"IsHidden"				"1"
-				"Duration"				"%duration"
-				"StatusEffectName"		"particles/custom/heros/skeletonking/skeletonking_one_ability6.vpcf"
-				"StatusEffectPriority"	"100"
+				"Duration"			"%duration"
+				"EffectName"		"particles/custom/heros/skeletonking/skeletonking_one_ability6.vpcf"
+				"EffectAttachType"	"follow_chest"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH"	"1"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+						"Function"		"SkeletonkingOneAbility6OnCreated"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
+						"Function"		"SkeletonkingOneAbility6TakeDamage"
+						"TakeDamage"	"%attack_damage"
+					}
+				}
 
 				"OnDestroy"
 				{
 					"RunScript"
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_skeletonking.lua"
-						"Function"		"SkeletonkingOneAbility6Remove"
+						"Function"		"SkeletonkingOneAbility6OnDestroy"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"Target"
+						{
+		                    "Types"     	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		                    "Teams"     	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		                    "Flags"     	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		                    "Center"    	"CASTER"
+		                    "Radius"    	"%damage_radius"
+		                }
+					}
+
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_skeletonking_one_ability6_effect"
 					}
 				}
+			}
+
+			"modifier_skeletonking_one_ability6_effect"
+			{
+				"IsHidden"				"1"
+				"Duration"				"0.1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"EffectName"			"particles/econ/items/abaddon/abaddon_feathers_mace/abaddon_aphotic_shield_explosion_ref.vpcf"
+				"EffectAttachType"		"follow_chest"
 			}
 		}
 
@@ -2874,54 +2930,21 @@
 		{
 			"01"	//持续时间
 			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"3.5 4 4.5 5 5.5 6 7"
+			}
+			"02"	//给予范围
+			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"			"20"
+				"radius"			"800"
+			}
+			"03"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_radius"		"180 190 200 210 220 230 250"
 			}
 		}
 	}
-	//巨石之人:重击
-	"skeletonking_one_ability6_huge_stone"
-	{
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"	"earth_spirit_rolling_boulder"
-
-		"Modifiers"
-		{
-			"modifier_skeletonking_one_ability6_huge_stone"
-			{
-				"Passive"		"1"
-				"IsHidden"		"1"
-				"OnAttackLanded"
-				{
-					"Damage"
-					{
-						"Target"
-						{
-							"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_NONE"
-							"Center"	"CASTER"
-							"Radius"	"%radius"
-						}
-						"Type"			 "DAMAGE_TYPE_PURE"
-						"Damage"		 "%attack_damage"
-					}
-				}
-			}
-		}
-
-		"AbilitySpecial"
-		{
-			"01"	//影响范围
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"400"
-			}
-		}
-	}
-
 
 	//================================================================================================
 	//风行 
@@ -2934,6 +2957,8 @@
 	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_ALL"
 	    "AbilityCastAnimation"		"ACT_DOTA_IDLE"
+	    "MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 
 	    "AbilityCastPoint"          "0.0"
 	    "AbilityCooldown"           "0"
@@ -3023,6 +3048,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"80"
@@ -3172,6 +3198,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"60"
@@ -3242,6 +3269,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"enchantress_natures_attendants"
 
 		"Modifiers"
@@ -3349,6 +3377,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCooldown"			"13 12 11 10 9 8 7"
 		"AbilityTextureName"		"windrunner_windrun_sylvan"
 
@@ -3442,6 +3471,7 @@
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"700"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"150"
@@ -3501,6 +3531,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"50"
@@ -3619,6 +3650,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"antimage_mana_void"
 	}
 
@@ -3630,6 +3662,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"50"
@@ -3794,6 +3827,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"keeper_of_the_light_spirit_form_illuminate"
 	}
 
@@ -3805,6 +3839,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"50"
@@ -3914,6 +3949,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"puck_illusory_orb"
 	}
 
@@ -3924,6 +3960,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"antimage_spell_shield"
 
 		"precache" //缓存
@@ -4066,6 +4103,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"modifier_illusion"
 
 		"Modifiers"
@@ -4188,6 +4226,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"0"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"150"
@@ -4379,6 +4418,7 @@
 		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MAX_HEAL | BOSSCASTABILITYSELECT_EXTRA_MELEE"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0.0"
 		"AbilityManaCost"			"30"
@@ -4510,6 +4550,7 @@
 		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MIN_HEAL | BOSSCASTABILITYSELECT_EXTRA_RANGE"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"1000"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"30"
@@ -4584,6 +4625,7 @@
 		"BossHealPercent"			"100"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"600"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"20"
@@ -4699,6 +4741,7 @@
 		"BossHealPercent"			"90"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"35"
@@ -4821,6 +4864,7 @@
 		"BossHealPercent"			"30"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityCastRange"			"200"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
@@ -4959,6 +5003,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"ability_6"
 
 		"Modifiers"

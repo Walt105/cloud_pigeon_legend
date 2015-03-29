@@ -234,4 +234,16 @@ function SetAbilitiesLevelToOne( unit )
 end
 
 
+-------------------------------------------------------
+--给予技能点
+function GiveAbilityPointToAll( num )
+	for k,v in pairs(GameRules._Players) do
+		if v then
+			local hero = v:GetAssignedHero()
+			if IsValidAndAlive(hero)  then
+				hero:SetAbilityPoints(hero:GetAbilityPoints() + num)
+			end
+		end
+	end
+end
 

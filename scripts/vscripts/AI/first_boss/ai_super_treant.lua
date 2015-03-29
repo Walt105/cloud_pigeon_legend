@@ -13,6 +13,7 @@ function Spawn( val )
 		if IsValidAndAlive(thisEntity) == "Not Valid" then
 			GameRules._IsRespawn = true
 			CustomRespawnHero()
+			GiveAbilityPointToAll( 2 )
 
 			--创建boss
 			local ent_boss = Entities:FindByName(nil,"first_boss_point")

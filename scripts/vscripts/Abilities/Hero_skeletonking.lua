@@ -128,27 +128,40 @@ end
 --巨石之魂
 function SkeletonkingOneAbility6( keys )
 	local caster = keys.caster
-	local target = keys.target
+	local ability = keys.ability
+	local group = keys.target_entities
 
-	if caster.SkeletonkingOneAbility6 ~= nil then
-		if IsValidEntity(caster.SkeletonkingOneAbility6) then
-			caster.SkeletonkingOneAbility6:RemoveSelf()
+	for k,v in pairs(group) do
+		if IsValidAndAlive(v) == true then
+			ability:ApplyDataDrivenModifier(v,v,"modifier_skeletonking_one_ability6",nil)
+			v.SkeletonkingOneAbility6Hero = caster
 		end
 	end
-		
-	caster.SkeletonkingOneAbility6 = target
-	target:SetAbsOrigin(caster:GetAbsOrigin() + 200 * caster:GetForwardVector())
-	target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
-	target:SetMaxHealth(caster:GetMaxHealth() * 4)
-	target:SetHealth(target:GetMaxHealth())
-	target:SetBaseDamageMax(caster:GetBaseDamageMax() * 2)
-	target:SetBaseDamageMin(caster:GetBaseDamageMin() * 2)
 end
 
-function SkeletonkingOneAbility6Remove( keys )
-	local target = keys.target
+function SkeletonkingOneAbility6OnCreated( keys )
+	local caster = keys.caster
+	caster.SkeletonkingOneAbility6=0
+end
 
-	if IsValidEntity(target) then
-		target:RemoveSelf()
+function SkeletonkingOneAbility6TakeDamage( keys )
+	local caster = keys.caster
+
+	if IsValidAndAlive(caster) == true then
+		caster:SetHealth(caster:GetHealth() + keys.TakeDamage)
+		caster.SkeletonkingOneAbility6 = caster.SkeletonkingOneAbility6 + keys.TakeDamage
 	end
+end
+
+function SkeletonkingOneAbility6OnDestroy( keys )
+	local caster = keys.caster
+	local group = keys.target_entities
+	local hero = caster.SkeletonkingOneAbility6Hero or caster
+
+	--造成伤害
+	local t = {	target_entities = group,
+				caster = hero,
+				damage = caster.SkeletonkingOneAbility6,
+				damage_type = keys.damage_type}
+	local damage = DamageAOE(t)
 end

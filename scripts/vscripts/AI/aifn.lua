@@ -256,20 +256,16 @@ function CAI:AutoCastAbility( unit )
 
 		if RollPercentage(random) then
 			for k,v in pairs(ability) do
-				print("random3",random)
 				local hp = v.BossHealPercent
 				if hp then
 					if heal_percent <= hp then
-						print("random4",random)
 						local min = v.BossCastPercentMin
 						local max = v.BossCastPercentMax
 						if min ~= nil and max ~= nil then
 							if RollPercentage(RandomFloat(min,max)) then
-								print("random5",random)
 								local a = unit:FindAbilityByName(k)
 								if a then
 									if a:IsCooldownReady() then
-										print("Cast "..k)
 										CAI:CastAbility( unit,a,v )
 
 										if v.BossNextAbility ~= nil and v.BossNextAbilityDelay ~= nil then

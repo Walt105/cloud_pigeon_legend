@@ -12,6 +12,7 @@
 			"item"		"item_custom_big_heal_bottle"
 			"item"		"item_custom_small_mana_bottle"
 			"item"		"item_custom_big_mana_bottle"
+			"item"		"item_pay_ability_point"
 		}
 		
 		"#DOTA_Item_Build_Early_Game"
