@@ -31,12 +31,15 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/custom/Boss_millenary_treant/Boss_millenary_treant_A4.vsndevts", context )
 
 	--载入特效
 	PrecacheResource( "particle", "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf", context )
 	
 	PrecacheResource( "particle", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf", context )
+	PrecacheResource( "particle", "particles/units/heroes/hero_ursa/ursa_earthshock.vpcf", context )
 	PrecacheResource( "particle_folder", "particles/custom", context )
 	PrecacheResource( "particle_folder", "particles/status_fx", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_sven", context )
@@ -47,6 +50,8 @@ function Precache( context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_phoenix", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_stormspirit", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_treant", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_tiny", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_wisp", context )
 
 	--载入模型
 	local unit_kv = LoadKeyValues("scripts/npc/npc_units_custom.txt")
@@ -57,6 +62,13 @@ function Precache( context )
                 if keys.Model then
                     --print("precacheing model"..keys.Model)
                     PrecacheModel(keys.Model, context )
+                end
+                if keys.precache then
+                	for k,v in pairs(keys.precache) do
+                		if v then
+                			PrecacheModel(v, context )
+                		end
+                	end
                 end
             end
         end
@@ -118,6 +130,8 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XpTable)
 	
 	--初始化
+	CUI:Init( )
+	SyncGold( )
 	CEvents:Init()
 	CustomPurgeInit()
 	GameRules.PlayerNum = 0
@@ -133,6 +147,7 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	GameRules._touch2TriggerUnit = {}
 	GameRules._touch3TriggerNum = 0
 	GameRules._touch3TriggerUnit = {}
+	GameRules._RemoveMajia = {}
 	GamePaused()
 end
 

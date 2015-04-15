@@ -39,41 +39,22 @@ end
 --A2
 function BossMillenaryTreantA2( keys )
 	local caster = keys.caster
-	local target = keys.target
+	local ability = keys.ability
+	local radius = keys.radius
+	local damage = keys.damage
+	local damage_type = keys.damage_type
+	local teams = ability:GetAbilityTargetTeam()
+	local types = ability:GetAbilityTargetType()
+	local flags = ability:GetAbilityTargetFlags()
+	local point = keys.target_points[1]
 
-	local unit = caster.BossMillenaryTreantA1Target or false
-
-	CustomTimer("BossMillenaryTreantA2",function( )
-		
-		if unit then
-			if IsValidAndAlive(unit) and IsValidAndAlive(target) then
-				if unit:HasModifier("modifier_boss_millenary_treant_a1") and target:HasModifier("modifier_boss_millenary_treant_a2") then
-
-					--获取位置
-					local target_abs = target:GetAbsOrigin()
-					local unit_abs = unit:GetAbsOrigin()
-
-					--设置位置
-					local face = (target_abs - unit_abs):Normalized()
-					local vec = target_abs - face * 6.5
-
-					target:SetAbsOrigin(vec)
-
-					return 0.02
-				end
-			end
-		end
-
-		if target:HasModifier("modifier_boss_millenary_treant_a2") then
-			target:RemoveModifierByName("modifier_boss_millenary_treant_a2")
-		end
-
-		--防止卡位
-		if IsValidAndAlive(target) then
-			FindClearSpaceForUnit(target,target:GetOrigin(),true)
-		end
-		return nil
-	end,0)
+	local p = CustomCreateParticle("particles/custom/heros/boss_millenary_treant/boss_millenary_treant_tree.vpcf",PATTACH_WORLDORIGIN,caster,15,false,function( )
+	    local group = FindUnitsInRadius(caster:GetTeamNumber(),point,nil,radius,teams,types,flags,FIND_UNITS_EVERYWHERE,true)
+	    caster:DamageAOEFun( group,damage,damage_type )
+	end)
+	ParticleManager:SetParticleControl(p,0,point)
+	ParticleManager:SetParticleControl(p,1,point)
+	ParticleManager:SetParticleControl(p,2,point)
 end
 
 --A4

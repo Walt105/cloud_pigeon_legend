@@ -188,6 +188,157 @@
 		}
 	}
 
+	//红色小精灵
+	"npc_wisp_red_effect"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"Modifiers"
+		{
+			"modifier_npc_wisp_red_effect"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/heros/wisp_red/wisp_red_ambient.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//绿色小精灵
+	"npc_wisp_green_effect"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"Modifiers"
+		{
+			"modifier_npc_wisp_green_effect"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/heros/wisp_green/wisp_green_ambient.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//蓝色小精灵
+	"npc_wisp_blue_effect"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"Modifiers"
+		{
+			"modifier_npc_wisp_blue_effect"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/heros/wisp_blue/wisp_blue_ambient.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+							"CASTER"		"attach_hitloc"
+						}
+					}
+				}
+			}
+
+			"modifier_npc_wisp_blue_1"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Aura"          "modifier_npc_wisp_blue_1_effect"
+                "Aura_Radius"   "80"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+			"modifier_npc_wisp_blue_1_effect"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/wisp_blue.lua"
+						"Function"		"WispBlue1"
+					}
+				}
+			}
+		}
+	}
+
 	//================================================================================================
 	//主宰 
 	//输出技能
@@ -1722,30 +1873,25 @@
 		"AbilityCastRange"			"800"
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"90"
-		"AbilityCooldown"			"10"
+		"AbilityCooldown"			"8"
 		"AbilityTextureName"		"phoenix_launch_fire_spirit"
 
 		"OnSpellStart"
 		{
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
-				"Function"		"LinaOneAbility1"
-				"EffectName"	"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
-				"move_speed"	"1100"
-				"radius"		"%radius"
-				"count"			"%count"
-			}
+			"TrackingProjectile"
+            {
+                "Target"            "TARGET"
+                "EffectName"        "particles/custom/heros/lina/lina_ability1.vpcf"
+                "Dodgeable"         "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+                "MoveSpeed"         "1000"
+                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
 		}
 
 		"OnProjectileHitUnit"
         {
-        	"RunScript"
-        	{
-        		"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-        		"Function"		"CatapultImpact"
-        	}
-
         	"AttachEffect"
         	{
         		"EffectName"		"particles\units\heroes\hero_jakiro\jakiro_liquid_fire_explosion.vpcf"
@@ -1778,16 +1924,6 @@
 
         "AbilitySpecial"
         {
-        	"01"	//弹射范围
-        	{
-        		"var_type"			"FIELD_INTEGER"
-        		"radius"			"600"
-        	}
-        	"02"	//弹射次数
-        	{
-        		"var_type"			"FIELD_INTEGER"
-        		"count"				"8"
-        	}
         	"03"	//伤害范围
         	{
         		"var_type"			"FIELD_INTEGER"
@@ -1796,7 +1932,7 @@
         	"04"	//伤害
         	{
         		"var_type"			"FIELD_INTEGER"
-        		"damage"			"50 100 150 200 250 300 350"
+        		"damage"			"100 150 200 250 300 350 400"
         	}
         }
 	}
@@ -2138,7 +2274,7 @@
 			"03"	//伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"10 15 20 25 30 35 40"
+				"damage"			"5 10 15 20 25 30 35"
 			}
 			"04"	//触发概率
 			{
@@ -4404,9 +4540,8 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET  | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
-		"AbilityCastAnimation"		"ACT_DOTA_IDLE_RARE"
 
 		"Boss"						"1"
 		"BossAutoCast"				"1"
@@ -4414,8 +4549,7 @@
 		"BossCastPercentMax"		"50"
 		"BossHealPercent"			"100"
 		"BossNextAbilityDelay"		"0.1"
-		"BossNextAbility"			"boss_millenary_treant_a2"
-		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MAX_HEAL | BOSSCASTABILITYSELECT_EXTRA_MELEE"
+		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MAX_HEAL"
 
 		"MaxLevel"					"1"
 		"LevelsBetweenUpgrades"		"0"
@@ -4534,20 +4668,19 @@
 	"boss_millenary_treant_a2"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 
 		"Boss"						"1"
-		"BossAutoCast"				"0"
-		"BossCastPercentMin"		"25"
-		"BossCastPercentMax"		"50"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"40"
+		"BossCastPercentMax"		"60"
 		"BossHealPercent"			"100"
 		"BossNextAbilityDelay"		"0.1"
-		"BossNextAbility"			"boss_millenary_treant_a1"
-		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MIN_HEAL | BOSSCASTABILITYSELECT_EXTRA_RANGE"
+		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_Random"
 
 		"MaxLevel"					"1"
 		"LevelsBetweenUpgrades"		"0"
@@ -4559,53 +4692,28 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
+			"RunScript"
 			{
-				"Target" 			"TARGET"
-				"ModifierName"		"modifier_boss_millenary_treant_a2"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_boss_millenary_treant_a2"
-			{
-				"IsDebuff"			"1"
-				"IsPurgable"		"1"
-				"Duration"			"%duration"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
-						"Function"		"BossMillenaryTreantA2"
-					}
-				}
+				"ScriptFile" 	"scripts/vscripts/Abilities/Boss_millenary_treant.lua"
+				"Target"		"POINT"
+				"radius"		"%radius"
+				"damage"		"%damage"
+				"damage_type"	"DAMAGE_TYPE_MAGICAL"
+				"Function"		"BossMillenaryTreantA2"
 			}
 		}
 
 		"AbilitySpecial"
 		{
-			"04"	//降低魔抗
+			"01"	//作用范围
 			{
 				"var_type"			"FIELD_INTEGER"
-				"magical"			"-25"
+				"radius"			"300"
 			}
-			"01"	//持续时间
+			"02"	//伤害
 			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"10"
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"80"
 			}
 		}
 	}
@@ -4716,7 +4824,7 @@
 			"03"	//持续伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_think"		"15"
+				"damage_think"		"10"
 			}
 			"04"	//伤害间隔
 			{
@@ -4844,7 +4952,7 @@
 			"02"	//提高技能伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"add_damage"		"25"
+				"add_damage"		"10"
 			}
 		}
 	}
@@ -4926,8 +5034,6 @@
 
 			"modifier_boss_millenary_treant_a5_effect"
 			{
-				"Duration"			"1"
-
 				"OnCreated"
 				{
 					"RunScript"
@@ -5062,6 +5168,656 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"heal_percent"		"20"
+			}
+		}
+	}
+
+	//================================================================================================
+	//BOSS:万年石头
+	//================================================================================================
+	//A1
+	"boss_stone_a1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityTextureName"		"ability_1"
+
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"50"
+		"BossCastPercentMax"		"75"
+		"BossHealPercent"			"100"
+		"BossCastAbilitySelect"		"BOSSCASTABILITYSELECT_MAX_HEAL"
+
+		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"8"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+				"Target"		"POINT"
+				"Function"		"BossStoneA1"
+				"radius"		"%radius"
+				"distance"		"%distance"
+				"duration"		"%duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_stone_a1"
+			{
+				"IsHidden"		"1"
+
+				"Aura"          "modifier_boss_stone_a1_damage"
+                "Aura_Radius"   "%radius"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+			}
+
+			"modifier_boss_stone_a1_damage"
+			{
+				"IsHidden"		"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_PHYSICAL"
+						"damage"		"%damage"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//伤害范围
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"128"
+			}
+			"02"	//距离
+			{
+				"var_type"			"FIELD_INTEGER"
+				"distance"			"2500"
+			}
+			"03"	//持续时间
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"1"
+			}
+			"04"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"175"
+			}
+		}
+	}
+
+	//A2
+	"boss_stone_a2"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"		"ability_2"
+
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"30"
+		"BossCastPercentMax"		"65"
+		"BossHealPercent"			"95"
+
+		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
+		"AbilityCastRange"			"300"
+		"AbilityCastPoint"			"0.4"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"12"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+				"Function"		"BossStoneA2"
+				"Target"		"POINT"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Tiny.Toss.Target"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_stone_a2"
+			{
+				"Duration"		"1"
+				"IsHidden"		"1"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target" 			"CASTER"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Ability.TossImpact"
+						"Target"  			"CASTER"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_PHYSICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				            "Center"    "CASTER"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"300"
+			}
+		}
+	}
+
+	//A3
+	"boss_stone_a3"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityCastAnimation"		"ACT_DOTA_IDLE"
+		"AbilityTextureName"		"ability_3"
+
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"5"
+		"BossCastPercentMax"		"25"
+		"BossHealPercent"			"70"
+
+		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
+		"AbilityChannelTime"		"1"
+		"AbilityCastRange"			"300"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"15"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_boss_stone_a3"
+			}
+		}
+
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_boss_stone_a3"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_stone_a3"
+			{
+				"Duration"			"1"
+				"IsHidden"			"1"
+
+				"ThinkInterval"		"0.1"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_boss_stone_a3_action"
+					}
+				}
+			}
+
+			"modifier_boss_stone_a3_action"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"IsHidden"			"0"
+				"Duration"			"0.2"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"  			"CASTER"
+						"ControlPoints"
+						{
+							"00"			"00 00 05"
+							"01"			"%radius %radius %radius"
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_PHYSICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				            "Center"    "CASTER"
+				            "Radius"    "%radius"
+				        }
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"850"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"30"
+			}
+		}
+	}
+
+	//A4
+	"boss_stone_a4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"		"ability_4"
+
+		"Boss"						"1"
+		"BossAutoCast"				"1"
+		"BossCastPercentMin"		"15"
+		"BossCastPercentMax"		"50"
+		"BossHealPercent"			"85"
+
+		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
+		"AbilityCastRange"			"0"
+		"AbilityCastPoint"			"0.0"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"10"
+
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"				"boss_stone_small"
+				"Target" 				"CASTER"
+				"Duration"				"0"
+				"UnitCount"				"1"
+				"SpawnRadius"			"200"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"TARGET"
+						"Duration"			"0.1"
+						"ModifierName"		"modifier_phased"
+					}	
+				}
+			}
+		}	
+	}
+
+	//A5
+	"boss_stone_a5"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"		"ability_5"
+
+		"Modifiers"
+		{
+			"modifier_boss_stone_a5"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+						"Function"		"BossStoneA5"
+						"take_damamge"	"%attack_damage"
+						"percent"		"%percent"
+						"damage_type"	"DAMAGE_TYPE_PHYSICAL"
+					}
+
+					"Random"
+					{
+						"Chance"			"%chance"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_boss_stone_a5_effect_show"
+							}
+							"ApplyModifier"
+							{
+								"Target" 			"CASTER"
+								"ModifierName"		"modifier_boss_stone_a5_effect"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_boss_stone_a5_effect_show"
+			{}
+
+			"modifier_boss_stone_a5_effect"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"AddAbilityDamage"
+						"add_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_boss_stone_a5_effect_show"
+						"AddOrLow"		"Add"
+						"count"			"1"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"LowAbilityDamage"
+						"low_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_boss_stone_a5_effect_show"
+						"AddOrLow"		"Low"
+						"count"			"1"
+						"Remove"		"1"
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//反弹伤害百分比
+			{
+				"var_type"			"FIELD_INTEGER"
+				"percent"			"10"
+			}
+			"04"	//触发概率
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"2"
+			}
+			"02"	//持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"15"
+			}
+			"03"	//增加的技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"20"
+			}
+		}
+	}
+
+	//A6
+	"boss_stone_a6"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"		"ability_6"
+
+		"Modifiers"
+		{
+			"modifier_boss_stone_a6"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+						"Function"		"BossStoneA6"
+						"low_heal"		"%low_heal"
+					}
+				}
+
+				"OnHealReceived"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+						"Function"		"BossStoneA6"
+						"low_heal"		"%low_heal"
+					}
+				}
+			}
+
+			"modifier_boss_stone_a6_effect"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"EffectName"		"particles/units/heroes/hero_tiny/tiny_loadout.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%incoming_damage"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"	//魔抗降低
+			{
+				"var_type"			"FIELD_INTEGER"
+				"magical"			"-5"
+			}
+			"02"	//护甲降低
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor"				"-3"
+			}
+			"03"	//提高承受的伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"incoming_damage"	"103"
+			}
+			"04"	//损失生命值百分比
+			{
+				"var_type"			"FIELD_INTEGER"
+				"low_heal"			"20"
+			}
+		}
+	}
+
+	//================================================================================================
+	//小石精
+	//================================================================================================
+	//跳跃
+	"boss_stone_small_a1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"		"ability_1"
+
+		"MaxLevel"					"1"
+		"LevelsBetweenUpgrades"		"0"
+		"AbilityCastRange"			"3000"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"5"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+				"Function"		"BossStoneSmallA1"
+				"Target"		"POINT"
+			}
+			"ApplyModifier"
+			{
+				"Target" 			"CASTER"
+				"ModifierName"		"modifier_boss_stone_small_a1_do"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Tiny.Toss.Target"
+				"Target"  			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_boss_stone_small_a1"
+			{
+				"Duration"		"1"
+				"IsHidden"		"1"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_tiny/tiny_toss_impact.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target" 			"CASTER"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Ability.TossImpact"
+						"Target"  			"CASTER"
+					}
+
+					"Damage"
+					{
+						"Target"
+						{
+		                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		                    "Center"    "CASTER"
+		                    "Radius"    "256"
+		                }
+						"Type"			 "DAMAGE_TYPE_PHYSICAL"
+						"MinDamage"		 "100"
+						"MaxDamage"		 "500"
+					}
+				}
+			}
+
+			"modifier_boss_stone_small_a1_do"
+			{
+				"Duration"		"1"
+				"IsHidden"		"1"
+				"OverrideAnimation"		"ACT_DOTA_FLAIL"
+			}
+
+			"modifier_boss_stone_small_a1_auto_cast"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"Random"
+					{
+						"Chance"			"5"
+						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile" 	"scripts/vscripts/Abilities/Boss_stone.lua"
+								"Function"		"BossStoneSmallA1Cast"
+								"Target"
+				                {
+				                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				                    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				                    "Center"    "CASTER"
+				                    "Radius"    "800"
+				                }
+							}
+						}
+					}
+				}
 			}
 		}
 	}

@@ -34,11 +34,13 @@ function Spawn( val )
 			local majia = CustomCreateUnit("npc_majia",ent_boss:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
 			majia:SetDayTimeVisionRange(1800)
 			majia:SetNightTimeVisionRange(1800)
+			table.insert( GameRules._RemoveMajia,majia )
 			for i=1,4 do
 				local ent = Entities:FindByName(nil,"first_boss_spawn_"..tostring(i))
 				local majia = CustomCreateUnit("npc_majia",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
 				majia:SetDayTimeVisionRange(1800)
 				majia:SetNightTimeVisionRange(1800)
+				table.insert( GameRules._RemoveMajia,majia )
 			end
 			return nil
 		end

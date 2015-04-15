@@ -12,6 +12,7 @@ require("global")
 require("util/damage")
 require("events")
 require("AI/aifn")
+require("UI")
 
 --游戏流程
 require("game_process/template_map_process")

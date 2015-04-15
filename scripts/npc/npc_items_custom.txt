@@ -269,7 +269,7 @@
 	    "ItemPurchasable"			"1"
 	    "ItemKillable"				"1"
 	    "ItemDisassembleRule"		"0"
-	    "ItemPermanent"				"0"
+	    "ItemPermanent"				"1"
 	    "ItemInitialCharges"		"1"
 	    "ItemRequiresCharges"		"1"
 	    "ItemStackable"				"1"
@@ -302,5 +302,23 @@
 	    		"point"				"1"
 	    	}
 	    }
+	}
+
+	//购买技能点
+	"item_pay_ability_point1"
+	{	
+	    "ID"						"1006"
+	    "BaseClass"					"item_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"		"item_pay_ability_point"
+
+	    "ItemCost"					"300"
+	    "ItemDroppable"				"1"
+	    "ItemSellable"				"1"
+	    "ItemPurchasable"			"1"
+	    "ItemKillable"				"1"
+	    "ItemDisassembleRule"		"0"
+	    "ItemPermanent"				"1"
+	    "ItemStockTime"				"0"
 	}
 }

@@ -250,9 +250,9 @@ function CAI:AutoCastAbility( unit )
 		end
 
 		local heal_percent = unit:GetHealthPercent()
-		local time = 0.5 + (heal_percent/10)
+		local time = 0.25 + (heal_percent/10)
 
-		local random = RandomFloat(5,100)
+		local random = RandomFloat(15,100)
 
 		if RollPercentage(random) then
 			for k,v in pairs(ability) do
@@ -287,7 +287,7 @@ function CAI:AutoCastAbility( unit )
 			end
 		end
 
-		return RandomFloat(0.5,time)
+		return RandomFloat(0.25,time)
 	end,0)
 
 end

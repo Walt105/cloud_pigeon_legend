@@ -7,6 +7,7 @@
 		"item"		"item_custom_small_mana_bottle"
 		"item"		"item_custom_big_mana_bottle"
 		"item"		"item_pay_ability_point"
+		"item"		"item_pay_ability_point1"
 	}
 	"attributes"
 	{

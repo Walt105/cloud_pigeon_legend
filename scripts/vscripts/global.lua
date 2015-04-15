@@ -247,3 +247,59 @@ function GiveAbilityPointToAll( num )
 	end
 end
 
+
+--同步金币
+function SyncGold( )
+	CustomTimer("SyncGold",function( )
+		for i=0,DOTA_MAX_PLAYER_TEAMS-1 do
+			local player = PlayerResource:GetPlayer(i)
+			if player then
+				FireGameEvent("sync_gold",{PlayerId=i,gold=PlayerResource:GetGold(i)})
+			end
+		end
+
+		return 0.1
+	end,0)
+end
+
+
+--创建特效
+function CustomCreateParticle( name,const,target,duration,immediately,fun )
+	local p = ParticleManager:CreateParticle(name,const,target)
+
+	CustomTimer("CustomCreateParticle",function( )
+		ParticleManager:DestroyParticle(p,immediately)
+
+		if fun then
+			if type(fun) == "function" then
+				fun()
+			end
+		end
+		return nil
+	end,duration)
+
+	return p
+end
+
+
+--获取饰品
+function CDOTA_BaseNPC:GetWearables( )
+	if IsValidAndAlive(self) ~= true then
+		return nil
+	end
+
+	local models = {}
+
+	local _model = self:FirstMoveChild()
+	while _model ~= nil do
+		if _model:GetClassname() ~= "" and _model:GetClassname() == "dota_item_wearable" then
+			local modelName = _model:GetModelName()
+			if string.find(modelName, "invisiblebox") == nil then
+				table.insert(models,_model)
+			end
+		end
+		_model = _model:NextMovePeer()
+	end
+
+	return models
+end

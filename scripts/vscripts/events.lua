@@ -81,6 +81,8 @@ function CEvents:OnGameRulesStateChange( keys )
 		elseif GetMapName() == "cloud_pigeon_legend" then
 
 			CCloudPigeonLegend:Start( )
+			local ent = Entities:FindByName(nil,"wisp_01")
+			CustomCreateUnit("npc_wisp_blue",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
 
 		end
 	end
@@ -196,6 +198,7 @@ function CDOTA_BaseNPC:FindItem( itemname )
 	return nil
 end
 
+ItemX = nil
 function CEvents:OnItemPurchased( keys )
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 

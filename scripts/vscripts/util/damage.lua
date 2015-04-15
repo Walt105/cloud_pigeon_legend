@@ -56,6 +56,25 @@ function DamageAOE( keys )
 
 end
 
+--方便Lua中调用
+function CDOTA_BaseNPC:DamageTargetFun( target,damage,damage_type )
+	local damageTable = {target = target,
+						caster = self,
+						damage = damage,
+						damage_type = damage_type
+	}
+	return DamageTarget( damageTable )
+end
+
+function CDOTA_BaseNPC:DamageAOEFun( group,damage,damage_type )
+	local damageTable = {target_entities = group,
+						caster = self,
+						damage = damage,
+						damage_type = damage_type
+	}
+	DamageAOE( damageTable )
+end
+
 --增加技能伤害
 --每个单位所标记的add_ability_damage就是指增加的技能伤害
 function AddAbilityDamage( keys )
