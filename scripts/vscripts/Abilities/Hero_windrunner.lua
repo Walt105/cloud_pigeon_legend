@@ -208,6 +208,7 @@ function WindrunnerOneAbility6( keys )
 			    local types = DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_HERO
 			    local flags = DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES
 
+			    if IsValidAndAlive(target)=="Not Valid" then return nil end
 			    local group = FindUnitsInRadius(caster:GetTeamNumber(),target:GetOrigin(),nil,1000,teams,types,flags,FIND_UNITS_EVERYWHERE,true)
 
 			    TableRemoveTable(group,target)

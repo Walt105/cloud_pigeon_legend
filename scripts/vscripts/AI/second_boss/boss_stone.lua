@@ -34,9 +34,12 @@ function Spawn( val )
 		if IsValidAndAlive(thisEntity) == true then
 			if thisEntity._BossIsWar then
 				war = true
+				GameRules._IsRespawn = false
 			else
 				if war then
 					war = false
+					GameRules._IsRespawn = true
+					CustomRespawnHero()
 					-- local group = FindUnitsInRadius(thisEntity:GetTeamNumber(),thisEntity:GetOrigin(),nil,3000,DOTA_UNIT_TARGET_TEAM_FRIENDLY,DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
 					-- for k,v in pairs(group) do
 					-- 	if IsValidAndAlive(v) then
@@ -44,13 +47,16 @@ function Spawn( val )
 					-- 	end
 					-- end
 
-					-- local ent = Entities:FindByName(nil,"first_boss_point")
-					-- thisEntity:SetAbsOrigin(ent:GetAbsOrigin())
+					local ent = Entities:FindByName(nil,"second_boss")
+					thisEntity:SetAbsOrigin(ent:GetAbsOrigin())
 					thisEntity:SetHealth(thisEntity:GetMaxHealth())
 					thisEntity:Stop()
 				end
 			end
 		else
+			GameRules._IsRespawn = true
+			CustomRespawnHero()
+
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 			return nil
 		end

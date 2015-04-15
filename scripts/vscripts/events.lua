@@ -81,8 +81,15 @@ function CEvents:OnGameRulesStateChange( keys )
 		elseif GetMapName() == "cloud_pigeon_legend" then
 
 			CCloudPigeonLegend:Start( )
-			local ent = Entities:FindByName(nil,"wisp_01")
-			CustomCreateUnit("npc_wisp_blue",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
+
+			--创建蓝色精灵球
+			for i=1,4 do
+				local name = string.format("wisp_0%d",i)
+				local ent = Entities:FindByName(nil,name)
+				if IsValidEntity(ent) then
+					CustomCreateUnit("npc_wisp_blue",ent:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
+				end
+			end
 
 		end
 	end
@@ -94,6 +101,7 @@ end
 ----------------------------------------------------------------------------------------------------------
 function CEvents:OnEntityKilled( keys )
 	local unit = EntIndexToHScript(keys.entindex_killed)
+	local unit_abs = unit:GetAbsOrigin()
 
 	if unit:IsHero() and unit:GetTeamNumber() == DOTA_TEAM_GOODGUYS and GameRules._IsRespawn then
 		CustomTimer("OnEntityKilled",function( )
@@ -104,6 +112,29 @@ function CEvents:OnEntityKilled( keys )
 			end
 			return nil
 		end,3)
+	end
+
+	if unit:GetTeamNumber() == DOTA_TEAM_BADGUYS and unit:IsAncient()==false then
+		if RollPercentage(RandomFloat(15,50)) then
+			local wisp = CustomCreateUnit("npc_wisp_green",unit_abs,270,DOTA_TEAM_GOODGUYS)
+			local ability = wisp:FindAbilityByName("npc_wisp_ability1")
+			if ability then
+				local face = wisp:GetForwardVector()
+				local abs = wisp:GetAbsOrigin() + face * RandomInt(50,350)
+				local vec = RotatePosition(wisp:GetAbsOrigin(),QAngle(0,RandomFloat(0,360),0),abs)
+				wisp:CastAbilityOnPosition(vec,ability,0)
+			end
+		end
+		if RollPercentage(RandomFloat(15,50)) then
+			local wisp = CustomCreateUnit("npc_wisp_red",unit_abs,270,DOTA_TEAM_GOODGUYS)
+			local ability = wisp:FindAbilityByName("npc_wisp_ability1")
+			if ability then
+				local face = wisp:GetForwardVector()
+				local abs = wisp:GetAbsOrigin() + face * RandomInt(50,350)
+				local vec = RotatePosition(wisp:GetAbsOrigin(),QAngle(0,RandomFloat(0,360),0),abs)
+				wisp:CastAbilityOnPosition(vec,ability,0)
+			end
+		end
 	end
 end
 ----------------------------------------------------------------------------------------------------------

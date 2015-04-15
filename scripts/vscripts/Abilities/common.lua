@@ -59,7 +59,6 @@ end
 --ShouldStun 	是否击晕
 --Fun 			落地后执行的函数
 function Knockback( Target,Center,Duration,Distance,Height,ShouldStun,Fun )
-	print("Run Knockback")
 
 	--对参数进行判断
 	if type(Target)~="table" or (type(Center) ~= "userdata" and type(Center)~="table") then
@@ -398,7 +397,7 @@ function CDOTA_BaseNPC:CustomHeal( heal )
 	if IsValidAndAlive(self) == true then else return end
 	self:SetHealth(self:GetHealth() + heal)
 	local heal_num = #tostring(math.floor(heal))
-    local particle = ParticleManager:CreateParticle("particles/msg_fx/msg_heal.vpcf",PATTACH_ABSORIGIN_FOLLOW,self)
+    local particle = CustomCreateParticle("particles/msg_fx/msg_heal.vpcf",PATTACH_ABSORIGIN_FOLLOW,self,3,false,nil)
     ParticleManager:SetParticleControl(particle,0,self:GetOrigin())
     ParticleManager:SetParticleControl(particle,1,Vector(10,heal,0))
     ParticleManager:SetParticleControl(particle,2,Vector(1,heal_num + 1,0))

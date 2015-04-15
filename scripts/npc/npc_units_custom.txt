@@ -83,7 +83,7 @@
 		//----------------------------------------------------------------
 		"Ability1"					"npc_wisp_red_effect"
 		"Ability2"					"majia"
-		"Ability3"					""
+		"Ability3"					"npc_wisp_ability1"
 		"Ability4"					""
 
 		// Attack
@@ -121,8 +121,8 @@
 
 		// 视野
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// 白天视野
-		"VisionNighttimeRange"		"1800"		// 夜晚视野
+		"VisionDaytimeRange"		"80"		// 白天视野
+		"VisionNighttimeRange"		"80"		// 夜晚视野
 	}
 
 	//绿色小精灵
@@ -145,7 +145,7 @@
 		//----------------------------------------------------------------
 		"Ability1"					"npc_wisp_green_effect"
 		"Ability2"					"majia"
-		"Ability3"					""
+		"Ability3"					"npc_wisp_ability1"
 		"Ability4"					""
 
 		// Attack
@@ -183,8 +183,8 @@
 
 		// 视野
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// 白天视野
-		"VisionNighttimeRange"		"1800"		// 夜晚视野
+		"VisionDaytimeRange"		"80"		// 白天视野
+		"VisionNighttimeRange"		"80"		// 夜晚视野
 	}
 
 	//蓝色小精灵
@@ -245,8 +245,8 @@
 
 		// 视野
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// 白天视野
-		"VisionNighttimeRange"		"1800"		// 夜晚视野
+		"VisionDaytimeRange"		"80"		// 白天视野
+		"VisionNighttimeRange"		"80"		// 夜晚视野
 	}
 
 	//测试用的单位

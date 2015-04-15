@@ -119,6 +119,29 @@ function CustomRespawnHero( )
 	end
 end
 
+--给予所有玩家金钱
+function GiveAllPlayerGold( gold )
+	if type(gold) ~= "number" then return end
+	for k,v in pairs(GameRules._Players) do
+		if IsValidEntity(v) then
+			PlayerResource:SetGold(v:GetPlayerID(),PlayerResource:GetGold(v:GetPlayerID())+gold,true)
+			local hero = v:GetAssignedHero()
+			hero:GoldEffect(gold)
+		end
+	end
+end
+
+function CDOTA_BaseNPC:GoldEffect( gold )
+	if IsValidAndAlive(self) == true then else return end 
+	EmitSoundOn("General.Sell",self)
+	local gold_num = #tostring(math.floor(gold))
+    local particle = CustomCreateParticle("particles/msg_fx/msg_gold.vpcf",PATTACH_ABSORIGIN_FOLLOW,self,3,false,nil)
+    ParticleManager:SetParticleControl(particle,0,self:GetOrigin())
+    ParticleManager:SetParticleControl(particle,1,Vector(10,gold,0))
+    ParticleManager:SetParticleControl(particle,2,Vector(1,gold_num + 1,0))
+    ParticleManager:SetParticleControl(particle,3,Vector(255,200,20))
+    ParticleManager:ReleaseParticleIndex(particle)
+end
 
 -------------------------------------------------------
 --对施法选择器进行分割

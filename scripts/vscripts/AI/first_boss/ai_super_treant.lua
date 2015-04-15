@@ -11,6 +11,8 @@ function Spawn( val )
 	GameRules:GetGameModeEntity():SetContextThink("ai_super_treant",function( )
 		
 		if IsValidAndAlive(thisEntity) == "Not Valid" then
+			GiveAllPlayerGold(200)
+
 			GameRules._IsRespawn = true
 			CustomRespawnHero()
 			GiveAbilityPointToAll( 2 )

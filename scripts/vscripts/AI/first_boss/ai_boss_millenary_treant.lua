@@ -12,13 +12,16 @@ function Spawn( val )
 		if IsValidAndAlive(thisEntity) == true then
 			if thisEntity._BossIsWar then
 				war = true
+				GameRules._IsRespawn = false
 			else
 				if war then
 					war = false
+					GameRules._IsRespawn = true
+					CustomRespawnHero()
 					local group = FindUnitsInRadius(thisEntity:GetTeamNumber(),thisEntity:GetOrigin(),nil,3000,DOTA_UNIT_TARGET_TEAM_FRIENDLY,DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
 					for k,v in pairs(group) do
 						if IsValidAndAlive(v) then
-							v:Kill(nil,nil)
+							v:RemoveSelf()
 						end
 					end
 
@@ -29,10 +32,13 @@ function Spawn( val )
 				end
 			end
 		else
+			GiveAllPlayerGold(1500)
+			GiveAbilityPointToAll( 4 )
+
 			local group = FindUnitsInRadius(thisEntity:GetTeamNumber(),thisEntity:GetOrigin(),nil,3000,DOTA_UNIT_TARGET_TEAM_FRIENDLY,DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
 			for k,v in pairs(group) do
 				if IsValidAndAlive(v) then
-					v:Kill(nil,nil)
+					v:RemoveSelf()
 				end
 			end
 
@@ -41,6 +47,9 @@ function Spawn( val )
 					v:RemoveSelf()
 				end
 			end
+
+			GameRules._IsRespawn = true
+			CustomRespawnHero()
 
 			--创建一个马甲毁坏树木
 			local ent_unit = Entities:FindByName(nil,"second_01")

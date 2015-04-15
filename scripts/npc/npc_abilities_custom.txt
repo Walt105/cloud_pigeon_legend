@@ -188,6 +188,78 @@
 		}
 	}
 
+	"npc_wisp_ability1"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityCastRange"			"0"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"			"3"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/wisp.lua"
+				"Function"		"NpcWispAbility1"
+				"Target"		"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_npc_wisp_ability1_npc_wisp_green"
+			{
+				"IsHidden"			"1"
+
+				"Aura"          "modifier_npc_wisp_ability1_npc_wisp_green_effect"
+                "Aura_Radius"   "80"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+
+			"modifier_npc_wisp_ability1_npc_wisp_green_effect"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/wisp.lua"
+						"Function"		"WispAbility1Green"
+					}
+				}
+			}
+
+			"modifier_npc_wisp_ability1_npc_wisp_red"
+			{
+				"IsHidden"			"1"
+
+				"Aura"          "modifier_npc_wisp_ability1_npc_wisp_red_effect"
+                "Aura_Radius"   "80"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+
+			"modifier_npc_wisp_ability1_npc_wisp_red_effect"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/wisp.lua"
+						"Function"		"WispAbility1Red"
+					}
+				}
+			}
+		}
+	}
+
 	//红色小精灵
 	"npc_wisp_red_effect"
 	{
@@ -225,6 +297,114 @@
 							"CASTER"		"attach_hitloc"
 						}
 					}
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_1"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"300"	//攻击速度
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"15"	//攻击力加成
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_2"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"30"	//魔抗
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"10"	//护甲
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_3"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"115"	//致命一击
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_4"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"30"	//格挡
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_5"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"200"	//魔法回复速度
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"2"		//生命恢复速度
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_6"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH"		"1"
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_7"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"		"500"	//生命值加成
+					"MODIFIER_PROPERTY_MANA_BONUS"			"100"	//魔法值加成
+				}
+			}
+
+			"modifier_npc_wisp_red_effect_buff_8"
+			{
+				"RemoveOnDeath"		"0"
+				"Duration"			"60"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"TextureName"		"wisp_red"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"-15"	//降低伤害
 				}
 			}
 		}
@@ -331,7 +511,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/wisp_blue.lua"
+						"ScriptFile" 	"scripts/vscripts/Abilities/wisp.lua"
 						"Function"		"WispBlue1"
 					}
 				}
@@ -4659,7 +4839,7 @@
 			"05"	//伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"100"
+				"damage"			"50"
 			}
 		}
 	}
@@ -4713,7 +4893,7 @@
 			"02"	//伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"80"
+				"damage"			"50"
 			}
 		}
 	}
@@ -4819,12 +4999,12 @@
 			"02"	//初始伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_init"		"80"
+				"damage_init"		"50"
 			}
 			"03"	//持续伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_think"		"10"
+				"damage_think"		"15"
 			}
 			"04"	//伤害间隔
 			{
@@ -4952,7 +5132,7 @@
 			"02"	//提高技能伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"add_damage"		"10"
+				"add_damage"		"5"
 			}
 		}
 	}
@@ -5696,7 +5876,7 @@
 			"03"	//提高承受的伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"incoming_damage"	"103"
+				"incoming_damage"	"5"
 			}
 			"04"	//损失生命值百分比
 			{
