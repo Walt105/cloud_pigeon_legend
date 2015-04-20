@@ -49,6 +49,110 @@ end
 
 
 -----------------------------------------------------------------------------------------------------------
+--旋转运动
+-----------------------------------------------------------------------------------------------------------
+--Target 		要旋转的目标
+--Center 		目标或者Vector，如果是目标则旋转的时候会相对目标的移动而移动
+--Duration 		持续时间内旋转
+--MinLen 		起始距离，当起始距离和最终距离一样，则是固定距离旋转
+--MaxLen 		最终距离，当最终距离为0，则是向内旋转，大于0是向外旋转
+--AngleSpeed	角速度
+--funMove		移动时所调用的函数，如果返回一个"EXIT"字符串，可以中途退出
+--funOver		旋转完毕所调用的函数
+function RotateMotion( Target,Center,Duration,MinLen,MaxLen,AngleSpeed,funMove,funOver )
+	--对参数进行判断
+	if type(Target)~="table" or (type(Center) ~= "userdata" and type(Center)~="table") then
+		print("Error is Target or Center")
+		return
+	end
+	if type(MinLen)~="number" or type(MaxLen)~="number" or type(Duration)~="number" or type(AngleSpeed)~="number" then
+		print("Error is MinLen or MaxLen or e or AngleSpeed or Clockwise")
+		return
+	end
+	if Duration<0 and MinLen<0 and MaxLen<0 then
+		print("Error is not positive number")
+		return
+	end
+
+	if IsValidAndAlive(Target)~=true then return end
+
+	local _target_abs = Target:GetAbsOrigin()
+	local _center_abs = nil
+	if Center.x then
+		_center_abs = Center
+	else
+		if IsValidAndAlive(Center)~=true then return end
+		_center_abs = Center:GetAbsOrigin()
+	end
+
+	local _dis = MinLen
+	local _dura = 0
+	local _time = 0.02
+	local _dis_speed = (MaxLen - MinLen) / (Duration / _time)
+	local _face = (_target_abs - _center_abs):Normalized()
+
+	if _face.x == 0 and _face.y == 0 and _face.z == 0 then
+		Target:SetAbsOrigin(_target_abs+Vector(5,0,0))
+	end
+
+	--判断向内还是向外旋转还是固定距离
+	if _dis_speed <= 0 then
+		if MaxLen==0 then
+			_dis = (_target_abs-_center_abs):Length()
+			_dis_speed = -(_dis / (Duration / _time))
+		elseif MinLen == MaxLen then _dis = MinLen end
+	end
+
+	CustomTimer("RotateMotion",function( )
+		if IsValidAndAlive(Target)~=true then return nil end
+		if _dura > Duration then
+			if type(funOver)=="function" then
+				funOver()
+			end
+			if IsValidAndAlive(Target)~=true then return nil end
+			Target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
+			return nil
+		end
+
+		--向内还是向外旋转
+		if MaxLen==0 then
+			if _dis>MinLen then
+				_dis = _dis + _dis_speed
+			end
+		else
+			if _dis<MaxLen then
+				_dis = _dis + _dis_speed
+			end
+		end
+			
+		local _target_abs = Target:GetAbsOrigin()
+		_face = (_target_abs - _center_abs):Normalized()
+		local vec1 = _center_abs + _face * _dis
+		local vec2 = RotatePosition(_center_abs,QAngle(0,AngleSpeed,0),vec1)
+
+		Target:SetAbsOrigin(vec2)
+
+		--如果是目标则进行跟随
+		if type(Center)=="table" then 
+			_target_abs = Target:GetAbsOrigin()
+			local _len = (_target_abs - _center_abs):Length()
+			_face = (_target_abs - _center_abs):Normalized()
+			_center_abs = Center:GetAbsOrigin()
+			Target:SetAbsOrigin(_center_abs + _face*_len)
+		end
+		
+		--移动时调用的函数
+		if type(funMove)=="function" then
+			local s = funMove()
+			if s == "EXIT" then return nil end
+		end
+		
+		_dura = _dura + _time
+		return _time
+	end,0)
+end
+
+-----------------------------------------------------------------------------------------------------------
 --投掷
 -----------------------------------------------------------------------------------------------------------
 --Target  		目标
@@ -70,6 +174,10 @@ function Knockback( Target,Center,Duration,Distance,Height,ShouldStun,Fun )
 		return
 	end
 
+	if IsValidAndAlive(Target)~=true then
+		return
+	end
+
 	local _dis = 0
 	local _h = 0
 	local _dura = 0
@@ -82,14 +190,11 @@ function Knockback( Target,Center,Duration,Distance,Height,ShouldStun,Fun )
 	if Center.x then
 		_center_abs = Center
 	else
+		if IsValidAndAlive(Center)~=true then return end
 		_center_abs = Center:GetAbsOrigin()
 	end
 
 	local _face = (_target_abs - _center_abs):Normalized()
-
-	if IsValidAndAlive(Target)~=true then
-		return
-	end
 
 	if ShouldStun then
 		Target:AddNewModifier(nil,nil,"modifier_stunned",{duration=Duration})
@@ -493,6 +598,10 @@ end
 
 function BossIsWarDestroy( keys )
 	local target = keys.target
+
+	if CAI:NotWork(unit) or CAI:NotWorkChanneling( unit ) then
+		return
+	end
 	target._BossIsWar = false
 	PrintMsg("#BossIsWarDestroy")
 end
@@ -621,3 +730,33 @@ function CDOTABaseAbility:IsNoTarget( )
 	return false
 end
 
+
+-----------------------------------------------------------------------------------------------------------
+--用于记录boss脱战后需要清除的单位
+-----------------------------------------------------------------------------------------------------------
+if ClearBossUnitTable == nil then
+	ClearBossUnitTable = {}
+end
+
+function ClearBossUnit( )
+	for k,v in pairs(ClearBossUnitTable) do
+		if IsValidAndAlive(v) == true then
+			v.IsWispCreate = false
+			v:Kill(nil,nil)
+		end
+	end
+	local num = #ClearBossUnitTable
+	for i=1,num do
+		for k,v in pairs(ClearBossUnitTable) do
+			if IsValidAndAlive(v) ~= true then
+				table.remove(ClearBossUnitTable,k)
+				break
+			end
+		end
+	end
+end
+function AddClearBossUnit( keys )
+	local target = keys.target
+
+	table.insert( ClearBossUnitTable,target )
+end

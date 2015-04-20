@@ -83,7 +83,7 @@ function CEvents:OnGameRulesStateChange( keys )
 			CCloudPigeonLegend:Start( )
 
 			--创建蓝色精灵球
-			for i=1,4 do
+			for i=1,6 do
 				local name = string.format("wisp_0%d",i)
 				local ent = Entities:FindByName(nil,name)
 				if IsValidEntity(ent) then
@@ -102,6 +102,7 @@ end
 function CEvents:OnEntityKilled( keys )
 	local unit = EntIndexToHScript(keys.entindex_killed)
 	local unit_abs = unit:GetAbsOrigin()
+	local unit_face = unit:GetForwardVector()
 
 	if unit:IsHero() and unit:GetTeamNumber() == DOTA_TEAM_GOODGUYS and GameRules._IsRespawn then
 		CustomTimer("OnEntityKilled",function( )
@@ -115,24 +116,52 @@ function CEvents:OnEntityKilled( keys )
 	end
 
 	if unit:GetTeamNumber() == DOTA_TEAM_BADGUYS and unit:IsAncient()==false then
-		if RollPercentage(RandomFloat(15,50)) then
-			local wisp = CustomCreateUnit("npc_wisp_green",unit_abs,270,DOTA_TEAM_GOODGUYS)
-			local ability = wisp:FindAbilityByName("npc_wisp_ability1")
-			if ability then
-				local face = wisp:GetForwardVector()
-				local abs = wisp:GetAbsOrigin() + face * RandomInt(50,350)
-				local vec = RotatePosition(wisp:GetAbsOrigin(),QAngle(0,RandomFloat(0,360),0),abs)
-				wisp:CastAbilityOnPosition(vec,ability,0)
+		if unit.IsWispCreate == false then return end
+		if unit:IsBoss() then
+			local num = 8
+			local u = {}
+			local name = nil
+			for i=1,num do
+				local vec = unit_abs + unit_face*25
+				local rota = RotatePosition(unit_abs,QAngle(0,(360/num)*i,0),vec) 
+
+				if (i%2)==0 then name="npc_wisp_red" else name="npc_wisp_green" end
+
+				u[i] = CustomCreateUnit(name,rota,270,DOTA_TEAM_GOODGUYS)
+
+				local time = 0
+
+				--从25到radius
+				RotateMotion( u[i],unit_abs,5,25,400,5,function( )
+					time = time + 0.02
+					if time >= 2 then
+						local ability = u[i]:FindAbilityByName("npc_wisp_ability1")
+						if ability then
+							ability:ApplyDataDrivenModifier(u[i],u[i],"modifier_npc_wisp_ability1_"..u[i]:GetUnitName(),nil)
+						end
+					end
+				end,nil)
 			end
-		end
-		if RollPercentage(RandomFloat(15,50)) then
-			local wisp = CustomCreateUnit("npc_wisp_red",unit_abs,270,DOTA_TEAM_GOODGUYS)
-			local ability = wisp:FindAbilityByName("npc_wisp_ability1")
-			if ability then
-				local face = wisp:GetForwardVector()
-				local abs = wisp:GetAbsOrigin() + face * RandomInt(50,350)
-				local vec = RotatePosition(wisp:GetAbsOrigin(),QAngle(0,RandomFloat(0,360),0),abs)
-				wisp:CastAbilityOnPosition(vec,ability,0)
+		else
+			if RollPercentage(RandomFloat(105,50)) then
+				local wisp = CustomCreateUnit("npc_wisp_green",unit_abs,270,DOTA_TEAM_GOODGUYS)
+				local ability = wisp:FindAbilityByName("npc_wisp_ability1")
+				if ability then
+					local face = wisp:GetForwardVector()
+					local abs = wisp:GetAbsOrigin() + face * RandomInt(50,350)
+					local vec = RotatePosition(wisp:GetAbsOrigin(),QAngle(0,RandomFloat(0,360),0),abs)
+					wisp:CastAbilityOnPosition(vec,ability,0)
+				end
+			end
+			if RollPercentage(RandomFloat(15,50)) then
+				local wisp = CustomCreateUnit("npc_wisp_red",unit_abs,270,DOTA_TEAM_GOODGUYS)
+				local ability = wisp:FindAbilityByName("npc_wisp_ability1")
+				if ability then
+					local face = wisp:GetForwardVector()
+					local abs = wisp:GetAbsOrigin() + face * RandomInt(50,350)
+					local vec = RotatePosition(wisp:GetAbsOrigin(),QAngle(0,RandomFloat(0,360),0),abs)
+					wisp:CastAbilityOnPosition(vec,ability,0)
+				end
 			end
 		end
 	end

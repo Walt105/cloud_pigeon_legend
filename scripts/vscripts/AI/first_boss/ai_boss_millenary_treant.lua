@@ -18,12 +18,16 @@ function Spawn( val )
 					war = false
 					GameRules._IsRespawn = true
 					CustomRespawnHero()
-					local group = FindUnitsInRadius(thisEntity:GetTeamNumber(),thisEntity:GetOrigin(),nil,3000,DOTA_UNIT_TARGET_TEAM_FRIENDLY,DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
-					for k,v in pairs(group) do
-						if IsValidAndAlive(v) then
-							v:RemoveSelf()
+					
+
+					while true do
+						if thisEntity:HasModifier("modifier_boss_millenary_treant_a4_effect") then
+							thisEntity:RemoveModifierByName("modifier_boss_millenary_treant_a4_effect")
+						else
+							break
 						end
 					end
+					ClearBossUnit()
 
 					local ent = Entities:FindByName(nil,"first_boss_point")
 					thisEntity:SetAbsOrigin(ent:GetAbsOrigin())
@@ -34,13 +38,7 @@ function Spawn( val )
 		else
 			GiveAllPlayerGold(1500)
 			GiveAbilityPointToAll( 4 )
-
-			local group = FindUnitsInRadius(thisEntity:GetTeamNumber(),thisEntity:GetOrigin(),nil,3000,DOTA_UNIT_TARGET_TEAM_FRIENDLY,DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
-			for k,v in pairs(group) do
-				if IsValidAndAlive(v) then
-					v:RemoveSelf()
-				end
-			end
+			ClearBossUnit()
 
 			for k,v in pairs(GameRules._RemoveMajia) do
 				if IsValidAndAlive(v) == true then

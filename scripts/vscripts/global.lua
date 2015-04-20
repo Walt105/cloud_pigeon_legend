@@ -326,3 +326,16 @@ function CDOTA_BaseNPC:GetWearables( )
 
 	return models
 end
+
+--判断是否是BOSS
+function CDOTA_BaseNPC:IsBoss(  )
+	if IsValidAndAlive(self)~="Not Valid" then
+		local name = self:GetUnitName()
+		for k,v in pairs(GameRules._Boss) do
+			if v==name then
+				return true
+			end
+		end
+	end
+	return false
+end

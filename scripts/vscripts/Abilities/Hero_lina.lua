@@ -3,18 +3,39 @@
 --弹跳火球
 function LinaOneAbility1( keys )
 	local caster = keys.caster
- 	local target = keys.target
- 	local ability = keys.ability
- 	local effectName = keys.EffectName
- 	local move_speed = tonumber(keys.move_speed)
- 	local radius = keys.radius
- 	local count = keys.count
- 	local teams = ability:GetAbilityTargetTeam()
-    local types = ability:GetAbilityTargetType()
-    local flags = ability:GetAbilityTargetFlags()
-    local find_tpye = FIND_CLOSEST
+	local caster_abs = caster:GetAbsOrigin()
+	local face = caster:GetForwardVector()
+	local num = keys.number
+	local radius = keys.radius
+	local angle_speed = keys.angle_speed
+	local len = keys.length
 
- 	Catapult( caster,target,ability,effectName,move_speed,radius,count,teams,types,flags,find_tpye )
+ 	for i=1,num do
+ 		local vec = caster_abs + face*radius
+		local rota = RotatePosition(caster_abs,QAngle(0,(360/num)*i,0),vec) 
+ 		local unit = CustomCreateUnit("npc_lina_phoenix",rota,270,caster:GetTeamNumber())
+ 		keys.ability:ApplyDataDrivenModifier(caster,unit,"modifier_lina_one_ability1",nil)
+
+ 		RotateMotion( unit,caster,2.5,radius,radius,angle_speed,function( )
+ 			local c_abs = caster:GetAbsOrigin()
+ 			local u_abs = unit:GetAbsOrigin()
+ 			local f = (u_abs - c_abs):Normalized()
+ 			unit:SetForwardVector(f)
+ 			unit:SetForwardVector(-unit:GetRightVector())
+
+ 		end,function( )
+ 			local r1 = radius - 3*len
+ 			RotateMotion( unit,caster,4,r1,0,angle_speed+3,function( )
+	 			local c_abs = caster:GetAbsOrigin()
+	 			local u_abs = unit:GetAbsOrigin()
+	 			local f = (u_abs - c_abs):Normalized()
+	 			unit:SetForwardVector(f)
+	 			unit:SetForwardVector(-unit:GetRightVector())
+	 		end,function( )
+	 			unit:RemoveSelf()
+	 		end)
+ 		end)
+ 	end
 end
 
 --火气冲天

@@ -11,7 +11,7 @@ CAI.NotWorkModifiers = {
 
 function CAI:NotWork( unit )
 	for k,v in pairs(CAI.NotWorkModifiers) do
-		if IsValidAndAlive(unit) then
+		if IsValidAndAlive(unit) == true then
 			if unit:HasModifier(v) then
 				return true
 			end
@@ -21,6 +21,7 @@ function CAI:NotWork( unit )
 end
 
 function CAI:NotWorkChanneling( unit )
+	if IsValidAndAlive(unit) ~= true then return false end
 	for i=0,unit:GetAbilityCount()-1 do
 		local ability = unit:GetAbilityByIndex(i)
 		if ability then

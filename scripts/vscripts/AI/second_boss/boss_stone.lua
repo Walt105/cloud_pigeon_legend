@@ -40,6 +40,7 @@ function Spawn( val )
 					war = false
 					GameRules._IsRespawn = true
 					CustomRespawnHero()
+					ClearBossUnit()
 					-- local group = FindUnitsInRadius(thisEntity:GetTeamNumber(),thisEntity:GetOrigin(),nil,3000,DOTA_UNIT_TARGET_TEAM_FRIENDLY,DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,FIND_CLOSEST,true)
 					-- for k,v in pairs(group) do
 					-- 	if IsValidAndAlive(v) then
@@ -56,6 +57,7 @@ function Spawn( val )
 		else
 			GameRules._IsRespawn = true
 			CustomRespawnHero()
+			ClearBossUnit()
 
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 			return nil

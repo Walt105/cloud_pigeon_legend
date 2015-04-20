@@ -33,6 +33,7 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/custom/Boss_millenary_treant/Boss_millenary_treant_A4.vsndevts", context )
 
@@ -53,6 +54,10 @@ function Precache( context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_treant", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_tiny", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_wisp", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_sandking", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_phoenix", context )
+
+	GameRules._Boss = {}
 
 	--载入模型
 	local unit_kv = LoadKeyValues("scripts/npc/npc_units_custom.txt")
@@ -64,6 +69,7 @@ function Precache( context )
                     --print("precacheing model"..keys.Model)
                     PrecacheModel(keys.Model, context )
                 end
+                if keys.IsBoss == 1 then table.insert( GameRules._Boss,unit_name ) end
                 if keys.precache then
                 	for k,v in pairs(keys.precache) do
                 		if v then

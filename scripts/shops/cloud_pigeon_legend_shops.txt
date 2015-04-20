@@ -10,7 +10,10 @@
 	}
 	"attributes"
 	{
-		
+		"item"		"item_ability_ball_1"
+		"item"		"item_ability_ball_2"
+		"item"		"item_ability_ball_3"
+		"item"		"item_ability_ball_4"
 	}
 
 	"weapons_armor"

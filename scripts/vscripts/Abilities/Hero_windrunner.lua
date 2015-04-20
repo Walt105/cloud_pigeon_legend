@@ -92,22 +92,70 @@ end
 --旋风
 function WindrunnerOneAbility2( keys )
 	local caster = keys.caster
+	local duration = keys.duration
+	local caster_abs = caster:GetOrigin()
+	local face = caster:GetForwardVector()
+	local angle_speed = keys.angle_speed
+	local radius = keys.radius
 
-	local speed = keys.attack_speed/100
-	caster:AddAttackSpeed(speed,keys.duration)
+	local num = keys.number
+	local unit = {}
+	for i=1,num do
+		local vec = caster_abs + face*25
+		local rota = RotatePosition(caster_abs,QAngle(0,(360/num)*i,0),vec) 
+		unit[i] = CustomCreateUnit("npc_majia",rota,270,caster:GetTeamNumber())
+		unit[i].WindrunnerOneAbility2=tostring(unit[i])
+		unit[i]:SetOwner(caster)
+		keys.ability:ApplyDataDrivenModifier(unit[i],unit[i],"modifier_windrunner_one_ability2",nil)
+
+		local name = "particles/custom/heros/windrunner/windrunner_guardian.vpcf"
+		local p = CustomCreateParticle(name,PATTACH_ABSORIGIN,unit[i],10,false,nil)
+
+		--从25到radius
+		RotateMotion( unit[i],caster,duration,25,radius,angle_speed,function( )
+			local vec = unit[i]:GetAbsOrigin()+unit[i]:GetUpVector()*100
+			ParticleManager:SetParticleControl(p,0,vec)
+			ParticleManager:SetParticleControl(p,1,vec)
+		end,function( )
+
+			--返回来
+			RotateMotion( unit[i],caster,duration,25,0,angle_speed,function( )
+				local vec = unit[i]:GetAbsOrigin()+unit[i]:GetUpVector()*100
+				ParticleManager:SetParticleControl(p,0,vec)
+				ParticleManager:SetParticleControl(p,1,vec)
+			end,function( )
+				ParticleManager:DestroyParticle(p,false)
+				unit[i]:Kill(nil,nil)
+			end )
+		end )
+	end
 end
 
-function WindrunnerOneAbility2Null( keys )
+function WindrunnerOneAbility2Effect( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-	local modifierName = "modifier_windrunner_one_ability2_add_damage"
-	while true do
-		if caster:HasModifier(modifierName) then
-			caster:RemoveModifierByName(modifierName)
-		else
-			return
+	local group = keys.target_entities
+
+	local s = ""
+	local str = caster.WindrunnerOneAbility2 or ""
+
+	for k,v in pairs(group) do
+		if IsValidAndAlive(v) == true then
+			repeat
+			if v:IsAncient() then break end
+			if v:GetUnitName()=="npc_majia" then break end
+			s = tostring(v)
+			if string.find(str,s) == nil then
+				caster.WindrunnerOneAbility2 = caster.WindrunnerOneAbility2..s
+				if v:IsOpposingTeam(caster:GetTeamNumber()) then
+					keys.ability:ApplyDataDrivenModifier(caster:GetOwner(),v,"modifier_windrunner_one_ability2_damage",nil)
+				else
+					keys.ability:ApplyDataDrivenModifier(caster:GetOwner(),v,"modifier_windrunner_one_ability2_heal",nil)
+				end
+			end
+			until true
 		end
 	end
+	
 end
 
 

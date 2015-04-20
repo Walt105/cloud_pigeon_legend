@@ -2042,7 +2042,7 @@
 	"lina_one_ability1"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
@@ -2058,61 +2058,68 @@
 
 		"OnSpellStart"
 		{
-			"TrackingProjectile"
-            {
-                "Target"            "TARGET"
-                "EffectName"        "particles/custom/heros/lina/lina_ability1.vpcf"
-                "Dodgeable"         "0"
-                "ProvidesVision"    "1"
-                "VisionRadius"      "300"
-                "MoveSpeed"         "1000"
-                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-            }
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_lina.lua"
+				"Function"		"LinaOneAbility1"
+				"number"		"%number"
+				"radius"		"%radius"
+				"angle_speed"	"%angle_speed"
+				"length"		"%length"
+			}
 		}
 
-		"OnProjectileHitUnit"
-        {
-        	"AttachEffect"
-        	{
-        		"EffectName"		"particles\units\heroes\hero_jakiro\jakiro_liquid_fire_explosion.vpcf"
-        		"EffectAttachType"  "follow_origin"
-        		"Target"  			"TARGET"
-        	}
-
-        	"FireSound"
-        	{
-        		"EffectName"		"Hero_Jakiro.LiquidFire"
-        		"Target"  			"TARGET"
-        	}
-
-        	"RunScript"
+		"Modifiers"
+		{
+			"modifier_lina_one_ability1"
 			{
-				"ScriptFile" 	"scripts/vscripts/util/damage.lua"
-				"Function"		"DamageAOE"
-				"damage_type"	"DAMAGE_TYPE_MAGICAL"
-				"damage"		"%damage"
-				"Target"
-		        {
-		            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
-		            "Center"    "TARGET"
-		            "Radius"    "%damage_radius"
-		        }
+				"IsHidden"			"1"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_ambient.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target" 			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_neck"
+							"TARGET"		"attach_tailbase"
+							"TARGET"		"attach_tailbase"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					}
+				}
 			}
-        }
+		}
 
         "AbilitySpecial"
         {
-        	"03"	//伤害范围
+        	"01"	//角速度
         	{
         		"var_type"			"FIELD_INTEGER"
-        		"damage_radius"		"200 210 220 230 240 250 260"
+        		"angle_speed"		"4"
         	}
-        	"04"	//伤害
+        	"02"	//长度
         	{
         		"var_type"			"FIELD_INTEGER"
-        		"damage"			"100 150 200 250 300 350 400"
+        		"length"			"125"
+        	}
+        	"03"	//数量
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"number"			"2"
+        	}
+        	"04"	//起始距离
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"radius"			"500"
         	}
         }
 	}
@@ -3373,19 +3380,18 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
+			"RunScript"
 			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_windrunner_one_ability2"
-			}
-			"ApplyModifier"
-			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_windrunner_one_ability2_null"
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+				"Function"		"WindrunnerOneAbility2"
+				"number"		"%number"
+				"duration"		"%duration"
+				"angle_speed"	"%angle_speed"
+				"radius"		"%radius"
 			}
 			"FireSound"
 			{
-				"EffectName"		"Ability.Windrunner"
+				"EffectName"		"Hero_Wisp.Tether.Stun"
 				"Target"  			"CASTER"
 			}
 		}
@@ -3394,89 +3400,69 @@
 		{
 			"modifier_windrunner_one_ability2"
 			{
-				"IsHidden"			"1"
-				"Duration"			"%duration"
+				"IsHidden"		"1"
 
-				"Properties"
+				"ThinkInterval"	"0.1"
+				"OnIntervalThink"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed"
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
+						"Function"		"WindrunnerOneAbility2Effect"
+						"Target"
+		                {
+		                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+		                    "Center"    "TARGET"
+		                    "Radius"    "100"
+		                }
+					}
 				}
+			}
+
+			"modifier_windrunner_one_ability2_damage"
+			{
+				"IsHidden"		"1"
+				"Duration"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"OnCreated"
 				{
 					"RunScript"
 					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
-						"Function"		"WindrunnerOneAbility2"
-						"attack_speed"	"%attack_speed"
-						"duration"		"%duration"
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageTarget"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
 					}
-				}
-
-				"OnUnitMoved"
-				{
-					"ApplyModifier"
+					"AttachEffect"
 					{
-						"Target" 			"CASTER"
-						"ModifierName"		"modifier_windrunner_one_ability2_add_damage"
+						"EffectName"		"particles/custom/heros/windrunner/windrunner_guardian_explosion.vpcf"
+						"EffectAttachType"  "follow_chest"
+						"Target"  			"TARGET"
 					}
 				}
 			}
 
-			"modifier_windrunner_one_ability2_null"
+			"modifier_windrunner_one_ability2_heal"
 			{
-				"Duration"			"%duration"
-				"EffectName"		"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"IsHidden"		"1"
+				"Duration"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_windrunner.lua"
-						"Function"		"WindrunnerOneAbility2Null"
-					}
-				}
-			}
-
-			"modifier_windrunner_one_ability2_add_damage"
-			{
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"OnCreated"
 				{
-					"RunScript"
+					"Heal"
 					{
-						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
-						"Function"		"AddAbilityDamage"
-						"add_damage"	"%add_damage"
+						"Target" 		"TARGET"
+						"HealAmount"	"%heal"
 					}
-					"RunScript"
+					"AttachEffect"
 					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-						"Function"		"AddOrLowModifierCount"
-						"modifierName"	"modifier_windrunner_one_ability2_null"
-						"AddOrLow"		"Add"
-						"count"			"1"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
-						"Function"		"LowAbilityDamage"
-						"low_damage"	"%add_damage"
-					}
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-						"Function"		"AddOrLowModifierCount"
-						"modifierName"	"modifier_windrunner_one_ability2_null"
-						"AddOrLow"		"Low"
-						"Remove"		"1"
-						"count"			"1"
+						"EffectName"		"particles/custom/heros/windrunner/windrunner_guardian_explosion.vpcf"
+						"EffectAttachType"  "follow_chest"
+						"Target"  			"TARGET"
 					}
 				}
 			}
@@ -3487,22 +3473,32 @@
 			"04"	//持续时间
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"15"
+				"duration"			"1"
 			}
-			"01"	//移动速度
+			"01"	//角速度
 			{
 				"var_type"			"FIELD_INTEGER"
-				"move_speed"		"10 15 20 25 30 35 40"
+				"angle_speed"		"8"
 			}
-			"02"	//移动速度
+			"02"	//数量
 			{
 				"var_type"			"FIELD_INTEGER"
-				"attack_speed"		"15 20 25 30 40 50 60"
+				"number"			"6"
 			}
-			"03"	//提高技能伤害
+			"03"	//最终距离
 			{
-				"var_type"			"FIELD_FLOAT"
-				"add_damage"		"0.1 0.2 0.3 0.4 0.5 0.6 0.7"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+			"05"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"50 75 100 125 150 175 200"
+			}
+			"06"	//恢复生命值
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal"				"35 55 75 95 115 135 155"
 			}
 		}
 	}
@@ -4651,6 +4647,26 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"		"lion_impale"
 
+		"OnOwnerDied"
+		{
+			"CreateItem"
+			{
+				"Target"
+				{
+					"Center" 	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}			
+				"ItemName"			"item_small_tree_branch"
+				"ItemCount"			"6"
+				"SpawnRadius"		"25"
+				"ItemChargeCount"	"0"
+				"AutoUse"			"0"
+				"LaunchHeight"		"300"
+				"LaunchDistance"	"?150 250"
+				"LaunchDuration"	"0.75"
+			}
+		}
+		
 		"Modifiers"
 		{
 			"modifier_super_treant_ability1"
@@ -5062,6 +5078,11 @@
 						"Target" 			"TARGET"
 						"ModifierName"		"modifier_boss_millenary_treant_a4_effect"
 					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddClearBossUnit"
+					}
 				}
 			}
 			"FireSound"
@@ -5185,6 +5206,11 @@
 						"Target" 			"TARGET"
 						"ModifierName"		"modifier_boss_millenary_treant_a5_unit"
 					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddClearBossUnit"
+					}
 				}
 			}
 		}
@@ -5291,6 +5317,43 @@
 		"MaxLevel"					"1"
 		"LevelsBetweenUpgrades"		"0"
 		"AbilityTextureName"		"ability_6"
+
+		"OnOwnerDied"
+		{
+			"CreateItem"
+			{
+				"Target"
+				{
+					"Center" 	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}			
+				"ItemName"			"item_boss_millenary_treant_eye"
+				"ItemCount"			"2"
+				"SpawnRadius"		"25"
+				"ItemChargeCount"	"0"
+				"AutoUse"			"0"
+				"LaunchHeight"		"300"
+				"LaunchDistance"	"?150 250"
+				"LaunchDuration"	"0.75"
+			}
+
+			"CreateItem"
+			{
+				"Target"
+				{
+					"Center" 	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}			
+				"ItemName"			"item_big_tree_branch"
+				"ItemCount"			"2"
+				"SpawnRadius"		"25"
+				"ItemChargeCount"	"0"
+				"AutoUse"			"0"
+				"LaunchHeight"		"300"
+				"LaunchDistance"	"?150 250"
+				"LaunchDuration"	"0.75"
+			}
+		}
 
 		"Modifiers"
 		{
@@ -5686,7 +5749,12 @@
 						"Target" 			"TARGET"
 						"Duration"			"0.1"
 						"ModifierName"		"modifier_phased"
-					}	
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddClearBossUnit"
+					}
 				}
 			}
 		}	
