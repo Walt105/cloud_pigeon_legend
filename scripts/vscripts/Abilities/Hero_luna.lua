@@ -68,52 +68,23 @@ end
 function LunaOneAbility2( keys )
 	local caster = keys.caster
 	local point = keys.target_points[1]
+	local ability = keys.ability
 	local caster_abs = caster:GetAbsOrigin()
-	local face = (point - caster_abs):Normalized()
+	local face = (caster_abs - point):Normalized()
+	local vec = caster_abs + face*100
 
-	--设置面向角度
-	caster:SetForwardVector(face)
+	local unit = CustomCreateUnit("npc_majia",caster_abs,270,caster:GetTeamNumber())
+	ability:ApplyDataDrivenModifier(caster,unit,"modifier_luna_one_ability2",nil)
 
-	local r = 0
-	local speed = 50
-	local back = true
-	CustomTimer("LunaOneAbility2",
-		function( )
+	Knockback( unit,vec,0.5,(point-caster_abs):Length(),500,true,function( )
+		local u_abs = unit:GetAbsOrigin()
+		local q = ParticleManager:CreateParticle("particles/units/heroes/hero_stormspirit/stormspirit_overload_discharge.vpcf",PATTACH_WORLDORIGIN,unit)
+		ParticleManager:SetParticleControl(q,0,u_abs)
 
-			--判断是否返回
-			if back then
-				r = r + speed
-			else
-				r = r - speed
-			end
-			
-			--小于0结束循环
-			if r < 0 or caster:IsAlive()==false then
-				caster:RemoveModifierByName("modifier_luna_one_ability2")
-				caster:RemoveModifierByName("modifier_luna_one_ability2_2")
-				caster:AddNewModifier(nil,nil,"modifier_phased",{duration=0.02})
-				LunaOneAbility1RemoveModifier(caster,0)
-				return nil
-			end
+		ability:ApplyDataDrivenModifier(caster,unit,"modifier_luna_one_ability2_damage",nil)
 
-			--位移
-			local vec = caster_abs + face * r
-			caster:SetAbsOrigin(vec)
-
-			--达到条件返回
-			if r <= keys.range and r > (keys.range - speed) and back then
-				back = false
-
-				--设置面向角度
-				caster:SetForwardVector(-face)
-
-				caster:RemoveModifierByName("modifier_luna_one_ability2_1")
-				keys.ability:ApplyDataDrivenModifier(caster,caster,"modifier_luna_one_ability2_2",nil)
-			end
-
-			return 0.02
-		end,0)
-
+		unit:RemoveSelf()
+	end)
 end
 
 
@@ -123,7 +94,7 @@ function LunaOneAbility3( keys )
 	local target = keys.target
 	local ability = keys.ability
 
-	local heal = target:GetHealthPercent()
+	local heal = caster:GetHealthPercent()
 
 	if heal < 50 then
 

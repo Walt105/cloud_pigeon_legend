@@ -191,9 +191,9 @@ function Knockback( Target,Center,Duration,Distance,Height,ShouldStun,Fun )
 	local _h = 0
 	local _dura = 0
 	local _time = 0.02
-	local _h_add = true
+	local _angle = 0
+	local _angle_speed = 180/(Duration / _time)
 	local _dis_speed = Distance / (Duration / _time)
-	local _h_speed = Height / (Duration / _time / 2)
 	local _target_abs = Target:GetAbsOrigin()
 	local _center_abs = nil
 	if Center.x then
@@ -217,10 +217,11 @@ function Knockback( Target,Center,Duration,Distance,Height,ShouldStun,Fun )
 			local vec = GetGroundPosition(Target:GetAbsOrigin(),Target)
 			if type(Fun) == "function" then
 				local target_vec = Target:GetOrigin()
-				if target_vec.z <= (vec.z+_h_speed+5) then
+				if target_vec.z <= (vec.z+128) then
 					Fun()
 				end
 			end
+			if IsValidAndAlive(Target)~=true then return nil end
 			Target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
 			Target:SetAbsOrigin(vec)
 			return nil
@@ -232,14 +233,8 @@ function Knockback( Target,Center,Duration,Distance,Height,ShouldStun,Fun )
 		end
 
 		--对高度进行计算
-		if _h >= Height and _h_add then
-			_h_add = false
-		end
-		if _h_add then
-			_h = _h + _h_speed
-		else
-			_h = _h - _h_speed
-		end
+		_angle = _angle_speed + _angle
+		_h = Height*math.sin(math.rad(_angle))
 		
 		--设置位移和高度
 		local vec = _target_abs + _face * _dis

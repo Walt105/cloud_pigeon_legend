@@ -622,7 +622,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 				            "Center"    "CASTER"
 				            "Radius"    "%radius"
 				        }
@@ -1401,36 +1401,25 @@
 	"luna_one_ability2"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
+		"AOERadius"					"350"
 		"LevelsBetweenUpgrades"		"0"
-		"AbilityCastRange"			"0"
+		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"18"
-		"AbilityManaCost"			"90"
+		"AbilityCooldown"			"6"
+		"AbilityManaCost"			"50"
 		"AbilityTextureName"		"storm_spirit_ball_lightning"
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_luna_one_ability2"
-			}
-			"ApplyModifier"
-			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_luna_one_ability2_1"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
-				"Target"		"POINT"
 				"Function"		"LunaOneAbility2"
-				"range"			"%range"
+				"Target"		"POINT"
 			}
 		}
 
@@ -1440,73 +1429,31 @@
 			{
 				"IsHidden"			"1"
 
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED" //魔法免疫
-					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED" //攻击免疫
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED" //沉默
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED" //无法移动
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED" //无碰撞
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED" //无法攻击
-				}
-
 				"OnCreated"
 				{
 					"AttachEffect"
 					{
-						"EffectName"		"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning_sphere.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"Target" 			"CASTER"
+						"EffectName"		"particles/custom/heros/luna/luna_ability1.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"  			"TARGET"
 						"ControlPointEntities"
 						{
-							"CASTER"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
 						}
 					}
-
 					"FireSound"
 					{
-						"EffectName"		"Hero_StormSpirit.BallLightning.Loop"
-						"Target"  			"CASTER"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 		"scripts/vscripts/global.lua"
-						"Target"			"CASTER"
-						"Function"			"StopSound"
-						"EffectName"		"Hero_StormSpirit.BallLightning.Loop"
+						"EffectName"		"Hero_StormSpirit.Orchid_BallLightning"
+						"Target" 			"TARGET"
 					}
 				}
 			}
-			"modifier_luna_one_ability2_1"
+
+			"modifier_luna_one_ability2_damage"
 			{
 				"IsHidden"			"1"
-
-				"Aura"          "modifier_luna_one_ability2_effect1"
-                "Aura_Radius"   "%radius"
-                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
-			}
-
-			"modifier_luna_one_ability2_2"
-			{
-				"IsHidden"			"1"
-
-				"Aura"          "modifier_luna_one_ability2_effect2"
-                "Aura_Radius"   "%radius"
-                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
-			}
-
-
-			"modifier_luna_one_ability2_effect1"
-			{
-				"IsHidden"			"1"
+				"Duration"			"0.1"
 
 				"OnCreated"
 				{
@@ -1520,34 +1467,15 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-				            "Center"    "CASTER"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				            "Center"    "TARGET"
 				            "Radius"    "%radius"
 				        }
 					}
-				}
-			}
-
-			"modifier_luna_one_ability2_effect2"
-			{
-				"IsHidden"			"1"
-
-				"OnCreated"
-				{
-					"RunScript"
+					"FireSound"
 					{
-						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
-						"Function"		"DamageAOE"
-						"damage_type"	"DAMAGE_TYPE_MAGICAL"
-						"damage"		"%damage"
-						"Target"
-				        {
-				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-				            "Center"    "CASTER"
-				            "Radius"    "%radius"
-				        }
+						"EffectName"		"Hero_StormSpirit.StaticRemnantExplode"
+						"Target"  			"TARGET"
 					}
 				}
 			}
@@ -1555,15 +1483,10 @@
 
 		"AbilitySpecial"
 		{
-			"01"	//距离
-			{
-				"var_type"			"FIELD_INTEGER"
-				"range"				"500"
-			}
 			"02"	//伤害范围
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"150"
+				"radius"			"350"
 			}
 			"03"	//伤害
 			{
@@ -1588,7 +1511,7 @@
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"20"
+		"AbilityCooldown"			"8.5"
 		"AbilityTextureName"		"wisp_tether"
 
 		"OnSpellStart"
@@ -1727,7 +1650,7 @@
 			"02"	//间隔
 			{
 				"var_type"			"FIELD_FLOAT"
-				"interval"			"0.75"
+				"interval"			"0.2"
 			}
 			"03"	//伤害
 			{
@@ -1806,7 +1729,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 				            "Center"    "TARGET"
 				            "Radius"    "%radius"
 				        }
@@ -1825,7 +1748,7 @@
 			"02"	//间隔
 			{
 				"var_type"			"FIELD_FLOAT"
-				"interval"			"1"
+				"interval"			"0.65"
 			}
 			"03"	//触发概率
 			{
@@ -1996,7 +1919,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 				            "Center"    "TARGET"
 				            "Radius"    "%radius"
 				        }
@@ -2446,7 +2369,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 				            "Center"    "CASTER"
 				            "Radius"    "%radius"
 				        }
@@ -2694,7 +2617,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 				            "Center"    "TARGET"
 				            "Radius"    "%damage_radius"
 				        }
@@ -4388,7 +4311,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 				            "Center"    "CASTER"
 				            "Radius"    "%radius"
 				        }
