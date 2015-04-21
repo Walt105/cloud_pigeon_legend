@@ -103,6 +103,9 @@ function RotateMotion( Target,Center,Duration,MinLen,MaxLen,AngleSpeed,funMove,f
 		elseif MinLen == MaxLen then _dis = MinLen end
 	end
 
+	local as = {}
+	as.AngleSpeed = AngleSpeed
+
 	CustomTimer("RotateMotion",function( )
 		if IsValidAndAlive(Target)~=true then return nil end
 		if _dura > Duration then
@@ -128,12 +131,18 @@ function RotateMotion( Target,Center,Duration,MinLen,MaxLen,AngleSpeed,funMove,f
 		local _target_abs = Target:GetAbsOrigin()
 		_face = (_target_abs - _center_abs):Normalized()
 		local vec1 = _center_abs + _face * _dis
-		local vec2 = RotatePosition(_center_abs,QAngle(0,AngleSpeed,0),vec1)
+		local vec2 = RotatePosition(_center_abs,QAngle(0,as.AngleSpeed,0),vec1)
 
 		Target:SetAbsOrigin(vec2)
 
 		--如果是目标则进行跟随
-		if type(Center)=="table" then 
+		if type(Center)=="table" then
+			if IsValidAndAlive(Center)~=true then
+				if type(funOver)=="function" then
+					funOver()
+				end
+			end
+			if IsValidAndAlive(Target)~=true then return nil end
 			_target_abs = Target:GetAbsOrigin()
 			local _len = (_target_abs - _center_abs):Length()
 			_face = (_target_abs - _center_abs):Normalized()
@@ -143,7 +152,7 @@ function RotateMotion( Target,Center,Duration,MinLen,MaxLen,AngleSpeed,funMove,f
 		
 		--移动时调用的函数
 		if type(funMove)=="function" then
-			local s = funMove()
+			local s = funMove(as)
 			if s == "EXIT" then return nil end
 		end
 		
@@ -508,6 +517,26 @@ function CDOTA_BaseNPC:CustomHeal( heal )
     ParticleManager:SetParticleControl(particle,2,Vector(1,heal_num + 1,0))
     ParticleManager:SetParticleControl(particle,3,Vector(0,255,0))
     ParticleManager:ReleaseParticleIndex(particle)
+end
+
+--用于kv
+function CustomHeal( keys )
+	if keys.Target == "CASTER" then
+		local heal = tonumber(keys.heal) or 0
+		keys.caster:CustomHeal(heal)
+	elseif keys.Target == "TARGET" then
+		local heal = tonumber(keys.heal) or 0
+		keys.target:CustomHeal(heal)
+	end
+end
+function CustomHealPercent( keys )
+	if keys.Target == "CASTER" then
+		local heal = keys.caster:GetMaxHealth() * (tonumber(keys.heal_percent) / 100)
+		keys.caster:CustomHeal(heal)
+	elseif keys.Target == "TARGET" then
+		local heal = keys.target:GetMaxHealth() * (tonumber(keys.heal_percent) / 100)
+		keys.target:CustomHeal(heal)
+	end
 end
 -----------------------------------------------------------------------------------------------------------
 

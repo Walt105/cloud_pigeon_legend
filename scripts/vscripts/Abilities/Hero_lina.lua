@@ -1,6 +1,6 @@
 
 
---弹跳火球
+--凤凰飞舞
 function LinaOneAbility1( keys )
 	local caster = keys.caster
 	local caster_abs = caster:GetAbsOrigin()
@@ -16,24 +16,32 @@ function LinaOneAbility1( keys )
  		local unit = CustomCreateUnit("npc_lina_phoenix",rota,270,caster:GetTeamNumber())
  		keys.ability:ApplyDataDrivenModifier(caster,unit,"modifier_lina_one_ability1",nil)
 
- 		RotateMotion( unit,caster,2.5,radius,radius,angle_speed,function( )
+ 		RotateMotion( unit,caster,2.5,radius,radius,angle_speed,function( a )
  			local c_abs = caster:GetAbsOrigin()
  			local u_abs = unit:GetAbsOrigin()
  			local f = (u_abs - c_abs):Normalized()
  			unit:SetForwardVector(f)
  			unit:SetForwardVector(-unit:GetRightVector())
+ 			a.AngleSpeed = a.AngleSpeed + 0.02
+ 			angle_speed = a.AngleSpeed
 
  		end,function( )
- 			local r1 = radius - 3*len
- 			RotateMotion( unit,caster,4,r1,0,angle_speed+3,function( )
-	 			local c_abs = caster:GetAbsOrigin()
-	 			local u_abs = unit:GetAbsOrigin()
-	 			local f = (u_abs - c_abs):Normalized()
-	 			unit:SetForwardVector(f)
-	 			unit:SetForwardVector(-unit:GetRightVector())
-	 		end,function( )
-	 			unit:RemoveSelf()
-	 		end)
+
+ 			if IsValidAndAlive(caster)==true then
+	 			RotateMotion( unit,caster,4,len,0,angle_speed,function( a )
+		 			local c_abs = caster:GetAbsOrigin()
+		 			local u_abs = unit:GetAbsOrigin()
+		 			local f = (u_abs - c_abs):Normalized()
+		 			unit:SetForwardVector(f)
+		 			unit:SetForwardVector(-unit:GetRightVector())
+		 			a.AngleSpeed = a.AngleSpeed + 0.02
+
+		 		end,function( )
+		 			unit:RemoveSelf()
+		 		end)
+		 	else
+		 		unit:RemoveSelf()
+	 		end
  		end)
  	end
 end
@@ -53,34 +61,29 @@ function LinaOneAbility2( keys )
 		unit[i] = CreateUnitByName("npc_majia",rota,false,nil,nil,caster:GetTeamNumber())
 		ability:ApplyDataDrivenModifier(caster,unit[i],"modifier_lina_one_ability2",nil)
 	end
+
+	CustomTimer("LinaOneAbility2",function( )
+		EmitSoundOn("Ability.LightStrikeArray",unit[1])
+
+		return keys.interval
+	end,keys.interval)
 end
 
 
---召唤火元素
-function LinaOneAbility3Unit( keys )
-	local caster = keys.caster
-	local target = keys.target
-
-	target:SetMaxHealth(target:GetMaxHealth() + caster:GetMaxHealth())
-	target:SetHealth(target:GetMaxHealth())
-	target:SetBaseDamageMin(caster:GetBaseDamageMin()/3)
-	target:SetBaseDamageMax(caster:GetBaseDamageMax()/3)
-	target:SetAbsOrigin(caster:GetAbsOrigin() + 200 * caster:GetForwardVector())
-	target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
-end
-
+--汲取热量
 function LinaOneAbility3( keys )
 	local caster = keys.caster
-	local group = keys.target_entities
+	local target = keys.target
+	local s = 850
 
-	for i,v in pairs(group) do
-		if IsValidEntity(v) then
-			if v:IsAlive() then
-				v:SetHealth(v:GetHealth() + keys.heal_speed)
-				v:SetMana(v:GetMana() + keys.mana_speed)
-			end
-		end
-	end
+	local name = "particles/custom/heros/lina/lina_ability1.vpcf"
+	local p = CustomCreateParticle(name,PATTACH_CUSTOMORIGIN_FOLLOW,caster,1.6,false,function( )
+		keys.ability:ApplyDataDrivenModifier(caster,target,"modifier_lina_one_ability3",nil)
+	end)
+	ParticleManager:SetParticleControlEnt(p,1,caster,5,"attach_hitloc",caster:GetOrigin(),true)
+	ParticleManager:SetParticleControlEnt(p,0,target,5,"attach_hitloc",target:GetOrigin(),true)
+	ParticleManager:SetParticleControl(p,2,Vector(s,s,s))
+	ParticleManager:SetParticleControl(p,3,Vector(s,s,s))
 end
 
 

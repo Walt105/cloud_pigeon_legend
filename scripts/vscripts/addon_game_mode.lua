@@ -34,13 +34,14 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts", context )
-	PrecacheResource( "soundfile", "soundevents/game_sounds.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/custom/Boss_millenary_treant/Boss_millenary_treant_A4.vsndevts", context )
 
 	--载入特效
 	PrecacheResource( "particle", "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf", context )
 	
 	PrecacheResource( "particle", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze.vpcf", context )
+	PrecacheResource( "particle", "particles/generic_gameplay/generic_slowed_cold.vpcf", context )
 	PrecacheResource( "particle", "particles/units/heroes/hero_ursa/ursa_earthshock.vpcf", context )
 	PrecacheResource( "particle_folder", "particles/custom", context )
 	PrecacheResource( "particle_folder", "particles/status_fx", context )
@@ -56,6 +57,7 @@ function Precache( context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_wisp", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_sandking", context )
 	PrecacheResource( "particle_folder", "particles/units/heroes/hero_phoenix", context )
+	PrecacheResource( "particle_folder", "particles/units/heroes/hero_crystalmaiden", context )
 
 	GameRules._Boss = {}
 
