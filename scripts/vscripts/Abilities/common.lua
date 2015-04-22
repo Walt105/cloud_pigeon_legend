@@ -248,6 +248,103 @@ end
 
 
 -----------------------------------------------------------------------------------------------------------
+--椭圆运动
+-----------------------------------------------------------------------------------------------------------
+function EllipseMotion( Target,Caster,Point,Face,FaceRight,Duration,Width,Clockwise,funMove,funOver )
+	--对参数进行判断
+	if type(Target)~="table" or (type(Caster) ~= "userdata" and type(Caster)~="table") or type(Point) ~= "userdata" then
+		print("Error is Target or Caster or Point")
+		return
+	end
+	if type(Width)~="number" or type(Duration)~="number" or type(Clockwise)~="boolean" then
+		print("Error is MinLen or MaxLen or e or AngleSpeed or Clockwise")
+		return
+	end
+	if Duration<0 and Width<0 and Length<0 then
+		print("Error is not positive number")
+		return
+	end
+	if IsValidAndAlive(Target)~=true then
+		return
+	end
+
+	local unit = CustomCreateUnit("npc_majia",Target:GetOrigin(),270,Target:GetTeamNumber())
+
+	local Distance = 0
+	local _dura = 0
+	local _time = 0.02
+	local _angle = 180
+	local _angle_speed = 360/(Duration / _time)
+	local _target_abs = Target:GetAbsOrigin()
+	local _caster_abs = nil
+	if Caster.x then
+		_caster_abs = Caster
+	else
+		if IsValidAndAlive(Caster)~=true then return end
+		_caster_abs = Caster:GetAbsOrigin()
+	end
+
+	local as = {}
+	as.AngleSpeed = _angle
+
+	CustomTimer("EllipseMotion",function( )
+		if IsValidAndAlive(Target)~=true then return nil end
+
+		if _dura > Duration then
+			if type(funOver)=="function" then
+				funOver()
+			end
+			unit:RemoveSelf()
+			if IsValidAndAlive(Target)~=true then return nil end
+			Target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
+			return nil
+		end
+
+		--如果是目标则进行跟随
+		if type(Caster)=="table" then
+			if IsValidAndAlive(Caster)~=true then
+				if type(funOver)=="function" then
+					funOver()
+				end
+				unit:RemoveSelf()
+				return nil
+			end
+			if IsValidAndAlive(Target)~=true then return nil end
+			
+			_caster_abs = Caster:GetAbsOrigin()
+			Face = (Point - _caster_abs):Normalized()
+			unit:SetForwardVector(Face)
+
+			if Clockwise then
+				FaceRight = unit:GetRightVector()
+			else
+				FaceRight = -unit:GetRightVector()
+			end
+		end
+		
+		Distance = (_caster_abs - Point):Length()
+		as.AngleSpeed = as.AngleSpeed + _angle_speed
+
+		local d = (Distance/2)
+		local x = d * math.cos(math.rad(as.AngleSpeed))
+		local y = Width * math.sin(math.rad(as.AngleSpeed))
+
+		Target:SetAbsOrigin(((_caster_abs + Face*d) + Face*x) + FaceRight*y)
+
+		--移动时调用的函数
+		if type(funMove)=="function" then
+			local s = funMove(as)
+			if s == "EXIT" then return nil end
+		end
+
+		_dura = _dura + _time
+		return _time
+	end,0)
+end
+-----------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------
 --同步技能等级
 -----------------------------------------------------------------------------------------------------------
 function SyncAbilityLevel( keys )
@@ -506,12 +603,11 @@ function CDOTA_BaseNPC:CustomHeal( heal )
 	if IsValidAndAlive(self) == true then else return end
 	self:SetHealth(self:GetHealth() + heal)
 	local heal_num = #tostring(math.floor(heal))
-    local particle = CustomCreateParticle("particles/msg_fx/msg_heal.vpcf",PATTACH_ABSORIGIN_FOLLOW,self,3,false,nil)
-    ParticleManager:SetParticleControl(particle,0,self:GetOrigin())
+    local particle = CustomCreateParticle("particles/msg_fx/msg_heal.vpcf",PATTACH_CUSTOMORIGIN_FOLLOW,self,3,false,nil)
+    ParticleManager:SetParticleControlEnt(particle,0,self,5,"attach_hitloc",self:GetOrigin(),true)
     ParticleManager:SetParticleControl(particle,1,Vector(10,heal,0))
     ParticleManager:SetParticleControl(particle,2,Vector(1,heal_num + 1,0))
     ParticleManager:SetParticleControl(particle,3,Vector(0,255,0))
-    ParticleManager:ReleaseParticleIndex(particle)
 end
 
 --用于kv

@@ -75,9 +75,10 @@ function LinaOneAbility3( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local s = 850
+	local len = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length()
 
 	local name = "particles/custom/heros/lina/lina_ability1.vpcf"
-	local p = CustomCreateParticle(name,PATTACH_CUSTOMORIGIN_FOLLOW,caster,1.6,false,function( )
+	local p = CustomCreateParticle(name,PATTACH_CUSTOMORIGIN_FOLLOW,caster,len/s,false,function( )
 		keys.ability:ApplyDataDrivenModifier(caster,target,"modifier_lina_one_ability3",nil)
 	end)
 	ParticleManager:SetParticleControlEnt(p,1,caster,5,"attach_hitloc",caster:GetOrigin(),true)

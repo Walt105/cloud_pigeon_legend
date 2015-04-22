@@ -536,8 +536,8 @@
 		"AbilityCastPoint"			"0"
 		"AbilityDuration"			"5"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"15  14  13  12  11  10  9"
-		"AbilityDamage"				"10  15  20  25  30  40  50"
+		"AbilityCooldown"			"20"
+		"AbilityDamage"				"5 10 15 20 25 30 35"
 		"AbilityTextureName"		"juggernaut_blade_fury"
 
 		"OnSpellStart"
@@ -710,60 +710,69 @@
 		}
 	}
 
-	//技能2：尾随
+	//技能2：回旋剑刃
 	"juggernaut_one_ability2"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
 
 		"MaxLevel"					"7"
 		"LevelsBetweenUpgrades"		"0"
-		"AbilityCastRange"			"200 225 250 275 300 325 350"
+		"AbilityCastRange"			"800"
 		"AbilityCastPoint"			"0"
-		"AbilityManaCost"			"30"
-		"AbilityCooldown"			"10"
-		"AbilityTextureName"		"juggernaut_one_ability2"
+		"AbilityManaCost"			"50"
+		"AbilityCooldown"			"7"
+		"AbilityTextureName"		"ember_spirit_searing_chains"
 
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"JuggOneAbility2OnCreate"
-				"duration"		"%duration"
-			}
-		}
-
-		"OnUpgrade"		//同步技能等级
-		{
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-				"Function"		"SyncAbilityLevel"
-				"abilityName"	"juggernaut_one_ability2_over"
+				"Function"		"JuggOneAbility2"
+				"Target"		"POINT"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_juggernaut_one_ability2"
+			"modifier_juggernaut_one_ability1_majia"	//马甲的modifier
 			{
-				"Duration"			"%duration"
+				"IsHidden"			"1"
+				"Duration"			"10"
 
-				"Properties"
+				"OnCreated"
 				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"	//攻击范围
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target" 			"TARGET"
+						"ControlPoints"
+						{
+							"00"			"00 00 05"
+							"05"			"%radius %radius %radius"
+						}
+					}
 				}
 
-				"OnDestroy"
+				"ThinkInterval"				"%interval"
+				"OnIntervalThink"
 				{
 					"RunScript"
 					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"JuggOneAbility2Over"
+						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+						"Function"		"DamageAOE"
+						"damage_type"	"DAMAGE_TYPE_MAGICAL"
+						"damage"		"%damage"
+						"Target"
+				        {
+				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				            "Center"    "TARGET"
+				            "Radius"    "%radius"
+				        }
 					}
 				}
 			}
@@ -771,171 +780,160 @@
 
 		"AbilitySpecial"
 		{
-			"01"	//施法距离
+			"01"	//伤害范围
 			{
 				"var_type"			"FIELD_INTEGER"
-				"cast_range"		"200 225 250 275 300 325 350"
+				"radius"			"150"
 			}
-			"03"	//攻击距离
-			{
-				"var_type"			"FIELD_INTEGER"
-				"attack_range"		"150 160 170 180 200 220 240"
-			}
-			"02"	//持续时间
+			"02"	//伤害间隔
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"30"
+				"interval"			"0.2"
+			}
+			"03"	//伤害间隔
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"5 10 15 20 25 30 35"
 			}
 		}
 	}
 
-	"juggernaut_one_ability2_over"	//取消跟随
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-		"MaxLevel"					"7"
-		"LevelsBetweenUpgrades"		"0"
-		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"1"
-		"AbilityTextureName"		"stop"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"JuggOneAbility2Over"
-			}
-		}
-
-		"OnUpgrade"		//同步技能等级
-		{
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-				"Function"		"SyncAbilityLevel"
-				"abilityName"	"juggernaut_one_ability2"
-			}
-		}
-	}
-
-	//技能3：三把刀
+	//技能3：剑气波
 	"juggernaut_one_ability3"
 	{
 		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityCastAnimation"		"ACT_DOTA_ATTACK_EVENT"
 
 		"MaxLevel"					"7"
 		"LevelsBetweenUpgrades"		"0"
-		"AbilityCastPoint"			"0"
-		"AbilityCooldown"			"1"
-		"AbilityManaCost"			"3"
-		"AbilityTextureName"		"juggernaut_omni_slash"
+		"AbilityCastRange"			"600"
+		"AbilityCastPoint"			"0.3"
+		"AbilityManaCost"			"50"
+		"AbilityCooldown"			"8"
+		"AbilityTextureName"		"juggernaut_one_ability3"
 
 		"OnSpellStart"
 		{
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"JuggOneAbility3"
-			}
+			"LinearProjectile"
+            {
+                "EffectName"        "particles/custom/heros/juggernaut/juggernaut_ability3.vpcf"
+                "MoveSpeed"         "1300"
+                "StartRadius"       "0"
+                "EndRadius"         "%radius"
+                "FixedDistance"     "%distance"
+                "TargetTeams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "TargetTypes"       "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                "TargetFlags"       "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+                "HasFrontalCone"    "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+            }
+
+            "FireSound"
+            {
+            	"EffectName"		"Hero_Juggernaut.BladeDance"
+            	"Target"  			"CASTER"
+            }
 		}
 
-		"OnUpgrade"		//同步技能等级
-		{
-			"RunScript"
+		"OnProjectileHitUnit"
+        {
+            "DeleteOnHit"               "0"
+
+            "ApplyModifier"
+            {
+            	"Target" 			"TARGET"
+            	"ModifierName"		"modifier_juggernaut_one_ability3"
+            }
+
+            "RunScript"
 			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-				"Function"		"SyncAbilityLevel"
-				"abilityName"	"juggernaut_one_ability3_kuangbao"
+				"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+				"Function"		"DamageTarget"
+				"damage_type"	"DAMAGE_TYPE_PHYSICAL"
+				"damage"		"%damage"
 			}
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-				"Function"		"SyncAbilityLevel"
-				"abilityName"	"juggernaut_one_ability3_judu"
-			}
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
-				"Function"		"SyncAbilityLevel"
-				"abilityName"	"juggernaut_one_ability3_xixue"
-			}
-			"RunScript"
-			{
-				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-				"Function"		"JuggOneAbility3Init"
-			}
-		}
+        }
 
 		"Modifiers"
 		{
-			"modifier_juggernaut_one_ability3" //用于英雄死亡后modifier消失的修复
+			"modifier_juggernaut_one_ability3"
 			{
-				"Passive"			"1"
+				"Duration"			"1"
 				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"OnCreated"
 				{
-					"RunScript"
+					"AttachEffect"
 					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"JuggOneAbility3OnCreated"
-					}
-				}
-			}
-		}
-	}
-
-	//三把刀--狂暴
-	"juggernaut_one_ability3_kuangbao"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-
-		"MaxLevel"					"7"
-		"LevelsBetweenUpgrades"		"0"
-		"AbilityTextureName"		"sanbadao_kuangbao"
-
-		"Modifiers"
-		{
-			"modifier_juggernaut_one_ability3_kuangbao"
-			{
-				"OnAttack"
-				{
-					"Random"
-					{
-						"Chance"			"%chance"
-						"PseudeoRandom"		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
-						"OnSuccess"
+						"EffectName"		"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target" 			"TARGET"
+						"ControlPointEntities"
 						{
-							"ApplyModifier"
-							{
-								"Target" 			"CASTER"
-								"ModifierName"		"modifier_juggernaut_one_ability3_kuangbao_effect"
-							}
-							"RunScript"
-							{
-								"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-								"Function"		"JuggOneAbility3KBModifierCount"
-								"AddOrLow"		"Add"
-							}
-							"FireSound"
-							{
-								"EffectName"		"Hero_Juggernaut.OmniSlash"
-								"Target"  			"CASTER"
-							}
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
 						}
 					}
 				}
 			}
+		}
 
-			"modifier_juggernaut_one_ability3_kuangbao_effect"
+		"AbilitySpecial"
+		{
+			"01"	//伤害范围
 			{
-				"IsHidden"				"1"
-				"Duration"				"%duration"
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"325"
+			}
+			"02"	//最终距离
+			{
+				"var_type"			"FIELD_INTEGER"
+				"distance"			"900"
+			}
+			"03"	//伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"30 60 90 120 150 180 210"
+			}
+		}
+	}
+
+	//技能4：三把刀
+	"juggernaut_one_ability4"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"0"
+		"AbilityTextureName"		"juggernaut_omni_slash"
+
+		"Modifiers"
+		{
+			"modifier_juggernaut_one_ability4_kuangbao"
+			{
+				"Passive"			"1"
+				"TextureName"		"sanbadao_kuangbao"
+
+				"OnDealDamage"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_juggernaut_one_ability4_kuangbao_effect"
+					}
+				}
+			}
+			"modifier_juggernaut_one_ability4_kuangbao_effect"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%add_damage_dura"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"OnCreated"
 				{
@@ -944,6 +942,14 @@
 						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
 						"Function"		"AddAbilityDamage"
 						"add_damage"	"%add_damage"
+					}
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_juggernaut_one_ability4_kuangbao"
+						"AddOrLow"		"Add"
+						"count"			"1"
 					}
 				}
 
@@ -957,76 +963,34 @@
 					}
 					"RunScript"
 					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"JuggOneAbility3KBModifierCount"
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"AddOrLowModifierCount"
+						"modifierName"	"modifier_juggernaut_one_ability4_kuangbao"
 						"AddOrLow"		"Low"
+						"count"			"1"
 					}
 				}
 			}
-		}
 
-		"AbilitySpecial"
-		{
-			"03"	//触发概率
+			"modifier_juggernaut_one_ability4_judu"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"chance"			"35"
-			}
-			"01"	//持续时间
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"5 6 7 8 9 10 11"
-			}
-			"02"	//增加的技能伤害
-			{
-				"var_type"			"FIELD_INTEGER"
-				"add_damage"		"5 10 15 20 25 30 35"
-			}
-		}
-	}
-
-	//三把刀--剧毒
-	"juggernaut_one_ability3_judu"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_PURE"
-
-		"MaxLevel"					"7"
-		"LevelsBetweenUpgrades"		"0"
-		"AbilityTextureName"		"sanbadao_judu"
-
-		"Modifiers"
-		{
-			"modifier_juggernaut_one_ability3_judu"
-			{
+				"Passive"			"1"
+				"TextureName"		"sanbadao_judu"
 				"OnAttackLanded"
 				{
 					"ApplyModifier"
 					{
 						"Target" 			"TARGET"
-						"ModifierName"		"modifier_juggernaut_one_ability3_judu_effect"
+						"ModifierName"		"modifier_juggernaut_one_ability4_judu_effect"
 					}
 				}
 			}
-
-			"modifier_juggernaut_one_ability3_judu_effect"
+			"modifier_juggernaut_one_ability4_judu_effect"
 			{
 				"IsDebuff"			"1"
 				"Duration"			"%duration"
 				"EffectName"		"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
 				"EffectAttachType"	"follow_chest"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
-						"Function"		"DamageTarget"
-						"damage_type"	"DAMAGE_TYPE_PURE"
-						"damage"		"%damage_init"
-					}
-				}
 
 				"ThinkInterval"		"%interval"
 				"OnIntervalThink"
@@ -1040,51 +1004,11 @@
 					}
 				}
 			}
-		}
 
-		"AbilitySpecial"
-		{
-			"01"	//持续时间
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"20"
-			}
-			"02"	//初始伤害
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage_init"		"50 100 150 200 250 300 350"
-			}
-			"03"	//持续伤害
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage_think"		"5 10 15 20 25 30 35"
-			}
-			"04"	//伤害间隔
-			{
-				"var_type"			"FIELD_FLOAT"
-				"interval"			"1 0.9 0.8 0.7 0.6 0.5 0.4"
-			}
-		}
-	}
-
-	//三把刀--吸血
-	"juggernaut_one_ability3_xixue"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-		"MaxLevel"					"7"
-		"LevelsBetweenUpgrades"		"0"
-		"AbilityTextureName"		"sanbadao_xixue"
-
-		"Modifiers"
-		{
 			"modifier_juggernaut_one_ability3_xixue"
 			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_out" //攻击加成百分比
-				}
+				"Passive"			"1"
+				"TextureName"		"sanbadao_xixue"
 				"OnAttackLanded"
 				{
 					"Lifesteal"
@@ -1098,21 +1022,41 @@
 
 		"AbilitySpecial"
 		{
-			"01"	//吸血百分比
+			"06"	//技能伤害持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"add_damage_dura" 	"10"
+			}
+			"05"	//提高技能伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"add_damage"		"1"
+			}
+			"01"	//剧毒持续时间
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"20"
+			}
+			"02"	//持续伤害
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_think"		"5 10 15 20 25 30 35"
+			}
+			"03"	//伤害间隔
+			{
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"1 0.9 0.8 0.7 0.6 0.5 0.4"
+			}
+			"04"	//吸血百分比
 			{
 				"var_type"			"FIELD_INTEGER"
 				"life_percent"		"50 75 100 125 150 175 200"
-			}
-			"02"	//攻击加成百分比
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage_out"		"5 10 15 20 25 30 35"
 			}
 		}
 	}
 
 	//技能4：神秘
-	"juggernaut_one_ability4"
+	"juggernaut_one_ability5"
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -1123,7 +1067,7 @@
 
 		"Modifiers"
 		{
-			"modifier_juggernaut_one_ability4"
+			"modifier_juggernaut_one_ability5"
 			{
 				"Passive"		"1"
 				"IsHidden"		"1"
@@ -1131,67 +1075,13 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion" //闪避
-				}
-
-				"Aura"          "modifier_juggernaut_one_ability4_attack"
-                "Aura_Radius"   "%radius"
-                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
-			}
-
-			"modifier_juggernaut_one_ability4_attack"
-			{
-				"IsHidden"		"1"
-
-				"OnAttackFailed"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"JuggOneAbility3CreateModifier"
-					}
-
-					"ApplyModifier"
-					{
-						"Target" 			"CASTER"
-						"ModifierName"		"modifier_juggernaut_one_ability4_effect_duration"
-					}
-				}
-			}
-
-			"modifier_juggernaut_one_ability4_effect"
-			{
-				"Properties"
-				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magical"
-				}
-			}
-
-			"modifier_juggernaut_one_ability4_effect_duration"
-			{
-				"IsHidden"			"1"
-				"Duration"			"%duration"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_juggernaut.lua"
-						"Function"		"JuggOneAbility3DestroyModifier"
-					}
 				}
 			}
 		}
 
 		"AbilitySpecial"
 		{
-			"01"	//光环范围
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"800"
-			}
 			"02"	//闪避概率
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -1200,18 +1090,13 @@
 			"03"	//魔抗
 			{
 				"var_type"			"FIELD_INTEGER"
-				"magical"			"3"
-			}
-			"04"	//持续时间
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"10 11 12 13 14 15 16"
+				"magical"			"3 5 7 9 11 13 15"
 			}
 		}
 	}
 
 	//技能5：嗜血之神
-	"juggernaut_one_ability5"
+	"juggernaut_one_ability6"
 	{
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
@@ -1227,12 +1112,12 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"		"modifier_juggernaut_one_ability5"
+				"ModifierName"		"modifier_juggernaut_one_ability6"
 				"Target"
 		        {
 		            "Types"     	"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		            "Teams"     	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		            "Flags"     	"DOTA_UNIT_TARGET_FLAG_NONE"
+		            "Flags"     	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		            "Center"    	"CASTER"
 		            "Radius"    	"%radius"
 		        }
@@ -1247,7 +1132,7 @@
 
 		"Modifiers"
 		{
-			"modifier_juggernaut_one_ability5"
+			"modifier_juggernaut_one_ability6"
 			{
 				"Duration"				"%duration"
 				"StatusEffectName"		"particles/custom/heros/juggernaut/juggernaut_one_ability5.vpcf"
@@ -1256,7 +1141,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%heal_speed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_speed"
 				}
 
 				"OnCreated"
@@ -1266,6 +1151,16 @@
 						"EffectName"		"particles/units/heroes/hero_sven/sven_loadout.vpcf"
 						"EffectAttachType"  "follow_origin"
 						"Target"  			"TARGET"
+						"ControlPoints"
+						{
+							"02"			"255 0 255"
+						}
+					}	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+						"EffectAttachType" 	"follow_origin"
+						"Target" 			"TARGET"
 					}
 				}
 			}
@@ -1290,8 +1185,8 @@
 			}
 			"04"	//生命恢复速度
 			{
-				"var_type"			"FIELD_INTEGER"
-				"heal_speed"		"15 20 25 30 35 45 55"
+				"var_type"			"FIELD_FLOAT"
+				"heal_speed"		"3 4 5 6 7 8 9"
 			}
 		}
 	}
@@ -1977,7 +1872,7 @@
 		"AbilityCastPoint"			"0.3"
 		"AbilityManaCost"			"90"
 		"AbilityCooldown"			"15"
-		"AbilityTextureName"		"phoenix_launch_fire_spirit"
+		"AbilityTextureName"		"phoenix_icarus_dive"
 
 		"OnSpellStart"
 		{

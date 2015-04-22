@@ -13,10 +13,7 @@
 		"Ability3"					"juggernaut_one_ability3"
 		"Ability4"					"juggernaut_one_ability4"
 		"Ability5"					"juggernaut_one_ability5"
-		"Ability6"					"juggernaut_one_ability2_over"
-		"Ability7"					"juggernaut_one_ability3_kuangbao"
-		"Ability8"					"juggernaut_one_ability3_judu"
-		"Ability9"					"juggernaut_one_ability3_xixue"
+		"Ability6"					"juggernaut_one_ability6"
 
 		"AttackDamageMin"			"55"
 		"AttackDamageMax"			"65"

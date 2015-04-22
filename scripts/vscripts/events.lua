@@ -202,38 +202,38 @@ function CEvents:OnNPCSpawned( keys )
 		table.insert( GameRules._PlayerHeroes,unit )
 
 		--针对某些英雄的技能进行重新排列
-		if HeroAbilityRearrange(unit:GetUnitName()) then
-			local abilityName = {}
+		-- if HeroAbilityRearrange(unit:GetUnitName()) then
+		-- 	local abilityName = {}
 
-			if unit:GetUnitName() == "npc_dota_hero_juggernaut" then
-				abilityName = {
-					"juggernaut_one_ability1",
-					"juggernaut_one_ability2",
-					"juggernaut_one_ability2_over",
-					"juggernaut_one_ability3",
-					"juggernaut_one_ability3_kuangbao",
-					"juggernaut_one_ability3_judu",
-					"juggernaut_one_ability3_xixue",
-					"juggernaut_one_ability4",
-					"juggernaut_one_ability5",
-				}
-			end
+		-- 	if unit:GetUnitName() == "npc_dota_hero_juggernaut" then
+		-- 		abilityName = {
+		-- 			"juggernaut_one_ability1",
+		-- 			"juggernaut_one_ability2",
+		-- 			"juggernaut_one_ability2_over",
+		-- 			"juggernaut_one_ability3",
+		-- 			"juggernaut_one_ability3_kuangbao",
+		-- 			"juggernaut_one_ability3_judu",
+		-- 			"juggernaut_one_ability3_xixue",
+		-- 			"juggernaut_one_ability4",
+		-- 			"juggernaut_one_ability5",
+		-- 		}
+		-- 	end
 
-			for i,v in ipairs(abilityName) do
-				unit:RemoveAbility(v)
-			end
+		-- 	for i,v in ipairs(abilityName) do
+		-- 		unit:RemoveAbility(v)
+		-- 	end
 
-			for i,v in ipairs(abilityName) do
-				unit:AddAbility(v)
-			end
+		-- 	for i,v in ipairs(abilityName) do
+		-- 		unit:AddAbility(v)
+		-- 	end
 
-			for i,v in ipairs(abilityName) do
-				local ability = unit:FindAbilityByName(v)
-				ability:SetLevel(1)
-			end
+		-- 	for i,v in ipairs(abilityName) do
+		-- 		local ability = unit:FindAbilityByName(v)
+		-- 		ability:SetLevel(1)
+		-- 	end
 
-			return
-		end
+		-- 	return
+		-- end
 
 		--设置技能等级为1
 		SetAbilitiesLevelToOne(unit)
