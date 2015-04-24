@@ -15,6 +15,7 @@ require("AI/aifn")
 require("UI")
 
 --游戏流程
+require("game_process/RoundThinker")
 require("game_process/template_map_process")
 require("game_process/cloud_pigeon_legend_process")
 

@@ -64,7 +64,7 @@ function SkeletonkingOneAbility4( keys )
 	if caster.SkeletonkingOneAbility4IsCriticalStrike == true then
 		local teams = DOTA_UNIT_TARGET_TEAM_FRIENDLY
     	local types = DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_HERO
-    	local flags = DOTA_UNIT_TARGET_FLAG_NONE
+    	local flags = DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS
     	local group = FindUnitsInRadius(caster:GetTeamNumber(),caster:GetOrigin(),nil,keys.radius,teams,types,flags,FIND_CLOSEST,true)
 
     	for i,v in pairs(group) do

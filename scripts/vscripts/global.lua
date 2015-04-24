@@ -97,10 +97,8 @@ function IsValidAndAlive( unit )
 		else
 			return false
 		end
-	else
-		return "Not Valid"
 	end
-	
+	return nil
 end
 
 --复活英雄
@@ -263,7 +261,7 @@ function GiveAbilityPointToAll( num )
 	for k,v in pairs(GameRules._Players) do
 		if v then
 			local hero = v:GetAssignedHero()
-			if IsValidAndAlive(hero)  then
+			if IsValidAndAlive(hero)~=nil  then
 				hero:SetAbilityPoints(hero:GetAbilityPoints() + num)
 			end
 		end
@@ -329,7 +327,7 @@ end
 
 --判断是否是BOSS
 function CDOTA_BaseNPC:IsBoss(  )
-	if IsValidAndAlive(self)~="Not Valid" then
+	if IsValidAndAlive(self)~=nil then
 		local name = self:GetUnitName()
 		for k,v in pairs(GameRules._Boss) do
 			if v==name then

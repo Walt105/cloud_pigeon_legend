@@ -216,7 +216,7 @@
                 "Aura_Radius"   "80"
                 "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
                 "Aura_Types"    "DOTA_UNIT_TARGET_HERO"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 			}
 
 			"modifier_npc_wisp_ability1_npc_wisp_green_effect"
@@ -241,7 +241,7 @@
                 "Aura_Radius"   "80"
                 "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
                 "Aura_Types"    "DOTA_UNIT_TARGET_HERO"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 			}
 
 			"modifier_npc_wisp_ability1_npc_wisp_red_effect"
@@ -501,7 +501,7 @@
                 "Aura_Radius"   "80"
                 "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
                 "Aura_Types"    "DOTA_UNIT_TARGET_HERO"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 			}
 			"modifier_npc_wisp_blue_1_effect"
 			{
@@ -513,6 +513,77 @@
 					{
 						"ScriptFile" 	"scripts/vscripts/Abilities/wisp.lua"
 						"Function"		"WispBlue1"
+					}
+				}
+			}
+		}
+	}
+
+	//================================================================================================
+	//天炼，天鸽，天炼翼
+	"cloud_war"
+	{
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+		"Modifiers"
+		{
+			"modifier_cloud_is_war"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_cloud_is_war_effect"
+					}
+				}	
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_cloud_is_war_effect"
+					}
+				}
+				"OnTakeDamage"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_cloud_is_war_effect"
+					}
+				}
+				"OnDealDamage"
+				{
+					"ApplyModifier"
+					{
+						"Target" 			"CASTER"
+						"ModifierName"		"modifier_cloud_is_war_effect"
+					}
+				}
+			}
+			"modifier_cloud_is_war_effect"
+			{
+				"Duration"					"3"
+				"IsHidden"					"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"CloudWarCreated"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+						"Function"		"CloudWarDestroy"
 					}
 				}
 			}
@@ -671,7 +742,7 @@
 				        {
 				            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 				            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+				            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 				            "Center"    "TARGET"
 				            "Radius"    "%radius_two"
 				        }
@@ -1398,7 +1469,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
@@ -1567,7 +1638,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
@@ -1863,7 +1934,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
@@ -2487,7 +2558,7 @@
 		                {
 		                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		                    "Center"    "CASTER"
 		                    "Radius"    "%radius"
 		                }
@@ -2573,7 +2644,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 
 		"MaxLevel"					"7"
@@ -2668,7 +2739,7 @@
 				{
                     "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
                     "Teams"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
                     "Center"    "CASTER"
                     "Radius"    "1000"
                 }
@@ -2750,7 +2821,7 @@
 				{
 					"Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
                     "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
                     "Center"    "POINT"
                     "Radius"    "%radius"
 				}
@@ -2814,7 +2885,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 
 		"MaxLevel"					"7"
 		"LevelsBetweenUpgrades"		"0"
@@ -3059,10 +3130,15 @@
 				{
                     "Types"     	"DOTA_UNIT_TARGET_HERO"
                     "Teams"     	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-                    "Flags"     	"DOTA_UNIT_TARGET_FLAG_NONE"
+                    "Flags"     	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
                     "Center"    	"CASTER"
                     "Radius"    	"%radius"
                 }
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_SkeletonKing.MortalStrike.Cast"
+				"Target"  			"CASTER"
 			}
 		}
 
@@ -3297,7 +3373,7 @@
 		                {
 		                    "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		                    "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+		                    "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		                    "Center"    "TARGET"
 		                    "Radius"    "100"
 		                }
@@ -5119,7 +5195,7 @@
                 "Aura_Radius"   "150"
                 "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
                 "Aura_Types"    "DOTA_UNIT_TARGET_BASIC"
-                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 			}
 
 			"modifier_boss_millenary_treant_a5_effect"

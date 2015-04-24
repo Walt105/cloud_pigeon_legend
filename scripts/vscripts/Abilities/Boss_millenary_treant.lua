@@ -6,7 +6,7 @@ function BossMillenaryTreantA1( keys )
 	local group = keys.target_entities
 
 	for k,v in pairs(group) do
-		if IsValidAndAlive(v) then
+		if IsValidAndAlive(v)==true then
 			local info = 
 		    {
 		        Target = v,
@@ -78,7 +78,7 @@ function BossMillenaryTreantA4( keys )
 	if ent then
 		target:SetAbsOrigin(ent:GetAbsOrigin())
 		CustomTimer("BossMillenaryTreantA4",function( )
-			if IsValidAndAlive(target) == "Not Valid" then return nil end
+			if IsValidAndAlive(target) == nil then return nil end
 
 			local newOrder = {
 		        UnitIndex = target:entindex(), 
@@ -127,7 +127,7 @@ function BossMillenaryTreantA5( keys )
 	if ent then
 		target:SetAbsOrigin(ent:GetAbsOrigin())
 		CustomTimer("BossMillenaryTreantA5",function( )
-			if IsValidAndAlive(target) == "Not Valid" then return nil end
+			if IsValidAndAlive(target) == nil then return nil end
 			
 			local newOrder = {
 		        UnitIndex = target:entindex(), 

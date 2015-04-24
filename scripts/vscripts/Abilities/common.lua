@@ -250,7 +250,15 @@ end
 -----------------------------------------------------------------------------------------------------------
 --椭圆运动
 -----------------------------------------------------------------------------------------------------------
-function EllipseMotion( Target,Caster,Point,Face,FaceRight,Duration,Width,Clockwise,funMove,funOver )
+--Target 		要旋转的目标
+--Caster 		施法者，或者最终旋转回来的时候的目标
+--Point 		旋转到指定点
+--Duration 		持续时间
+--Width 		宽度
+--Clockwise 	是否顺时针
+--funMove 		移动式调用的函数，如果返回一个"EXIT"字符串，可以中途退出
+--funOver 		运行完毕调用的函数
+function EllipseMotion( Target,Caster,Point,Duration,Width,Clockwise,funMove,funOver )
 	--对参数进行判断
 	if type(Target)~="table" or (type(Caster) ~= "userdata" and type(Caster)~="table") or type(Point) ~= "userdata" then
 		print("Error is Target or Caster or Point")
@@ -268,12 +276,10 @@ function EllipseMotion( Target,Caster,Point,Face,FaceRight,Duration,Width,Clockw
 		return
 	end
 
-	local unit = CustomCreateUnit("npc_majia",Target:GetOrigin(),270,Target:GetTeamNumber())
-
+	local Face,FaceRight = nil,nil
 	local Distance = 0
 	local _dura = 0
 	local _time = 0.02
-	local _angle = 180
 	local _angle_speed = 360/(Duration / _time)
 	local _target_abs = Target:GetAbsOrigin()
 	local _caster_abs = nil
@@ -285,7 +291,7 @@ function EllipseMotion( Target,Caster,Point,Face,FaceRight,Duration,Width,Clockw
 	end
 
 	local as = {}
-	as.AngleSpeed = _angle
+	as.AngleSpeed = 180
 
 	CustomTimer("EllipseMotion",function( )
 		if IsValidAndAlive(Target)~=true then return nil end
@@ -294,7 +300,6 @@ function EllipseMotion( Target,Caster,Point,Face,FaceRight,Duration,Width,Clockw
 			if type(funOver)=="function" then
 				funOver()
 			end
-			unit:RemoveSelf()
 			if IsValidAndAlive(Target)~=true then return nil end
 			Target:AddNewModifier(nil,nil,"modifier_phased",{duration=0.1})
 			return nil
@@ -306,22 +311,24 @@ function EllipseMotion( Target,Caster,Point,Face,FaceRight,Duration,Width,Clockw
 				if type(funOver)=="function" then
 					funOver()
 				end
-				unit:RemoveSelf()
 				return nil
 			end
 			if IsValidAndAlive(Target)~=true then return nil end
 			
 			_caster_abs = Caster:GetAbsOrigin()
-			Face = (Point - _caster_abs):Normalized()
-			unit:SetForwardVector(Face)
-
-			if Clockwise then
-				FaceRight = unit:GetRightVector()
-			else
-				FaceRight = -unit:GetRightVector()
-			end
 		end
+		Face = (Point - _caster_abs):Normalized()
+
+		--是否顺时针转动
+		local rota = nil
+		if Clockwise then
+			rota = RotatePosition(_caster_abs,QAngle(0,-90,0),Point)
+		else
+			rota = RotatePosition(_caster_abs,QAngle(0,90,0),Point)
+		end
+		FaceRight = (rota - _caster_abs):Normalized()
 		
+		--位移
 		Distance = (_caster_abs - Point):Length()
 		as.AngleSpeed = as.AngleSpeed + _angle_speed
 
@@ -707,12 +714,11 @@ end
 
 
 -----------------------------------------------------------------------------------------------------------
---记录BOSS附近的单位
+--记录BOSS是否进入战斗
 -----------------------------------------------------------------------------------------------------------
 function BossIsWarCreated( keys )
 	local target = keys.target
 	target._BossIsWar = true
-	local str = target:GetUnitName()
 	PrintMsg("#BossIsWarCreated")
 end
 
@@ -879,4 +885,23 @@ function AddClearBossUnit( keys )
 	local target = keys.target
 
 	table.insert( ClearBossUnitTable,target )
+end
+
+
+-----------------------------------------------------------------------------------------------------------
+--记录是否进入战斗
+-----------------------------------------------------------------------------------------------------------
+function CloudWarCreated( keys )
+	local target = keys.target
+	target._CloudIsWar = true
+	PrintMsg("#"..target:GetUnitName().."war")
+end
+
+function CloudWarDestroy( keys )
+	local target = keys.target
+
+	if CAI:NotWork(unit) or CAI:NotWorkChanneling( unit ) then
+		return
+	end
+	target._CloudIsWar = false
 end

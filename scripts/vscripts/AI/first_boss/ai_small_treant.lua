@@ -1,32 +1,58 @@
 
 
 function Spawn( val )
-	local old = thisEntity:GetOrigin()
+	local ent = Entities:FindByName(nil,"first_boss_treant_over")
+	local ent_abs = ent:GetAbsOrigin()
+	thisEntity._turn = false
+	local turn = false
 	CustomTimer("ai_small_treant",function( )
 		
-		if IsValidEntity(thisEntity) then
-			if thisEntity:IsAlive() then
-
-				local new = thisEntity:GetOrigin()
-				if new == old then
-					local range = 200
-					local vec = new + Vector(RandomFloat(-range,range),RandomFloat(-range,range),RandomFloat(-range,range))
-					local newOrder = {
-				        UnitIndex = thisEntity:entindex(), 
-				        OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-				        Position = vec, 
-				        Queue = 0
-				    }
-				    ExecuteOrderFromTable(newOrder)
-				end
-
-				old = new
-				return 0.9
-			else
-				return nil
-			end
-		else
+		if IsValidAndAlive(thisEntity)~=true then
 			return nil
 		end
-	end,0.9)
+
+		if (ent_abs - thisEntity:GetAbsOrigin()):Length()>100 and thisEntity._turn == false then
+			local newOrder = {
+		        UnitIndex = thisEntity:entindex(), 
+		        OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+		        Position = ent_abs, 
+		        Queue = 0
+		    }
+		    ExecuteOrderFromTable(newOrder)
+		end
+
+		if thisEntity._turn then
+			if not turn and IsValidAndAlive(GameRules._npc_cloudforged)==true then
+				turn = not turn
+
+				local name = nil
+				if RollPercentage(70) then
+					name = "cloudforged"
+				else
+					name = "cloudforgedwing"
+				end
+				ent = Entities:FindByName(nil,name)
+				ent_abs = ent:GetAbsOrigin()
+
+			elseif IsValidAndAlive(GameRules._npc_cloudforged)~=true and not turn then
+				turn = not turn
+				ent = Entities:FindByName(nil,"cloudforgedwing")
+				ent_abs = ent:GetAbsOrigin()
+			elseif IsValidAndAlive(GameRules._npc_cloudforged)~=true and turn then
+				turn = not turn
+				ent = Entities:FindByName(nil,"cloudforgedwing")
+				ent_abs = ent:GetAbsOrigin()
+			end
+
+			local newOrder = {
+		        UnitIndex = thisEntity:entindex(), 
+		        OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+		        Position = ent_abs, 
+		        Queue = 0
+		    }
+		    ExecuteOrderFromTable(newOrder)
+		end
+
+		return 3
+	end,1)
 end

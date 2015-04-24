@@ -160,6 +160,9 @@ function CCloudPigeonLegendGameMode:InitGameMode()
 	GameRules._touch3TriggerNum = 0
 	GameRules._touch3TriggerUnit = {}
 	GameRules._RemoveMajia = {}
+	GameRules._npc_cloudforged = nil
+	GameRules._npc_cloudpigeon = nil
+	GameRules._npc_cloudforgedwing = nil
 	GamePaused()
 end
 

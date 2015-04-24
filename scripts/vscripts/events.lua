@@ -57,6 +57,16 @@ function CEvents:OnGameRulesStateChange( keys )
 
 		--设置玩家系数
 		GameRules.PlayerPercent = GameRules.PlayerNum / GameRules.PlayerMaxNum
+
+		if GetMapName() == "cloud_pigeon_legend" then
+			--创建天鸽、天炼、天炼翼
+			local cloud_1 = Entities:FindByName(nil,"cloudforged")
+			GameRules._npc_cloudforged = CustomCreateUnit("npc_cloudforged",cloud_1:GetOrigin(),45,DOTA_TEAM_GOODGUYS)
+			local cloud_2 = Entities:FindByName(nil,"cloudpigeon")
+			GameRules._npc_cloudpigeon = CustomCreateUnit("npc_cloudpigeon",cloud_2:GetOrigin(),270,DOTA_TEAM_GOODGUYS)
+			local cloud_3 = Entities:FindByName(nil,"cloudforgedwing")
+			GameRules._npc_cloudforgedwing = CustomCreateUnit("npc_cloudforgedwing",cloud_3:GetOrigin(),90,DOTA_TEAM_GOODGUYS)
+		end
 	end
 
 	if new == DOTA_GAMERULES_STATE_PRE_GAME then
@@ -80,8 +90,6 @@ function CEvents:OnGameRulesStateChange( keys )
 
 		elseif GetMapName() == "cloud_pigeon_legend" then
 
-			CCloudPigeonLegend:Start( )
-
 			--创建蓝色精灵球
 			for i=1,6 do
 				local name = string.format("wisp_0%d",i)
@@ -91,6 +99,13 @@ function CEvents:OnGameRulesStateChange( keys )
 				end
 			end
 
+		end
+	end
+
+	if new == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+
+		if GetMapName() == "cloud_pigeon_legend" then
+			CCloudPigeonLegend:Start()
 		end
 	end
 	
@@ -115,6 +130,7 @@ function CEvents:OnEntityKilled( keys )
 		end,3)
 	end
 
+	--掉落小精灵
 	if unit:GetTeamNumber() == DOTA_TEAM_BADGUYS and unit:IsAncient()==false then
 		if unit.IsWispCreate == false then return end
 		if unit:IsBoss() then
@@ -143,7 +159,7 @@ function CEvents:OnEntityKilled( keys )
 				end,nil)
 			end
 		else
-			if RollPercentage(RandomFloat(105,50)) then
+			if RollPercentage(RandomFloat(15,30)) then
 				local wisp = CustomCreateUnit("npc_wisp_green",unit_abs,270,DOTA_TEAM_GOODGUYS)
 				local ability = wisp:FindAbilityByName("npc_wisp_ability1")
 				if ability then
@@ -153,7 +169,7 @@ function CEvents:OnEntityKilled( keys )
 					wisp:CastAbilityOnPosition(vec,ability,0)
 				end
 			end
-			if RollPercentage(RandomFloat(15,50)) then
+			if RollPercentage(RandomFloat(15,30)) then
 				local wisp = CustomCreateUnit("npc_wisp_red",unit_abs,270,DOTA_TEAM_GOODGUYS)
 				local ability = wisp:FindAbilityByName("npc_wisp_ability1")
 				if ability then
@@ -245,7 +261,7 @@ end
 
 ----------------------------------------------------------------------------------------------------------
 function CDOTA_BaseNPC:FindItem( itemname )
-	if IsValidAndAlive(self) then
+	if IsValidAndAlive(self)==true then
 		for i=0,12 do
 			local item = self:GetItemInSlot(i)
 			if item then

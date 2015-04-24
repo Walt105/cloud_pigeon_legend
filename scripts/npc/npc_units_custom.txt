@@ -63,6 +63,258 @@
 		"VisionNighttimeRange"		"0"		// 夜晚视野
 	}
 
+	//天炼
+	"npc_cloudforged"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/meepo/meepo.vmdl" //空模型
+		"ModelScale" 				"1.5"							// 模型大小
+		"ConsideredHero" 			"1"
+		"IsAncient"					"1"
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"	 	 //物理护甲
+		"MagicalResistance"			"40"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					"cloud_war"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"50"								// 最低攻击伤害
+		"AttackDamageMax"			"100"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.0"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"		// 碰撞类型
+		"RingRadius"				"100"						// 选择圈大小
+		"HealthBarOffset"			"175"						// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"						// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"15000"						// 基础生命值
+		"StatusHealthRegen"			"1"							// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"precache"
+		{
+			"model_1"			"models/items/meepo/riftshadow_roamer_gloves/riftshadow_roamer_gloves.vmdl"
+			"model_2"			"models/items/meepo/riftshadow_roamer_hat/riftshadow_roamer_hat.vmdl"
+			"model_3"			"models/items/meepo/riftshadow_roamer_pack/riftshadow_roamer_pack.vmdl"
+			"model_4"			"models/items/meepo/riftshadow_roamer_pan/riftshadow_roamer_pan.vmdl"
+			"model_5"			"models/items/meepo/riftshadow_roamer_vest/riftshadow_roamer_vest.vmdl"
+		}
+
+		//添加饰品
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable4" { "ItemDef"	"4421" }
+				"Wearable1"	{ "ItemDef" "4427" }
+				"Wearable2"	{ "ItemDef"	"4434" }
+				"Wearable3" { "ItemDef"	"4344" }
+				"Wearable4" { "ItemDef"	"4423" }
+			}
+		}
+
+		"vscripts"					"AI/cloudforged.lua"
+	}
+
+	//天鸽
+	"npc_cloudpigeon"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/meepo/meepo.vmdl" //空模型
+		"ModelScale" 				"1.15"							// 模型大小
+		"ConsideredHero" 			"1" 
+		"IsAncient"					"1"
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"	 	 //物理护甲
+		"MagicalResistance"			"40"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					"cloud_war"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"50"								// 最低攻击伤害
+		"AttackDamageMax"			"100"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.0"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"		// 碰撞类型
+		"RingRadius"				"65"						// 选择圈大小
+		"HealthBarOffset"			"115"						// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"						// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"13000"						// 基础生命值
+		"StatusHealthRegen"			"1"							// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"precache"
+		{
+			"model_1"			"models/items/meepo/meepo_cratepack/meepo_cratepack.vmdl"
+			"model_2"			"models/items/meepo/meepo_skeletonkey_bandana/meepo_skeletonkey_bandana.vmdl"
+			"model_3"			"models/items/meepo/meepo_skeletonkey_sword/meepo_skeletonkey_sword.vmdl"
+			"model_4"			"models/items/meepo/meeposkback/meeposkback.vmdl"
+			"model_5"			"models/items/meepo/meeposksh/meeposksh.vmdl"
+		}
+
+		//添加饰品
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable4" { "ItemDef"	"4646" }
+				"Wearable1"	{ "ItemDef" "4911" }
+				"Wearable2"	{ "ItemDef"	"4912" }
+				"Wearable3" { "ItemDef"	"4913" }
+				"Wearable4" { "ItemDef"	"4914" }
+			}
+		}
+
+		"vscripts"					"AI/cloudforged.lua"
+	}
+
+	//天炼翼
+	"npc_cloudforgedwing"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/meepo/meepo.vmdl" //空模型
+		"ModelScale" 				"0.85"							// 模型大小
+		"ConsideredHero" 			"1" 
+		"IsAncient"					"1"
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"20"	 	 //物理护甲
+		"MagicalResistance"			"40"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					"cloud_war"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"50"								// 最低攻击伤害
+		"AttackDamageMax"			"100"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.0"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"0"		// 最低金钱奖励
+		"BountyGoldMax"				"0"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"		// 碰撞类型
+		"RingRadius"				"45"						// 选择圈大小
+		"HealthBarOffset"			"110"						// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"						// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"10000"						// 基础生命值
+		"StatusHealthRegen"			"1"							// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"precache"
+		{
+			"model_1"			"models/items/meepo/crystal_scavenger_arms/crystal_scavenger_arms.vmdl"
+			"model_2"			"models/items/meepo/crystal_scavenger_back/crystal_scavenger_back.vmdl"
+			"model_3"			"models/items/meepo/crystal_scavenger_head/crystal_scavenger_head.vmdl"
+			"model_4"			"models/items/meepo/crystal_scavenger_shoulders/crystal_scavenger_shoulders.vmdl"
+			"model_5"			"models/items/meepo/crystal_scavenger_weapon/crystal_scavenger_weapon.vmdl"
+		}
+
+		//添加饰品
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable4" { "ItemDef"	"6342" }
+				"Wearable1"	{ "ItemDef" "6562" }
+				"Wearable2"	{ "ItemDef"	"6563" }
+				"Wearable3" { "ItemDef"	"6564" }
+				"Wearable4" { "ItemDef"	"6565" }
+			}
+		}
+
+		"vscripts"					"AI/cloudforged.lua"
+	}
+
 	//莉娜 凤凰
 	"npc_lina_phoenix"
 	{
@@ -375,12 +627,12 @@
 	//以下是刷怪
 	//-------------------------------------------------------------------------------------------------------
 	//小树精
-	"npc_first_boss_small_treant"
+	"npc_treant_01"
 	{
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/furion/treant.vmdl" //空模型
 		"SoundSet"					"Furion_Treant"					// 音效文件
-		"ModelScale" 				"0.7"							// 模型大小
+		"ModelScale" 				"1.0"							// 模型大小
 
 		// 护甲
 		//----------------------------------------------------------------
@@ -407,14 +659,14 @@
 		// 奖励
 		//----------------------------------------------------------------
 		"BountyXP"					"0"		// 经验奖励
-		"BountyGoldMin"				"0"		// 最低金钱奖励
-		"BountyGoldMax"				"0"		// 最高金钱奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
 
 		// 碰撞
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
-		"RingRadius"				"45"							// 选择圈大小
-		"HealthBarOffset"			"110"							// 血条相对高度
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"138"							// 血条相对高度
 
 		// 移动
 		//----------------------------------------------------------------
@@ -434,19 +686,17 @@
 
 		"vscripts"					"AI/first_boss/ai_small_treant.lua"
 	}
-
-	//大树精
-	"npc_first_boss_big_treant"
+	"npc_treant_02"
 	{
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/items/furion/treant_stump.vmdl" //空模型
+		"Model"						"models/items/furion/treant_flower_1.vmdl" //空模型
 		"SoundSet"					"Furion_Treant"					// 音效文件
-		"ModelScale" 				"0.8"							// 模型大小
+		"ModelScale" 				"1.0"							// 模型大小
 
 		// 护甲
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"	 	 //物理护甲
-		"MagicalResistance"			"10"	  //魔抗
+		"MagicalResistance"			"12"	  //魔抗
 
 		//技能
 		//----------------------------------------------------------------
@@ -461,6 +711,303 @@
 		"AttackDamageMin"			"30"								// 最低攻击伤害
 		"AttackDamageMax"			"40"								// 最高攻击伤害
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.2"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"138"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"2000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
+	}
+	"npc_treant_03"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant/furion_treant_nelum_red/furion_treant_nelum_red.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"1.0"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"3"	 	 //物理护甲
+		"MagicalResistance"			"14"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"40"								// 最低攻击伤害
+		"AttackDamageMax"			"50"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.2"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"138"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"3000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
+	}
+	"npc_treant_04"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant/primeval_treant/primeval_treant.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"1.0"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"	 	 //物理护甲
+		"MagicalResistance"			"16"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"50"								// 最低攻击伤害
+		"AttackDamageMax"			"60"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.2"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"138"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"4000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
+	}
+	"npc_treant_05"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"1.0"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"	 	 //物理护甲
+		"MagicalResistance"			"18"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"60"								// 最低攻击伤害
+		"AttackDamageMax"			"70"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.2"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"138"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"5000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
+	}
+	"npc_treant_06"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant/shroomling_treant/shroomling_treant.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"1.0"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"6"	 	 //物理护甲
+		"MagicalResistance"			"20"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"70"								// 最低攻击伤害
+		"AttackDamageMax"			"80"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.2"								// 攻击间隔，与攻击速度是两个概念
+		"AttackAcquisitionRange"	"600"							// 侦测范围
+		"AttackRange"				"80"							// 攻击范围
+
+		// 奖励
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// 经验奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
+
+		// 碰撞
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"		// 碰撞类型
+		"RingRadius"				"65"							// 选择圈大小
+		"HealthBarOffset"			"138"							// 血条相对高度
+
+		// 移动
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
+		"MovementSpeed"				"300"							// 移动速度
+		"MovementTurnRate"			"1"							// 转身速度
+
+		// 生命值和魔法值
+		//----------------------------------------------------------------
+		"StatusHealth"				"6000"						// 基础生命值
+		"StatusHealthRegen"			"1"								// 基础生命回复速度
+
+		// 视野
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"		// 白天视野
+		"VisionNighttimeRange"		"1000"		// 夜晚视野
+
+		"vscripts"					"AI/first_boss/ai_small_treant.lua"
+	}
+
+	//大树精
+	"npc_first_boss_big_treant"
+	{
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/furion/treant_stump.vmdl" //空模型
+		"SoundSet"					"Furion_Treant"					// 音效文件
+		"ModelScale" 				"1.0"							// 模型大小
+
+		// 护甲
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"8"	 	 //物理护甲
+		"MagicalResistance"			"22"	  //魔抗
+
+		//技能
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"  	// 攻击方式，此为近战攻击 
+		"AttackDamageMin"			"80"								// 最低攻击伤害
+		"AttackDamageMax"			"90"								// 最高攻击伤害
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.1"								// 攻击间隔，与攻击速度是两个概念
 		"AttackAcquisitionRange"	"600"							// 侦测范围
 		"AttackRange"				"90"							// 攻击范围
@@ -468,8 +1015,8 @@
 		// 奖励
 		//----------------------------------------------------------------
 		"BountyXP"					"0"		// 经验奖励
-		"BountyGoldMin"				"0"		// 最低金钱奖励
-		"BountyGoldMax"				"0"		// 最高金钱奖励
+		"BountyGoldMin"				"1"		// 最低金钱奖励
+		"BountyGoldMax"				"5"		// 最高金钱奖励
 
 		// 碰撞
 		//----------------------------------------------------------------
@@ -485,7 +1032,7 @@
 
 		// 生命值和魔法值
 		//----------------------------------------------------------------
-		"StatusHealth"				"1500"						// 基础生命值
+		"StatusHealth"				"8500"						// 基础生命值
 		"StatusHealthRegen"			"1"								// 基础生命回复速度
 
 		// 视野
@@ -618,7 +1165,7 @@
 		// 移动
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
-		"MovementSpeed"				"300"							// 移动速度
+		"MovementSpeed"				"200"							// 移动速度
 		"MovementTurnRate"			"1"							// 转身速度
 
 		// 生命值和魔法值
@@ -807,7 +1354,7 @@
 		// 移动
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"	// 移动类型
-		"MovementSpeed"				"300"							// 移动速度
+		"MovementSpeed"				"200"							// 移动速度
 		"MovementTurnRate"			"1"							// 转身速度
 
 		// 生命值和魔法值

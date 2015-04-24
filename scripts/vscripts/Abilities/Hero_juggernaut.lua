@@ -69,7 +69,7 @@ function JuggOneAbility2( keys )
 
 		if i%2==0 then c = false else c = true end
 
-		EllipseMotion( unit,caster,caster_abs+face*len,face,caster:GetRightVector(),1,300,c,nil,function( )
+		EllipseMotion( unit,caster,caster_abs+face*len,1,300,c,nil,function( )
 			unit:RemoveSelf()
 		end )
 	end
