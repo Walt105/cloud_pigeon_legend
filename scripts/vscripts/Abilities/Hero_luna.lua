@@ -64,7 +64,7 @@ function LunaOneAbility1RemoveModifier( caster,count )
 end
 
 
---摩擦生电
+--闪电风暴
 function LunaOneAbility2( keys )
 	local caster = keys.caster
 	local point = keys.target_points[1]
@@ -88,26 +88,11 @@ function LunaOneAbility2( keys )
 end
 
 
---感应电流
+--电能冲击
 function LunaOneAbility3( keys )
 	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
 
-	local heal = caster:GetHealthPercent()
-
-	if heal < 50 then
-
-		--恢复血量
-		ability:ApplyDataDrivenModifier(caster,target,"modifier_luna_one_ability3_effect_heal",nil)
-
-	else
-
-		--造成伤害
-		ability:ApplyDataDrivenModifier(caster,target,"modifier_luna_one_ability3_effect_damage",nil)
-		LunaOneAbility1RemoveModifier(caster,1)
-
-	end
+	LunaOneAbility1RemoveModifier(caster,1)
 end
 
 

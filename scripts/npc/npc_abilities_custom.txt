@@ -1462,7 +1462,7 @@
 		}
 	}
 
-	//技能3：感应电流
+	//技能3：电能冲击
 	"luna_one_ability3"
 	{
 		"BaseClass"					"ability_datadriven"
@@ -1477,156 +1477,125 @@
 		"AbilityCastRange"			"900"
 		"AbilityCastPoint"			"0"
 		"AbilityManaCost"			"100"
-		"AbilityCooldown"			"8.5"
-		"AbilityTextureName"		"wisp_tether"
+		"AbilityCooldown"			"9.5"
+		"AbilityTextureName"		"luna_ability3"
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"Target" 			"TARGET"
-				"ModifierName"		"modifier_luna_one_ability3"
-			}
-			"ApplyModifier"
-			{
-				"Target" 			"CASTER"
-				"ModifierName"		"modifier_luna_one_ability3_null"
-			}
+			"TrackingProjectile"
+            {
+                "Target"            "TARGET"
+                "EffectName"        "particles/custom/heros/luna/luna_ability3.vpcf"
+                "Dodgeable"         "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+                "MoveSpeed"         "1000"
+                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+            }
+            "FireSound"
+            {
+            	"EffectName"		"Hero_luna.Ability3"
+            	"Target" 			"CASTER"
+            }
 
+            "DelayedAction"
+            {
+            	"Delay"				"0.4"
+            	"Action"
+            	{
+            		"TrackingProjectile"
+		            {
+		                "Target"            "TARGET"
+		                "EffectName"        "particles/custom/heros/luna/luna_ability3.vpcf"
+		                "Dodgeable"         "0"
+		                "ProvidesVision"    "1"
+		                "VisionRadius"      "300"
+		                "MoveSpeed"         "1000"
+		                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+		            }
+		            "FireSound"
+		            {
+		            	"EffectName"		"Hero_luna.Ability3"
+		            	"Target" 			"CASTER"
+		            }
+            		"DelayedAction"
+		            {
+		            	"Delay"				"0.4"
+		            	"Action"
+		            	{
+		            		"TrackingProjectile"
+				            {
+				                "Target"            "TARGET"
+				                "EffectName"        "particles/custom/heros/luna/luna_ability3.vpcf"
+				                "Dodgeable"         "0"
+				                "ProvidesVision"    "1"
+				                "VisionRadius"      "300"
+				                "MoveSpeed"         "1000"
+				                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+				            }
+				            "FireSound"
+				            {
+				            	"EffectName"		"Hero_luna.Ability3"
+				            	"Target" 			"CASTER"
+				            }
+		            	}
+		            }
+            	}
+            }
+		}
+
+		"OnProjectileHitUnit"
+        {
+            "RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/util/damage.lua"
+				"Function"		"DamageAOE"
+				"damage_type"	"DAMAGE_TYPE_MAGICAL"
+				"damage"		"%damage"
+				"Target"
+		        {
+		            "Types"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		            "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		            "Center"    "TARGET"
+		            "Radius"    "%radius"
+		        }
+			}
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/common.lua"
+				"Target"		"CASTER"
+				"Function"		"CustomHealPercent"
+				"heal_percent"	"%heal_percent"
+			}
+			"RunScript"
+			{
+				"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
+				"Function"		"LunaOneAbility3"
+			}
 			"FireSound"
 			{
-				"EffectName"		"Ability.static.loop"
-				"Target"  			"CASTER"
+				"EffectName"		"Hero_Sven.StormBoltImpact"
+				"Target"  			"TARGET"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_luna_one_ability3"
-			{
-				"IsDebuff"			"1"
-				"Duration"			"%duration"
-
-				"ThinkInterval"		"%interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/Abilities/Hero_luna.lua"
-						"Function"		"LunaOneAbility3"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"Target" 			"CASTER"
-						"ModifierName"		"modifier_luna_one_ability3_null"
-					}
-					"RunScript"
-					{
-						"ScriptFile" 		"scripts/vscripts/global.lua"
-						"Target"			"CASTER"
-						"Function"			"StopSound"
-						"EffectName"		"Ability.static.loop"
-					}
-				}
-			}
-
-			"modifier_luna_one_ability3_null"
-			{
-				"Duration"			"%duration"
-			}
-
-			"modifier_luna_one_ability3_effect_damage"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"scripts/vscripts/util/damage.lua"
-						"Function"		"DamageTarget"
-						"damage_type"	"DAMAGE_TYPE_MAGICAL"
-						"damage"		"%damage"
-					}
-
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_razor/razor_whip.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
-						"Target"  			"TARGET"
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-						}
-					}
-				}
-			}
-
-			"modifier_luna_one_ability3_effect_heal"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnCreated"
-				{
-					"Heal"
-					{
-						"Target"  		"CASTER"
-						"HealAmount"	"%heal"
-					}	
-
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_razor/razor_whip.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
-						"Target"  			"TARGET"
-						"ControlPointEntities"
-						{
-							"TARGET"		"attach_hitloc"
-							"CASTER"		"attach_hitloc"
-							"CASTER"		"attach_hitloc"
-							"CASTER"		"attach_hitloc"
-							"CASTER"		"attach_hitloc"
-							"CASTER"		"attach_hitloc"
-						}
-					}
-				}
-			}
-		}
+        }
 
 		"AbilitySpecial"
 		{
-			"01"	//持续时间
+			"01"	//伤害范围
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"			"10 11 12 13 14 15 16"
-			}
-			"02"	//间隔
-			{
-				"var_type"			"FIELD_FLOAT"
-				"interval"			"0.2"
+				"radius"			"300"
 			}
 			"03"	//伤害
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"10 15 20 25 30 40 50"
+				"damage"			"35 55 75 95 115 135 155"
 			}
 			"04"	//恢复
 			{
 				"var_type"			"FIELD_INTEGER"
-				"heal"				"10 15 20 25 30 40 50"
+				"heal_percent"		"2 4 6 8 10 12 14"
 			}
 		}
 	}

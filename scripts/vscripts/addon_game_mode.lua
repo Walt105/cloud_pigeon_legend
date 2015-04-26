@@ -22,6 +22,8 @@ function Precache( context )
 	PrecacheResource( "model", "models/heroes/antimage/antimage_weapon.vmdl", context )
 
 	--载入音效
+	PrecacheResource( "soundfile", "soundevents/custom/heroes/heroes.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_sven.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_razor.vsndevts", context )
@@ -35,7 +37,6 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts", context )
-	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/custom/Boss_millenary_treant/Boss_millenary_treant_A4.vsndevts", context )
 
 	--载入特效
